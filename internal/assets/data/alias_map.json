@@ -1,0 +1,3445 @@
+{
+ "version": 2,
+ "note": "食材别名归一表。canonical = 标准名（与 food_items.json 的 name 对齐），aliases = 指向它的其他常见写法。匹配时菜式名与库存名两侧都归一再比，所以 canonical 选哪个词不影响匹配结果，只影响展示口径。v2（T5.3.2）：随种子库扩到 88 条、菜式扩到 40+ 道，别名组由 21 组补到 53 组，覆盖新增食材的方言名 / 俗称 / 书面名。【红线】刻意留缺的名称（seed_data_test.dart 的 deliberateGaps：可乐 / 花椒粉 / 蒜苗 / 基围虾 / 蒸鱼豉油 / 黑胡椒碎 / 油炸花生米 / 鸭腿 / 酸萝卜 / 枸杞 / 腊肠 / 腊肉 / 小油菜）不许收进任何 aliases，否则「差一点就能做」的三态分布会塌回全可做；recipe_matcher_test.dart 有对应用例守住这条。注意「鸭」可以并到「鸭肉」，但「鸭腿」不行；「豆芽」并到「绿豆芽」，但「蒜苗」不行。",
+ "groups": [
+  {
+   "canonical": "低筋面粉",
+   "aliases": [
+    "蛋糕粉"
+   ]
+  },
+  {
+   "canonical": "八爪鱼",
+   "aliases": [
+    "章鱼",
+    "鱿鱼须"
+   ]
+  },
+  {
+   "canonical": "八角",
+   "aliases": [
+    "八角茴香",
+    "大料",
+    "八角粉"
+   ]
+  },
+  {
+   "canonical": "冬瓜",
+   "aliases": [
+    "白瓜"
+   ]
+  },
+  {
+   "canonical": "冰糖",
+   "aliases": [
+    "多晶冰糖",
+    "老冰糖",
+    "黄冰糖"
+   ]
+  },
+  {
+   "canonical": "包菜",
+   "aliases": [
+    "卷心菜",
+    "圆白菜",
+    "高丽菜"
+   ]
+  },
+  {
+   "canonical": "千张",
+   "aliases": [
+    "干豆腐",
+    "百叶"
+   ]
+  },
+  {
+   "canonical": "南瓜",
+   "aliases": [
+    "姜柄瓜"
+   ]
+  },
+  {
+   "canonical": "四季豆",
+   "aliases": [
+    "芸豆",
+    "菜豆",
+    "豆角",
+    "扁豆"
+   ]
+  },
+  {
+   "canonical": "土豆",
+   "aliases": [
+    "洋芋",
+    "马铃薯"
+   ]
+  },
+  {
+   "canonical": "大白菜",
+   "aliases": [
+    "白菜",
+    "黄芽菜"
+   ]
+  },
+  {
+   "canonical": "大米",
+   "aliases": [
+    "珍珠米",
+    "白米"
+   ]
+  },
+  {
+   "canonical": "大葱",
+   "aliases": [
+    "葱白"
+   ]
+  },
+  {
+   "canonical": "大蒜粉",
+   "aliases": [
+    "蒜粉"
+   ]
+  },
+  {
+   "canonical": "大骨",
+   "aliases": [
+    "猪大骨",
+    "猪棒骨"
+   ]
+  },
+  {
+   "canonical": "奥尔良粉",
+   "aliases": [
+    "奥尔良腌料"
+   ]
+  },
+  {
+   "canonical": "奶粉",
+   "aliases": [
+    "全脂奶粉"
+   ]
+  },
+  {
+   "canonical": "奶酪",
+   "aliases": [
+    "奶油奶酪",
+    "干酪粉"
+   ]
+  },
+  {
+   "canonical": "嫩豆腐",
+   "aliases": [
+    "内酯豆腐",
+    "南豆腐"
+   ]
+  },
+  {
+   "canonical": "对虾",
+   "aliases": [
+    "虾"
+   ]
+  },
+  {
+   "canonical": "小油条",
+   "aliases": [
+    "油条"
+   ]
+  },
+  {
+   "canonical": "小番茄",
+   "aliases": [
+    "千禧果",
+    "圣女果"
+   ]
+  },
+  {
+   "canonical": "小米辣",
+   "aliases": [
+    "小辣椒",
+    "指天椒",
+    "朝天椒"
+   ]
+  },
+  {
+   "canonical": "小葱",
+   "aliases": [
+    "细葱",
+    "葱",
+    "香葱"
+   ]
+  },
+  {
+   "canonical": "小豆蔻",
+   "aliases": [
+    "白豆蔻"
+   ]
+  },
+  {
+   "canonical": "小酥肉粉",
+   "aliases": [
+    "酥肉炸粉"
+   ]
+  },
+  {
+   "canonical": "山茶油",
+   "aliases": [
+    "茶油"
+   ]
+  },
+  {
+   "canonical": "干辣椒",
+   "aliases": [
+    "辣椒干",
+    "刀口辣椒",
+    "糍粑辣椒"
+   ]
+  },
+  {
+   "canonical": "干香菇",
+   "aliases": [
+    "干蘑菇"
+   ]
+  },
+  {
+   "canonical": "彩椒",
+   "aliases": [
+    "甜椒",
+    "红菜椒"
+   ]
+  },
+  {
+   "canonical": "扇贝",
+   "aliases": [
+    "扇贝肉"
+   ]
+  },
+  {
+   "canonical": "挂面",
+   "aliases": [
+    "干面条",
+    "面条",
+    "手擀面"
+   ]
+  },
+  {
+   "canonical": "料酒",
+   "aliases": [
+    "绍酒",
+    "花雕酒",
+    "黄酒"
+   ]
+  },
+  {
+   "canonical": "木耳",
+   "aliases": [
+    "云耳",
+    "黑木耳",
+    "干木耳"
+   ]
+  },
+  {
+   "canonical": "杂菜",
+   "aliases": [
+    "素菜"
+   ]
+  },
+  {
+   "canonical": "桂圆",
+   "aliases": [
+    "桂圆干",
+    "龙眼干"
+   ]
+  },
+  {
+   "canonical": "桂皮",
+   "aliases": [
+    "肉桂"
+   ]
+  },
+  {
+   "canonical": "椰汁",
+   "aliases": [
+    "椰子汁"
+   ]
+  },
+  {
+   "canonical": "毛肚",
+   "aliases": [
+    "千层肚"
+   ]
+  },
+  {
+   "canonical": "河虾",
+   "aliases": [
+    "大头虾"
+   ]
+  },
+  {
+   "canonical": "油豆腐",
+   "aliases": [
+    "油炸豆腐"
+   ]
+  },
+  {
+   "canonical": "泡椒",
+   "aliases": [
+    "野山椒",
+    "野山椒水",
+    "泡辣椒"
+   ]
+  },
+  {
+   "canonical": "泡菜",
+   "aliases": [
+    "辣白菜",
+    "腌菜"
+   ]
+  },
+  {
+   "canonical": "洋葱",
+   "aliases": [
+    "圆葱",
+    "葱头",
+    "小洋葱"
+   ]
+  },
+  {
+   "canonical": "洋葱粉",
+   "aliases": [
+    "洋葱酥粉"
+   ]
+  },
+  {
+   "canonical": "海带",
+   "aliases": [
+    "昆布",
+    "海带扣"
+   ]
+  },
+  {
+   "canonical": "海米",
+   "aliases": [
+    "虾米"
+   ]
+  },
+  {
+   "canonical": "淀粉",
+   "aliases": [
+    "生粉",
+    "芡粉",
+    "水淀粉"
+   ]
+  },
+  {
+   "canonical": "牛排",
+   "aliases": [
+    "西冷牛排"
+   ]
+  },
+  {
+   "canonical": "牛肉",
+   "aliases": [
+    "牛肉片"
+   ]
+  },
+  {
+   "canonical": "牛肉末",
+   "aliases": [
+    "牛肉馅"
+   ]
+  },
+  {
+   "canonical": "牛里脊",
+   "aliases": [
+    "牛外脊",
+    "牛柳"
+   ]
+  },
+  {
+   "canonical": "牛骨头",
+   "aliases": [
+    "牛棒骨"
+   ]
+  },
+  {
+   "canonical": "猪五花",
+   "aliases": [
+    "三层肉",
+    "五花",
+    "五花肉",
+    "肥肉"
+   ]
+  },
+  {
+   "canonical": "猪排骨",
+   "aliases": [
+    "排骨",
+    "肋排"
+   ]
+  },
+  {
+   "canonical": "猪油",
+   "aliases": [
+    "猪板油"
+   ]
+  },
+  {
+   "canonical": "猪肉",
+   "aliases": [
+    "瘦肉",
+    "猪瘦肉"
+   ]
+  },
+  {
+   "canonical": "猪肉末",
+   "aliases": [
+    "猪肉糜",
+    "猪肉馅",
+    "肉末"
+   ]
+  },
+  {
+   "canonical": "猪里脊",
+   "aliases": [
+    "里脊",
+    "里脊肉"
+   ]
+  },
+  {
+   "canonical": "甜面酱",
+   "aliases": [
+    "面酱"
+   ]
+  },
+  {
+   "canonical": "生姜",
+   "aliases": [
+    "姜",
+    "老姜"
+   ]
+  },
+  {
+   "canonical": "生抽",
+   "aliases": [
+    "酱油",
+    "浓口酱油",
+    "淡口酱油",
+    "豉油",
+    "黄豆酱油"
+   ]
+  },
+  {
+   "canonical": "生菜",
+   "aliases": [
+    "叶用莴苣",
+    "莴苣",
+    "生菜叶"
+   ]
+  },
+  {
+   "canonical": "番茄",
+   "aliases": [
+    "洋柿子",
+    "西红柿"
+   ]
+  },
+  {
+   "canonical": "番茄酱",
+   "aliases": [
+    "番茄沙司"
+   ]
+  },
+  {
+   "canonical": "白糖",
+   "aliases": [
+    "白砂糖",
+    "砂糖",
+    "细砂糖"
+   ]
+  },
+  {
+   "canonical": "白胡椒粉",
+   "aliases": [
+    "胡椒粉",
+    "白胡椒"
+   ]
+  },
+  {
+   "canonical": "白芝麻",
+   "aliases": [
+    "熟白芝麻"
+   ]
+  },
+  {
+   "canonical": "白萝卜",
+   "aliases": [
+    "萝卜",
+    "心里美萝卜",
+    "樱桃萝卜",
+    "青萝卜"
+   ]
+  },
+  {
+   "canonical": "白酒",
+   "aliases": [
+    "高度白酒"
+   ]
+  },
+  {
+   "canonical": "百里香",
+   "aliases": [
+    "地椒"
+   ]
+  },
+  {
+   "canonical": "盐",
+   "aliases": [
+    "精盐",
+    "食盐",
+    "海盐"
+   ]
+  },
+  {
+   "canonical": "竹笋",
+   "aliases": [
+    "小竹笋",
+    "春笋",
+    "笋",
+    "笋片"
+   ]
+  },
+  {
+   "canonical": "竹轮",
+   "aliases": [
+    "鸣门卷"
+   ]
+  },
+  {
+   "canonical": "粉丝",
+   "aliases": [
+    "细粉丝",
+    "龙口粉丝"
+   ]
+  },
+  {
+   "canonical": "糊辣椒",
+   "aliases": [
+    "糊辣子"
+   ]
+  },
+  {
+   "canonical": "糯米粉",
+   "aliases": [
+    "江米粉"
+   ]
+  },
+  {
+   "canonical": "红葱头",
+   "aliases": [
+    "毛葱"
+   ]
+  },
+  {
+   "canonical": "红薯淀粉",
+   "aliases": [
+    "地瓜粉"
+   ]
+  },
+  {
+   "canonical": "红酸汤",
+   "aliases": [
+    "红酸汤底料"
+   ]
+  },
+  {
+   "canonical": "绿豆",
+   "aliases": [
+    "绿豆瓣"
+   ]
+  },
+  {
+   "canonical": "绿豆芽",
+   "aliases": [
+    "豆芽"
+   ]
+  },
+  {
+   "canonical": "罐头玉米",
+   "aliases": [
+    "玉米粒"
+   ]
+  },
+  {
+   "canonical": "罗勒",
+   "aliases": [
+    "九层塔",
+    "金不换",
+    "罗勒叶",
+    "罗勒碎"
+   ]
+  },
+  {
+   "canonical": "罗非鱼",
+   "aliases": [
+    "吴郭鱼",
+    "福寿鱼"
+   ]
+  },
+  {
+   "canonical": "羊肉",
+   "aliases": [
+    "羊外脊肉"
+   ]
+  },
+  {
+   "canonical": "老抽",
+   "aliases": [
+    "红烧酱油"
+   ]
+  },
+  {
+   "canonical": "老豆腐",
+   "aliases": [
+    "北豆腐",
+    "卤水豆腐"
+   ]
+  },
+  {
+   "canonical": "肉丸",
+   "aliases": [
+    "丸子",
+    "肉丸子"
+   ]
+  },
+  {
+   "canonical": "肥牛",
+   "aliases": [
+    "牛肉卷",
+    "肥牛卷"
+   ]
+  },
+  {
+   "canonical": "胡椒粒",
+   "aliases": [
+    "白胡椒粒"
+   ]
+  },
+  {
+   "canonical": "胡萝卜",
+   "aliases": [
+    "红萝卜",
+    "黄胡萝卜"
+   ]
+  },
+  {
+   "canonical": "腐乳",
+   "aliases": [
+    "南乳汁",
+    "红腐乳汁",
+    "腐乳汁",
+    "油腐乳"
+   ]
+  },
+  {
+   "canonical": "芒果",
+   "aliases": [
+    "青芒果"
+   ]
+  },
+  {
+   "canonical": "芝麻酱",
+   "aliases": [
+    "芝麻酥酱",
+    "麻酱"
+   ]
+  },
+  {
+   "canonical": "芥末",
+   "aliases": [
+    "黄芥末"
+   ]
+  },
+  {
+   "canonical": "花椒",
+   "aliases": [
+    "红花椒"
+   ]
+  },
+  {
+   "canonical": "花椒油",
+   "aliases": [
+    "麻椒油"
+   ]
+  },
+  {
+   "canonical": "花菜",
+   "aliases": [
+    "散花菜"
+   ]
+  },
+  {
+   "canonical": "花蛤",
+   "aliases": [
+    "花甲",
+    "蛤蜊"
+   ]
+  },
+  {
+   "canonical": "苏打水",
+   "aliases": [
+    "气泡水"
+   ]
+  },
+  {
+   "canonical": "草果",
+   "aliases": [
+    "草果粉"
+   ]
+  },
+  {
+   "canonical": "荸荠",
+   "aliases": [
+    "马蹄"
+   ]
+  },
+  {
+   "canonical": "莲藕",
+   "aliases": [
+    "藕",
+    "藕节"
+   ]
+  },
+  {
+   "canonical": "菜心",
+   "aliases": [
+    "油菜心"
+   ]
+  },
+  {
+   "canonical": "葡萄酒",
+   "aliases": [
+    "白葡萄酒"
+   ]
+  },
+  {
+   "canonical": "蒜",
+   "aliases": [
+    "大蒜",
+    "蒜头",
+    "蒜瓣"
+   ]
+  },
+  {
+   "canonical": "蒜苔",
+   "aliases": [
+    "蒜薹"
+   ]
+  },
+  {
+   "canonical": "薄荷",
+   "aliases": [
+    "薄荷叶"
+   ]
+  },
+  {
+   "canonical": "虾仁",
+   "aliases": [
+    "虾肉"
+   ]
+  },
+  {
+   "canonical": "螃蟹",
+   "aliases": [
+    "梭子蟹"
+   ]
+  },
+  {
+   "canonical": "西兰花",
+   "aliases": [
+    "绿花菜",
+    "西蓝花",
+    "青花菜"
+   ]
+  },
+  {
+   "canonical": "豆瓣酱",
+   "aliases": [
+    "郫县豆瓣",
+    "郫县豆瓣酱"
+   ]
+  },
+  {
+   "canonical": "豆腐干",
+   "aliases": [
+    "豆干",
+    "香干"
+   ]
+  },
+  {
+   "canonical": "豆腐皮",
+   "aliases": [
+    "豆皮",
+    "豆腐丝"
+   ]
+  },
+  {
+   "canonical": "豌豆苗",
+   "aliases": [
+    "豆苗"
+   ]
+  },
+  {
+   "canonical": "辣椒",
+   "aliases": [
+    "红辣椒"
+   ]
+  },
+  {
+   "canonical": "辣椒油",
+   "aliases": [
+    "红油",
+    "油辣椒"
+   ]
+  },
+  {
+   "canonical": "辣椒酱",
+   "aliases": [
+    "百年辣椒",
+    "泡馍辣椒酱",
+    "辣酱"
+   ]
+  },
+  {
+   "canonical": "辣椒面",
+   "aliases": [
+    "干辣椒面",
+    "辣椒粉"
+   ]
+  },
+  {
+   "canonical": "酱菜",
+   "aliases": [
+    "酱瓜"
+   ]
+  },
+  {
+   "canonical": "醪糟",
+   "aliases": [
+    "甜酒酿",
+    "酒酿",
+    "醪糟汁"
+   ]
+  },
+  {
+   "canonical": "青椒",
+   "aliases": [
+    "尖椒",
+    "柿子椒",
+    "菜椒"
+   ]
+  },
+  {
+   "canonical": "青花椒",
+   "aliases": [
+    "藤椒"
+   ]
+  },
+  {
+   "canonical": "青鱼",
+   "aliases": [
+    "青鱼尾"
+   ]
+  },
+  {
+   "canonical": "面粉",
+   "aliases": [
+    "中筋面粉",
+    "小麦粉",
+    "普通面粉",
+    "干面粉"
+   ]
+  },
+  {
+   "canonical": "食用油",
+   "aliases": [
+    "植物油",
+    "色拉油",
+    "调和油",
+    "豆油",
+    "大豆油",
+    "明油",
+    "芥花籽油",
+    "葡萄籽油",
+    "葵花籽油"
+   ]
+  },
+  {
+   "canonical": "馄饨皮",
+   "aliases": [
+    "云吞皮",
+    "抄手皮",
+    "馄饨"
+   ]
+  },
+  {
+   "canonical": "香油",
+   "aliases": [
+    "芝麻油",
+    "麻油",
+    "黑麻油",
+    "芝麻香油"
+   ]
+  },
+  {
+   "canonical": "香茅",
+   "aliases": [
+    "香茅草"
+   ]
+  },
+  {
+   "canonical": "香菇",
+   "aliases": [
+    "冬菇"
+   ]
+  },
+  {
+   "canonical": "香菜",
+   "aliases": [
+    "芫荽",
+    "大香菜"
+   ]
+  },
+  {
+   "canonical": "香菜籽",
+   "aliases": [
+    "芫荽籽"
+   ]
+  },
+  {
+   "canonical": "香蒜油",
+   "aliases": [
+    "蒜油"
+   ]
+  },
+  {
+   "canonical": "香辣酱",
+   "aliases": [
+    "干锅酱"
+   ]
+  },
+  {
+   "canonical": "高汤",
+   "aliases": [
+    "高汤粉",
+    "鲜汤",
+    "肉汤"
+   ]
+  },
+  {
+   "canonical": "鱼饼",
+   "aliases": [
+    "鱼糕"
+   ]
+  },
+  {
+   "canonical": "鲜鱼",
+   "aliases": [
+    "鱼",
+    "鱼肉"
+   ]
+  },
+  {
+   "canonical": "鳕鱼",
+   "aliases": [
+    "银鳕鱼"
+   ]
+  },
+  {
+   "canonical": "鳝鱼",
+   "aliases": [
+    "黄鳝"
+   ]
+  },
+  {
+   "canonical": "鸡架",
+   "aliases": [
+    "鸡骨架",
+    "卤鸡架"
+   ]
+  },
+  {
+   "canonical": "鸡翅",
+   "aliases": [
+    "翅中",
+    "鸡中翅"
+   ]
+  },
+  {
+   "canonical": "鸡肉",
+   "aliases": [
+    "鸡肉块",
+    "鸡",
+    "鸡块"
+   ]
+  },
+  {
+   "canonical": "鸡胸肉",
+   "aliases": [
+    "鸡胸",
+    "鸡脯肉"
+   ]
+  },
+  {
+   "canonical": "鸡腿",
+   "aliases": [
+    "琵琶腿",
+    "鸡大腿"
+   ]
+  },
+  {
+   "canonical": "鸡蛋",
+   "aliases": [
+    "土鸡蛋",
+    "蛋黄",
+    "鲜鸡蛋",
+    "蛋清"
+   ]
+  },
+  {
+   "canonical": "鸭架",
+   "aliases": [
+    "鸭骨架"
+   ]
+  },
+  {
+   "canonical": "鸭肉",
+   "aliases": [
+    "鸭",
+    "鸭块"
+   ]
+  },
+  {
+   "canonical": "麻辣鲜",
+   "aliases": [
+    "麻辣鲜粉"
+   ]
+  },
+  {
+   "canonical": "黄灯笼辣椒酱",
+   "aliases": [
+    "黄灯笼椒酱"
+   ]
+  },
+  {
+   "canonical": "黄瓜",
+   "aliases": [
+    "胡瓜",
+    "青瓜"
+   ]
+  },
+  {
+   "canonical": "黄花菜",
+   "aliases": [
+    "干黄花菜"
+   ]
+  },
+  {
+   "canonical": "黑糖",
+   "aliases": [
+    "黑砂糖"
+   ]
+  },
+  {
+   "canonical": "黑胡椒粉",
+   "aliases": [
+    "黑胡椒"
+   ]
+  },
+  {
+   "canonical": "黑虎虾",
+   "aliases": [
+    "斑节虾",
+    "草虾"
+   ]
+  },
+  {
+   "canonical": "黑鱼",
+   "aliases": [
+    "生鱼"
+   ]
+  },
+  {
+   "canonical": "龙利鱼",
+   "aliases": [
+    "巴沙鱼",
+    "龙利鱼柳"
+   ]
+  },
+  {
+   "canonical": "黄彩椒",
+   "aliases": [
+    "黄甜椒"
+   ]
+  },
+  {
+   "canonical": "红彩椒",
+   "aliases": [
+    "红甜椒"
+   ]
+  },
+  {
+   "canonical": "水果黄瓜",
+   "aliases": [
+    "迷你黄瓜",
+    "无刺黄瓜"
+   ]
+  },
+  {
+   "canonical": "白玉苦瓜",
+   "aliases": [
+    "白苦瓜"
+   ]
+  },
+  {
+   "canonical": "手指胡萝卜",
+   "aliases": [
+    "迷你胡萝卜",
+    "小胡萝卜"
+   ]
+  },
+  {
+   "canonical": "铁棍山药",
+   "aliases": [
+    "淮山",
+    "山药棍"
+   ]
+  },
+  {
+   "canonical": "香芋",
+   "aliases": [
+    "芋艿",
+    "小芋头"
+   ]
+  },
+  {
+   "canonical": "洋姜",
+   "aliases": [
+    "菊芋",
+    "鬼子姜"
+   ]
+  },
+  {
+   "canonical": "苤蓝",
+   "aliases": [
+    "球茎甘蓝",
+    "大头菜"
+   ]
+  },
+  {
+   "canonical": "甜菜根",
+   "aliases": [
+    "红菜头"
+   ]
+  },
+  {
+   "canonical": "水萝卜",
+   "aliases": [
+    "小红萝卜"
+   ]
+  },
+  {
+   "canonical": "罗马生菜",
+   "aliases": [
+    "直立生菜",
+    "萝蔓生菜"
+   ]
+  },
+  {
+   "canonical": "黄油生菜",
+   "aliases": [
+    "奶油生菜"
+   ]
+  },
+  {
+   "canonical": "冰草",
+   "aliases": [
+    "冰菜",
+    "水晶冰菜"
+   ]
+  },
+  {
+   "canonical": "羽衣甘蓝",
+   "aliases": [
+    "无头甘蓝"
+   ]
+  },
+  {
+   "canonical": "木耳菜",
+   "aliases": [
+    "落葵",
+    "潺菜"
+   ]
+  },
+  {
+   "canonical": "马齿苋",
+   "aliases": [
+    "长命菜"
+   ]
+  },
+  {
+   "canonical": "鸡枞菌",
+   "aliases": [
+    "鸡枞"
+   ]
+  },
+  {
+   "canonical": "松茸",
+   "aliases": [
+    "松口蘑"
+   ]
+  },
+  {
+   "canonical": "牛肝菌",
+   "aliases": [
+    "白牛肝菌"
+   ]
+  },
+  {
+   "canonical": "滑子菇",
+   "aliases": [
+    "滑菇"
+   ]
+  },
+  {
+   "canonical": "红枣干",
+   "aliases": [
+    "干红枣",
+    "大枣"
+   ]
+  },
+  {
+   "canonical": "葡萄干",
+   "aliases": [
+    "提子干"
+   ]
+  },
+  {
+   "canonical": "裙带菜",
+   "aliases": [
+    "裙带"
+   ]
+  },
+  {
+   "canonical": "豆泡",
+   "aliases": [
+    "豆腐泡"
+   ]
+  },
+  {
+   "canonical": "纳豆",
+   "aliases": [
+    "拉丝纳豆"
+   ]
+  },
+  {
+   "canonical": "素肠",
+   "aliases": [
+    "素肉肠"
+   ]
+  },
+  {
+   "canonical": "溏心蛋",
+   "aliases": [
+    "半熟蛋"
+   ]
+  },
+  {
+   "canonical": "卤蛋",
+   "aliases": [
+    "卤鸡蛋"
+   ]
+  },
+  {
+   "canonical": "鸽子蛋",
+   "aliases": [
+    "鸽蛋"
+   ]
+  },
+  {
+   "canonical": "马苏里拉芝士",
+   "aliases": [
+    "马苏里拉奶酪",
+    "披萨芝士"
+   ]
+  },
+  {
+   "canonical": "黄油块",
+   "aliases": [
+    "动物黄油"
+   ]
+  },
+  {
+   "canonical": "帕玛森芝士",
+   "aliases": [
+    "帕尔马奶酪",
+    "巴马臣芝士"
+   ]
+  },
+  {
+   "canonical": "树莓",
+   "aliases": [
+    "覆盆子"
+   ]
+  },
+  {
+   "canonical": "火龙果",
+   "aliases": [
+    "红龙果",
+    "仙蜜果"
+   ]
+  },
+  {
+   "canonical": "青提",
+   "aliases": [
+    "青葡萄",
+    "无籽青提"
+   ]
+  },
+  {
+   "canonical": "红提",
+   "aliases": [
+    "红葡萄"
+   ]
+  },
+  {
+   "canonical": "山竹",
+   "aliases": [
+    "莽吉柿"
+   ]
+  },
+  {
+   "canonical": "榴莲",
+   "aliases": [
+    "榴梿"
+   ]
+  },
+  {
+   "canonical": "火鸡腿",
+   "aliases": [
+    "火鸡腿肉"
+   ]
+  },
+  {
+   "canonical": "鸭掌",
+   "aliases": [
+    "鸭脚"
+   ]
+  },
+  {
+   "canonical": "乌鸡",
+   "aliases": [
+    "乌骨鸡",
+    "竹丝鸡"
+   ]
+  },
+  {
+   "canonical": "童子鸡",
+   "aliases": [
+    "仔鸡"
+   ]
+  },
+  {
+   "canonical": "牛尾",
+   "aliases": [
+    "牛尾巴"
+   ]
+  },
+  {
+   "canonical": "猪大肠",
+   "aliases": [
+    "猪肠"
+   ]
+  },
+  {
+   "canonical": "牛舌",
+   "aliases": [
+    "牛口条"
+   ]
+  },
+  {
+   "canonical": "兔肉",
+   "aliases": [
+    "兔子肉"
+   ]
+  },
+  {
+   "canonical": "牛霖",
+   "aliases": [
+    "牛后腿肉"
+   ]
+  },
+  {
+   "canonical": "猪耳朵",
+   "aliases": [
+    "猪耳"
+   ]
+  },
+  {
+   "canonical": "金枪鱼",
+   "aliases": [
+    "吞拿鱼"
+   ]
+  },
+  {
+   "canonical": "虾夷扇贝",
+   "aliases": [
+    "北海道扇贝"
+   ]
+  },
+  {
+   "canonical": "花螺",
+   "aliases": [
+    "东风螺"
+   ]
+  },
+  {
+   "canonical": "香螺",
+   "aliases": [
+    "响螺"
+   ]
+  },
+  {
+   "canonical": "蛤蜊肉",
+   "aliases": [
+    "蛤肉"
+   ]
+  },
+  {
+   "canonical": "沙丁鱼",
+   "aliases": [
+    "沙丁"
+   ]
+  },
+  {
+   "canonical": "秋刀鱼",
+   "aliases": [
+    "秋刀"
+   ]
+  },
+  {
+   "canonical": "燕麦米",
+   "aliases": [
+    "燕麦粒"
+   ]
+  },
+  {
+   "canonical": "意大利面",
+   "aliases": [
+    "意大利面条"
+   ]
+  },
+  {
+   "canonical": "紫米",
+   "aliases": [
+    "紫糯米",
+    "黑糯米"
+   ]
+  },
+  {
+   "canonical": "玉米糁",
+   "aliases": [
+    "玉米碴",
+    "玉米渣"
+   ]
+  },
+  {
+   "canonical": "高粱米",
+   "aliases": [
+    "高粱"
+   ]
+  },
+  {
+   "canonical": "薏米",
+   "aliases": [
+    "薏仁",
+    "薏苡仁"
+   ]
+  },
+  {
+   "canonical": "葱油饼",
+   "aliases": [
+    "葱油饼坯"
+   ]
+  },
+  {
+   "canonical": "烧卖",
+   "aliases": [
+    "烧麦"
+   ]
+  },
+  {
+   "canonical": "奶黄包",
+   "aliases": [
+    "奶黄包子"
+   ]
+  },
+  {
+   "canonical": "小笼包",
+   "aliases": [
+    "小笼包子"
+   ]
+  },
+  {
+   "canonical": "生煎包",
+   "aliases": [
+    "生煎馒头"
+   ]
+  },
+  {
+   "canonical": "冷冻虾仁",
+   "aliases": [
+    "冻虾仁"
+   ]
+  },
+  {
+   "canonical": "冷冻豌豆",
+   "aliases": [
+    "冻豌豆"
+   ]
+  },
+  {
+   "canonical": "糖蒜",
+   "aliases": [
+    "糖醋蒜"
+   ]
+  },
+  {
+   "canonical": "黄桃罐头",
+   "aliases": [
+    "糖水黄桃"
+   ]
+  },
+  {
+   "canonical": "玉米罐头",
+   "aliases": [
+    "甜玉米罐头"
+   ]
+  },
+  {
+   "canonical": "亚麻籽油",
+   "aliases": [
+    "胡麻油"
+   ]
+  },
+  {
+   "canonical": "玉米油",
+   "aliases": [
+    "玉米胚芽油"
+   ]
+  },
+  {
+   "canonical": "椰子油",
+   "aliases": [
+    "椰油"
+   ]
+  },
+  {
+   "canonical": "核桃油",
+   "aliases": [
+    "核桃仁油"
+   ]
+  },
+  {
+   "canonical": "粗盐",
+   "aliases": [
+    "大粒盐"
+   ]
+  },
+  {
+   "canonical": "岩盐",
+   "aliases": [
+    "喜马拉雅盐"
+   ]
+  },
+  {
+   "canonical": "麦芽糖",
+   "aliases": [
+    "饴糖"
+   ]
+  },
+  {
+   "canonical": "白酱油",
+   "aliases": [
+    "白豉油"
+   ]
+  },
+  {
+   "canonical": "喼汁",
+   "aliases": [
+    "辣酱油",
+    "乌酢"
+   ]
+  },
+  {
+   "canonical": "塔塔酱",
+   "aliases": [
+    "塔塔汁"
+   ]
+  },
+  {
+   "canonical": "辣椒仔",
+   "aliases": [
+    "塔巴斯科"
+   ]
+  },
+  {
+   "canonical": "是拉差辣酱",
+   "aliases": [
+    "是拉差"
+   ]
+  },
+  {
+   "canonical": "橄榄酱",
+   "aliases": [
+    "橄榄泥"
+   ]
+  },
+  {
+   "canonical": "砂仁",
+   "aliases": [
+    "缩砂仁"
+   ]
+  },
+  {
+   "canonical": "山奈",
+   "aliases": [
+    "沙姜"
+   ]
+  },
+  {
+   "canonical": "罗汉果",
+   "aliases": [
+    "神仙果"
+   ]
+  },
+  {
+   "canonical": "姜粉",
+   "aliases": [
+    "生姜粉"
+   ]
+  },
+  {
+   "canonical": "肉桂粉",
+   "aliases": [
+    "桂皮粉"
+   ]
+  },
+  {
+   "canonical": "豆蔻粉",
+   "aliases": [
+    "白豆蔻粉"
+   ]
+  },
+  {
+   "canonical": "高汤块",
+   "aliases": [
+    "浓汤块"
+   ]
+  },
+  {
+   "canonical": "牛骨汤块",
+   "aliases": [
+    "牛肉汤块"
+   ]
+  },
+  {
+   "canonical": "菌菇粉",
+   "aliases": [
+    "蘑菇粉"
+   ]
+  },
+  {
+   "canonical": "卡真粉",
+   "aliases": [
+    "卡疆粉"
+   ]
+  },
+  {
+   "canonical": "酸菜鱼调料",
+   "aliases": [
+    "酸菜鱼料包"
+   ]
+  },
+  {
+   "canonical": "麻婆豆腐调料",
+   "aliases": [
+    "麻婆酱"
+   ]
+  },
+  {
+   "canonical": "火锅蘸料",
+   "aliases": [
+    "蘸料"
+   ]
+  },
+  {
+   "canonical": "卤料包",
+   "aliases": [
+    "卤味包",
+    "卤水料"
+   ]
+  },
+  {
+   "canonical": "梅酒",
+   "aliases": [
+    "青梅酒"
+   ]
+  },
+  {
+   "canonical": "伏特加",
+   "aliases": [
+    "俄得克"
+   ]
+  },
+  {
+   "canonical": "紫长茄",
+   "aliases": [
+    "线茄",
+    "长茄子"
+   ]
+  },
+  {
+   "canonical": "圆茄",
+   "aliases": [
+    "圆茄子",
+    "大圆茄"
+   ]
+  },
+  {
+   "canonical": "青线椒",
+   "aliases": [
+    "线椒",
+    "青辣椒"
+   ]
+  },
+  {
+   "canonical": "薄皮辣椒",
+   "aliases": [
+    "薄皮椒",
+    "嫩辣椒"
+   ]
+  },
+  {
+   "canonical": "贝贝南瓜",
+   "aliases": [
+    "小南瓜",
+    "迷你南瓜"
+   ]
+  },
+  {
+   "canonical": "板栗南瓜",
+   "aliases": [
+    "栗味南瓜",
+    "日本南瓜"
+   ]
+  },
+  {
+   "canonical": "丝瓜尖",
+   "aliases": [
+    "丝瓜苗",
+    "丝瓜藤尖"
+   ]
+  },
+  {
+   "canonical": "牛蒡",
+   "aliases": [
+    "东洋参",
+    "牛蒡根"
+   ]
+  },
+  {
+   "canonical": "藕带",
+   "aliases": [
+    "藕心菜",
+    "藕簪"
+   ]
+  },
+  {
+   "canonical": "慈姑",
+   "aliases": [
+    "茨菇",
+    "慈菇"
+   ]
+  },
+  {
+   "canonical": "魔芋块",
+   "aliases": [
+    "魔芋豆腐",
+    "魔芋糕"
+   ]
+  },
+  {
+   "canonical": "葛根粉块",
+   "aliases": [
+    "葛粉块",
+    "葛根粉"
+   ]
+  },
+  {
+   "canonical": "白山药",
+   "aliases": [
+    "白山",
+    "菜山药"
+   ]
+  },
+  {
+   "canonical": "红芽姜",
+   "aliases": [
+    "子姜",
+    "紫姜"
+   ]
+  },
+  {
+   "canonical": "菜心苗",
+   "aliases": [
+    "菜薹苗"
+   ]
+  },
+  {
+   "canonical": "娃娃菜苗",
+   "aliases": [
+    "娃娃菜心",
+    "小白菜苗"
+   ]
+  },
+  {
+   "canonical": "紫叶生菜",
+   "aliases": [
+    "紫生菜",
+    "红叶生菜"
+   ]
+  },
+  {
+   "canonical": "鸡毛菜",
+   "aliases": [
+    "青菜苗"
+   ]
+  },
+  {
+   "canonical": "苋菜苗",
+   "aliases": [
+    "米苋"
+   ]
+  },
+  {
+   "canonical": "豌豆尖",
+   "aliases": [
+    "龙须菜"
+   ]
+  },
+  {
+   "canonical": "南瓜尖",
+   "aliases": [
+    "南瓜藤尖",
+    "南瓜苗"
+   ]
+  },
+  {
+   "canonical": "红薯叶",
+   "aliases": [
+    "番薯叶"
+   ]
+  },
+  {
+   "canonical": "黑鸡枞",
+   "aliases": [
+    "黑鸡枞菌"
+   ]
+  },
+  {
+   "canonical": "羊肚菌",
+   "aliases": [
+    "羊肚蘑",
+    "羊肚菜"
+   ]
+  },
+  {
+   "canonical": "竹荪蛋",
+   "aliases": [
+    "竹荪球",
+    "竹荪胚"
+   ]
+  },
+  {
+   "canonical": "猴头菇",
+   "aliases": [
+    "猴头菌",
+    "猴头蘑"
+   ]
+  },
+  {
+   "canonical": "球盖菇",
+   "aliases": [
+    "大球盖菇",
+    "皱环球盖菇"
+   ]
+  },
+  {
+   "canonical": "鲜茶树菇",
+   "aliases": [
+    "茶薪菇"
+   ]
+  },
+  {
+   "canonical": "紫菜干",
+   "aliases": [
+    "海苔干"
+   ]
+  },
+  {
+   "canonical": "干茶树菇",
+   "aliases": [
+    "茶树菇干",
+    "干茶薪菇"
+   ]
+  },
+  {
+   "canonical": "腐竹结",
+   "aliases": [
+    "腐竹扣",
+    "豆筋结"
+   ]
+  },
+  {
+   "canonical": "粉皮",
+   "aliases": [
+    "拉皮",
+    "淀粉皮"
+   ]
+  },
+  {
+   "canonical": "银耳碎",
+   "aliases": [
+    "白木耳碎"
+   ]
+  },
+  {
+   "canonical": "木耳丝",
+   "aliases": [
+    "黑木耳丝"
+   ]
+  },
+  {
+   "canonical": "腐竹段",
+   "aliases": [
+    "豆皮棍"
+   ]
+  },
+  {
+   "canonical": "豆腐丸子",
+   "aliases": [
+    "豆腐圆子",
+    "豆腐球"
+   ]
+  },
+  {
+   "canonical": "油豆皮",
+   "aliases": [
+    "油皮"
+   ]
+  },
+  {
+   "canonical": "千张结",
+   "aliases": [
+    "百叶结",
+    "豆皮结"
+   ]
+  },
+  {
+   "canonical": "素鸭",
+   "aliases": [
+    "素烧鸭",
+    "仿荤鸭"
+   ]
+  },
+  {
+   "canonical": "豆筋",
+   "aliases": [
+    "豆筋棍",
+    "素面筋"
+   ]
+  },
+  {
+   "canonical": "蛋饺",
+   "aliases": [
+    "蛋角",
+    "鸡蛋饺"
+   ]
+  },
+  {
+   "canonical": "茶叶蛋",
+   "aliases": [
+    "茶蛋",
+    "五香蛋"
+   ]
+  },
+  {
+   "canonical": "车打芝士",
+   "aliases": [
+    "切达芝士",
+    "车达芝士"
+   ]
+  },
+  {
+   "canonical": "奶酪片",
+   "aliases": [
+    "芝士片",
+    "干酪片"
+   ]
+  },
+  {
+   "canonical": "奶油芝士",
+   "aliases": [
+    "芝士奶油"
+   ]
+  },
+  {
+   "canonical": "奶片",
+   "aliases": [
+    "奶片糖",
+    "奶贝"
+   ]
+  },
+  {
+   "canonical": "荔枝",
+   "aliases": [
+    "荔枝果",
+    "离枝"
+   ]
+  },
+  {
+   "canonical": "龙眼",
+   "aliases": [
+    "龙眼果"
+   ]
+  },
+  {
+   "canonical": "枇杷",
+   "aliases": [
+    "枇杷果",
+    "芦橘"
+   ]
+  },
+  {
+   "canonical": "柿子",
+   "aliases": [
+    "柿子果",
+    "红柿"
+   ]
+  },
+  {
+   "canonical": "无花果",
+   "aliases": [
+    "无花果果",
+    "文仙果"
+   ]
+  },
+  {
+   "canonical": "木瓜",
+   "aliases": [
+    "番木瓜",
+    "万寿果"
+   ]
+  },
+  {
+   "canonical": "车厘子",
+   "aliases": [
+    "车厘子樱桃",
+    "大樱桃"
+   ]
+  },
+  {
+   "canonical": "鸡腿肉",
+   "aliases": [
+    "去骨鸡腿"
+   ]
+  },
+  {
+   "canonical": "鹅掌",
+   "aliases": [
+    "鹅脚",
+    "鹅掌肉"
+   ]
+  },
+  {
+   "canonical": "猪尾巴",
+   "aliases": [
+    "猪尾",
+    "猪尾骨"
+   ]
+  },
+  {
+   "canonical": "羊蝎子",
+   "aliases": [
+    "羊脊骨",
+    "羊蝎"
+   ]
+  },
+  {
+   "canonical": "驴肉",
+   "aliases": [
+    "驴肉块",
+    "酱驴肉"
+   ]
+  },
+  {
+   "canonical": "鹿肉",
+   "aliases": [
+    "鹿肉块",
+    "梅花鹿肉"
+   ]
+  },
+  {
+   "canonical": "猪心",
+   "aliases": [
+    "猪心脏"
+   ]
+  },
+  {
+   "canonical": "牛肚",
+   "aliases": [
+    "牛百叶",
+    "牛胃"
+   ]
+  },
+  {
+   "canonical": "牛筋",
+   "aliases": [
+    "牛筋条",
+    "牛板筋"
+   ]
+  },
+  {
+   "canonical": "多春鱼",
+   "aliases": [
+    "柳叶鱼",
+    "多春"
+   ]
+  },
+  {
+   "canonical": "带鱼段",
+   "aliases": [
+    "刀鱼段"
+   ]
+  },
+  {
+   "canonical": "鲜鲈鱼",
+   "aliases": [
+    "花鲈"
+   ]
+  },
+  {
+   "canonical": "银鱼",
+   "aliases": [
+    "小银鱼",
+    "面条鱼"
+   ]
+  },
+  {
+   "canonical": "鲜虾皮",
+   "aliases": [
+    "鲜虾"
+   ]
+  },
+  {
+   "canonical": "鹰嘴豆",
+   "aliases": [
+    "桃尔豆",
+    "鸡豆"
+   ]
+  },
+  {
+   "canonical": "红腰豆",
+   "aliases": [
+    "红芸豆",
+    "腰豆"
+   ]
+  },
+  {
+   "canonical": "通心粉",
+   "aliases": [
+    "通心面",
+    "马卡罗尼"
+   ]
+  },
+  {
+   "canonical": "荞麦米",
+   "aliases": [
+    "荞麦",
+    "荞麦粒"
+   ]
+  },
+  {
+   "canonical": "燕麦片",
+   "aliases": [
+    "麦片"
+   ]
+  },
+  {
+   "canonical": "香米",
+   "aliases": [
+    "香稻米",
+    "茉莉香米"
+   ]
+  },
+  {
+   "canonical": "刀削面",
+   "aliases": [
+    "刀削",
+    "削面"
+   ]
+  },
+  {
+   "canonical": "蒸饺",
+   "aliases": [
+    "蒸饺皮",
+    "蒸水饺"
+   ]
+  },
+  {
+   "canonical": "春卷皮",
+   "aliases": [
+    "春卷",
+    "薄饼皮"
+   ]
+  },
+  {
+   "canonical": "发面饼",
+   "aliases": [
+    "发面馍",
+    "发面大饼"
+   ]
+  },
+  {
+   "canonical": "糖糕",
+   "aliases": [
+    "糖糕饼",
+    "炸糖糕"
+   ]
+  },
+  {
+   "canonical": "麻团",
+   "aliases": [
+    "芝麻团",
+    "煎堆"
+   ]
+  },
+  {
+   "canonical": "冷冻鸡块",
+   "aliases": [
+    "冻鸡块"
+   ]
+  },
+  {
+   "canonical": "冷冻鱼排",
+   "aliases": [
+    "冻鱼排",
+    "鱼排"
+   ]
+  },
+  {
+   "canonical": "冷冻丸子",
+   "aliases": [
+    "冻丸子"
+   ]
+  },
+  {
+   "canonical": "冷冻菠菜",
+   "aliases": [
+    "冻菠菜",
+    "菠菜块"
+   ]
+  },
+  {
+   "canonical": "冷冻饺子",
+   "aliases": [
+    "冻饺子",
+    "速冻水饺"
+   ]
+  },
+  {
+   "canonical": "腌辣椒",
+   "aliases": [
+    "腌辣椒段",
+    "辣咸菜"
+   ]
+  },
+  {
+   "canonical": "酸豇豆",
+   "aliases": [
+    "泡豇豆"
+   ]
+  },
+  {
+   "canonical": "泡萝卜",
+   "aliases": [
+    "泡菜萝卜"
+   ]
+  },
+  {
+   "canonical": "腌笃鲜",
+   "aliases": [
+    "腌笃鲜汤",
+    "笃鲜"
+   ]
+  },
+  {
+   "canonical": "酱黄瓜",
+   "aliases": [
+    "糖醋黄瓜"
+   ]
+  },
+  {
+   "canonical": "蘑菇罐头",
+   "aliases": [
+    "罐头蘑菇",
+    "蘑菇罐"
+   ]
+  },
+  {
+   "canonical": "沙丁鱼罐头",
+   "aliases": [
+    "油浸沙丁鱼"
+   ]
+  },
+  {
+   "canonical": "八宝粥罐头",
+   "aliases": [
+    "八宝粥",
+    "八宝粥罐"
+   ]
+  },
+  {
+   "canonical": "豆豉鲮鱼罐头",
+   "aliases": [
+    "豆豉鲮鱼",
+    "鲮鱼罐头"
+   ]
+  },
+  {
+   "canonical": "米糠油",
+   "aliases": [
+    "米油",
+    "糠油"
+   ]
+  },
+  {
+   "canonical": "牛油果油",
+   "aliases": [
+    "鳄梨油"
+   ]
+  },
+  {
+   "canonical": "南瓜籽油",
+   "aliases": [
+    "南瓜籽",
+    "白瓜子油"
+   ]
+  },
+  {
+   "canonical": "粗砂糖",
+   "aliases": [
+    "粗糖"
+   ]
+  },
+  {
+   "canonical": "糖霜",
+   "aliases": [
+    "糖霜粉"
+   ]
+  },
+  {
+   "canonical": "竹盐",
+   "aliases": [
+    "竹盐粉",
+    "海竹盐"
+   ]
+  },
+  {
+   "canonical": "味极鲜",
+   "aliases": [
+    "味极鲜酱油",
+    "鲜味生抽"
+   ]
+  },
+  {
+   "canonical": "老抽王",
+   "aliases": [
+    "浓酱油"
+   ]
+  },
+  {
+   "canonical": "日式酱油",
+   "aliases": [
+    "日本酱油"
+   ]
+  },
+  {
+   "canonical": "白兰地",
+   "aliases": [
+    "白兰地酒",
+    "干邑"
+   ]
+  },
+  {
+   "canonical": "果酒",
+   "aliases": [
+    "水果酒",
+    "果味酒"
+   ]
+  },
+  {
+   "canonical": "良姜",
+   "aliases": [
+    "高良姜",
+    "小良姜"
+   ]
+  },
+  {
+   "canonical": "辛夷",
+   "aliases": [
+    "辛夷花",
+    "木笔花"
+   ]
+  },
+  {
+   "canonical": "孜然粒",
+   "aliases": [
+    "孜然籽"
+   ]
+  },
+  {
+   "canonical": "花椒粒",
+   "aliases": [
+    "川椒"
+   ]
+  },
+  {
+   "canonical": "迷迭香粉",
+   "aliases": [
+    "迷迭香叶"
+   ]
+  },
+  {
+   "canonical": "咖喱叶粉",
+   "aliases": [
+    "咖喱叶",
+    "咖喱叶粉未"
+   ]
+  },
+  {
+   "canonical": "柴鱼片",
+   "aliases": [
+    "鲣鱼片"
+   ]
+  },
+  {
+   "canonical": "海带汤料",
+   "aliases": [
+    "海带高汤",
+    "昆布汤料"
+   ]
+  },
+  {
+   "canonical": "鸡汤块",
+   "aliases": [
+    "鸡精块",
+    "鸡汤宝"
+   ]
+  },
+  {
+   "canonical": "黑椒腌料",
+   "aliases": [
+    "黑胡椒腌料",
+    "黑椒腌肉料"
+   ]
+  },
+  {
+   "canonical": "辣椒蘸料",
+   "aliases": [
+    "辣椒碟",
+    "干蘸料"
+   ]
+  },
+  {
+   "canonical": "炖肉料",
+   "aliases": [
+    "炖肉香料"
+   ]
+  },
+  {
+   "canonical": "千岛酱",
+   "aliases": [
+    "千岛沙拉酱",
+    "千岛汁"
+   ]
+  },
+  {
+   "canonical": "沙嗲酱",
+   "aliases": [
+    "沙嗲"
+   ]
+  },
+  {
+   "canonical": "芥末粉",
+   "aliases": [
+    "芥辣粉"
+   ]
+  },
+  {
+   "canonical": "香叶粉",
+   "aliases": [
+    "月桂粉"
+   ]
+  },
+  {
+   "canonical": "炖肉料包",
+   "aliases": [
+    "炖肉包",
+    "炖肉料袋"
+   ]
+  },
+  {
+   "canonical": "蒜香粉",
+   "aliases": [
+    "蒜香调料"
+   ]
+  },
+  {
+   "canonical": "红葡萄酒",
+   "aliases": [
+    "红酒"
+   ]
+  },
+  {
+   "canonical": "起泡酒",
+   "aliases": [
+    "气泡酒",
+    "香槟"
+   ]
+  },
+  {
+   "canonical": "鲷鱼",
+   "aliases": [
+    "加吉鱼",
+    "真鲷"
+   ]
+  },
+  {
+   "canonical": "鲅鱼",
+   "aliases": [
+    "马鲛鱼",
+    "鲅鱼块"
+   ]
+  },
+  {
+   "canonical": "韩式辣椒酱",
+   "aliases": [
+    "苦椒酱"
+   ]
+  },
+  {
+   "canonical": "泰式甜辣酱",
+   "aliases": [
+    "泰式甜辣"
+   ]
+  },
+  {
+   "canonical": "薄荷粉",
+   "aliases": [
+    "薄荷叶粉"
+   ]
+  },
+  {
+   "canonical": "草蔻",
+   "aliases": [
+    "草豆蔻",
+    "草寇"
+   ]
+  },
+  {
+   "canonical": "鸡脖",
+   "aliases": [
+    "鸡脖子",
+    "鸡颈"
+   ]
+  },
+  {
+   "canonical": "鸭翅根",
+   "aliases": [
+    "鸭翅中"
+   ]
+  },
+  {
+   "canonical": "鹅胸",
+   "aliases": [
+    "鹅胸肉",
+    "鹅脯"
+   ]
+  },
+  {
+   "canonical": "柴鸡蛋",
+   "aliases": [
+    "散养鸡蛋"
+   ]
+  },
+  {
+   "canonical": "白茄子",
+   "aliases": [
+    "白茄",
+    "白皮茄子"
+   ]
+  },
+  {
+   "canonical": "花茄",
+   "aliases": [
+    "花茄子",
+    "紫花茄"
+   ]
+  },
+  {
+   "canonical": "青圆椒",
+   "aliases": [
+    "圆椒"
+   ]
+  },
+  {
+   "canonical": "独头蒜",
+   "aliases": [
+    "独蒜",
+    "独头大蒜"
+   ]
+  },
+  {
+   "canonical": "沙姜鲜",
+   "aliases": [
+    "鲜沙姜"
+   ]
+  },
+  {
+   "canonical": "南姜",
+   "aliases": [
+    "大高良姜",
+    "南姜片"
+   ]
+  },
+  {
+   "canonical": "山柰鲜",
+   "aliases": [
+    "鲜山奈"
+   ]
+  },
+  {
+   "canonical": "百合鲜",
+   "aliases": [
+    "鲜百合",
+    "百合瓣"
+   ]
+  },
+  {
+   "canonical": "菱角",
+   "aliases": [
+    "菱角米",
+    "菱实"
+   ]
+  },
+  {
+   "canonical": "白茅根",
+   "aliases": [
+    "茅根",
+    "白茅"
+   ]
+  },
+  {
+   "canonical": "鱼腥草根",
+   "aliases": [
+    "折耳根",
+    "鱼腥草"
+   ]
+  },
+  {
+   "canonical": "芥蓝苗",
+   "aliases": [
+    "芥兰苗"
+   ]
+  },
+  {
+   "canonical": "菜薹",
+   "aliases": [
+    "菜心薹",
+    "菜苔"
+   ]
+  },
+  {
+   "canonical": "红苋菜",
+   "aliases": [
+    "红苋",
+    "红米苋"
+   ]
+  },
+  {
+   "canonical": "绿苋菜",
+   "aliases": [
+    "绿苋",
+    "白米苋"
+   ]
+  },
+  {
+   "canonical": "包菜苗",
+   "aliases": [
+    "卷心菜苗"
+   ]
+  },
+  {
+   "canonical": "水芹菜",
+   "aliases": [
+    "水芹",
+    "野芹菜"
+   ]
+  },
+  {
+   "canonical": "鸡腿菇",
+   "aliases": [
+    "毛头鬼伞",
+    "鸡腿蘑"
+   ]
+  },
+  {
+   "canonical": "榆黄蘑",
+   "aliases": [
+    "金顶侧耳",
+    "黄金菇"
+   ]
+  },
+  {
+   "canonical": "草菇",
+   "aliases": [
+    "兰花菇",
+    "苞脚菇"
+   ]
+  },
+  {
+   "canonical": "白灵菇",
+   "aliases": [
+    "白灵侧耳",
+    "白灵菇片"
+   ]
+  },
+  {
+   "canonical": "榛蘑",
+   "aliases": [
+    "蜜环菌",
+    "榛蘑干"
+   ]
+  },
+  {
+   "canonical": "元蘑",
+   "aliases": [
+    "亚侧耳",
+    "黄蘑"
+   ]
+  },
+  {
+   "canonical": "姬松茸干",
+   "aliases": [
+    "姬松茸",
+    "巴西蘑菇干"
+   ]
+  },
+  {
+   "canonical": "黄花菜干",
+   "aliases": [
+    "金针菜"
+   ]
+  },
+  {
+   "canonical": "干萝卜丝",
+   "aliases": [
+    "萝卜丝干",
+    "萝卜干丝"
+   ]
+  },
+  {
+   "canonical": "笋衣",
+   "aliases": [
+    "笋壳",
+    "笋衣干"
+   ]
+  },
+  {
+   "canonical": "素鸡块",
+   "aliases": [
+    "豆制素鸡"
+   ]
+  },
+  {
+   "canonical": "豆干丝",
+   "aliases": [
+    "干丝"
+   ]
+  },
+  {
+   "canonical": "初生蛋",
+   "aliases": [
+    "初产蛋",
+    "小鸡蛋"
+   ]
+  },
+  {
+   "canonical": "绿壳蛋",
+   "aliases": [
+    "青壳蛋",
+    "绿壳鸡蛋"
+   ]
+  },
+  {
+   "canonical": "双黄蛋",
+   "aliases": [
+    "双黄鸡蛋",
+    "双黄"
+   ]
+  },
+  {
+   "canonical": "马苏里拉碎",
+   "aliases": [
+    "马苏里拉",
+    "披萨芝士碎"
+   ]
+  },
+  {
+   "canonical": "帕玛森粉",
+   "aliases": [
+    "帕玛森",
+    "帕尔马干酪粉"
+   ]
+  },
+  {
+   "canonical": "奶酪棒",
+   "aliases": [
+    "芝士棒",
+    "奶酪条"
+   ]
+  },
+  {
+   "canonical": "奶豆腐",
+   "aliases": [
+    "奶豆腐块",
+    "蒙古奶豆腐"
+   ]
+  },
+  {
+   "canonical": "杏",
+   "aliases": [
+    "杏子",
+    "甜杏"
+   ]
+  },
+  {
+   "canonical": "李子",
+   "aliases": [
+    "李子果",
+    "布林"
+   ]
+  },
+  {
+   "canonical": "西梅",
+   "aliases": [
+    "西梅果",
+    "欧洲李"
+   ]
+  },
+  {
+   "canonical": "黄桃",
+   "aliases": [
+    "黄桃果",
+    "黄肉桃"
+   ]
+  },
+  {
+   "canonical": "蟠桃",
+   "aliases": [
+    "扁桃",
+    "盘桃"
+   ]
+  },
+  {
+   "canonical": "油桃",
+   "aliases": [
+    "油桃果",
+    "光桃"
+   ]
+  },
+  {
+   "canonical": "杨桃",
+   "aliases": [
+    "五敛子",
+    "阳桃"
+   ]
+  },
+  {
+   "canonical": "鸡胗花",
+   "aliases": [
+    "鸡肫花"
+   ]
+  },
+  {
+   "canonical": "鸭锁骨",
+   "aliases": [
+    "鸭锁子骨"
+   ]
+  },
+  {
+   "canonical": "鸡腿排",
+   "aliases": [
+    "去骨鸡腿排",
+    "鸡排"
+   ]
+  },
+  {
+   "canonical": "鸭腿肉",
+   "aliases": [
+    "鸭腿块"
+   ]
+  },
+  {
+   "canonical": "鹅翅",
+   "aliases": [
+    "鹅翅膀",
+    "鹅翅中"
+   ]
+  },
+  {
+   "canonical": "牛腱芯",
+   "aliases": [
+    "牛腱",
+    "牛腱子芯"
+   ]
+  },
+  {
+   "canonical": "猪肘",
+   "aliases": [
+    "猪蹄髈"
+   ]
+  },
+  {
+   "canonical": "猪肚尖",
+   "aliases": [
+    "肚尖"
+   ]
+  },
+  {
+   "canonical": "猪大肠头",
+   "aliases": [
+    "大肠头",
+    "猪肠头"
+   ]
+  },
+  {
+   "canonical": "羊腿肉",
+   "aliases": [
+    "羊腿块"
+   ]
+  },
+  {
+   "canonical": "羊排肉",
+   "aliases": [
+    "羊肋排"
+   ]
+  },
+  {
+   "canonical": "鲈鱼段",
+   "aliases": [
+    "海鲈鱼段"
+   ]
+  },
+  {
+   "canonical": "鲳鱼段",
+   "aliases": [
+    "平鱼段"
+   ]
+  },
+  {
+   "canonical": "黄花鱼",
+   "aliases": [
+    "大黄鱼"
+   ]
+  },
+  {
+   "canonical": "小黄鱼",
+   "aliases": [
+    "小黄鱼段",
+    "梅子鱼"
+   ]
+  },
+  {
+   "canonical": "梅童鱼",
+   "aliases": [
+    "大头宝"
+   ]
+  },
+  {
+   "canonical": "龙头鱼",
+   "aliases": [
+    "九肚鱼",
+    "豆腐鱼"
+   ]
+  },
+  {
+   "canonical": "年糕条",
+   "aliases": [
+    "宁波年糕"
+   ]
+  },
+  {
+   "canonical": "米粉干",
+   "aliases": [
+    "干米粉"
+   ]
+  },
+  {
+   "canonical": "螺旋面",
+   "aliases": [
+    "螺丝面",
+    "螺旋意面"
+   ]
+  },
+  {
+   "canonical": "蝴蝶面",
+   "aliases": [
+    "蝴蝶意面",
+    "法法尔面"
+   ]
+  },
+  {
+   "canonical": "贝壳面",
+   "aliases": [
+    "贝壳意面",
+    "海螺面"
+   ]
+  },
+  {
+   "canonical": "细面",
+   "aliases": [
+    "细面条",
+    "龙须面"
+   ]
+  },
+  {
+   "canonical": "锅贴",
+   "aliases": [
+    "锅贴饺子",
+    "煎饺"
+   ]
+  },
+  {
+   "canonical": "包子皮",
+   "aliases": [
+    "面皮",
+    "包子面皮"
+   ]
+  },
+  {
+   "canonical": "酥饼",
+   "aliases": [
+    "酥皮饼",
+    "酥饼点心"
+   ]
+  },
+  {
+   "canonical": "月饼",
+   "aliases": [
+    "广式月饼",
+    "中秋月饼"
+   ]
+  },
+  {
+   "canonical": "蛋黄酥",
+   "aliases": [
+    "蛋黄酥饼",
+    "咸蛋黄酥"
+   ]
+  },
+  {
+   "canonical": "冷冻馄饨",
+   "aliases": [
+    "冻馄饨",
+    "速冻馄饨"
+   ]
+  },
+  {
+   "canonical": "冷冻南瓜块",
+   "aliases": [
+    "冻南瓜",
+    "南瓜块"
+   ]
+  },
+  {
+   "canonical": "冷冻芦笋",
+   "aliases": [
+    "冻芦笋",
+    "芦笋段"
+   ]
+  },
+  {
+   "canonical": "冷冻蓝莓",
+   "aliases": [
+    "冻蓝莓",
+    "蓝莓冻果"
+   ]
+  },
+  {
+   "canonical": "冷冻芋圆",
+   "aliases": [
+    "芋圆",
+    "冻芋圆"
+   ]
+  },
+  {
+   "canonical": "酸笋",
+   "aliases": [
+    "酸笋丝",
+    "发酵笋"
+   ]
+  },
+  {
+   "canonical": "腌芥菜",
+   "aliases": [
+    "咸芥菜",
+    "腌芥菜丝"
+   ]
+  },
+  {
+   "canonical": "腌白菜",
+   "aliases": [
+    "腌大白菜"
+   ]
+  },
+  {
+   "canonical": "腌萝卜条",
+   "aliases": [
+    "萝卜条",
+    "咸萝卜条"
+   ]
+  },
+  {
+   "canonical": "红烧肉罐头",
+   "aliases": [
+    "红烧肉",
+    "罐头红烧肉"
+   ]
+  },
+  {
+   "canonical": "鹌鹑蛋罐头",
+   "aliases": [
+    "卤鹌鹑蛋"
+   ]
+  },
+  {
+   "canonical": "糖水橘子罐头",
+   "aliases": [
+    "橘子罐头",
+    "糖水橘瓣"
+   ]
+  },
+  {
+   "canonical": "竹笋罐头",
+   "aliases": [
+    "笋罐头",
+    "罐头笋"
+   ]
+  },
+  {
+   "canonical": "紫苏籽油",
+   "aliases": [
+    "紫苏油"
+   ]
+  },
+  {
+   "canonical": "棕榈油",
+   "aliases": [
+    "棕油",
+    "棕榈液油"
+   ]
+  },
+  {
+   "canonical": "棉籽油",
+   "aliases": [
+    "棉油",
+    "棉籽色拉油"
+   ]
+  },
+  {
+   "canonical": "冰糖碎",
+   "aliases": [
+    "碎冰糖",
+    "冰糖粒"
+   ]
+  },
+  {
+   "canonical": "片糖",
+   "aliases": [
+    "黄片糖",
+    "片糖块"
+   ]
+  },
+  {
+   "canonical": "焦糖糖浆",
+   "aliases": [
+    "焦糖酱",
+    "焦糖液"
+   ]
+  },
+  {
+   "canonical": "高粱酒",
+   "aliases": [
+    "高粱白酒",
+    "烧酒"
+   ]
+  },
+  {
+   "canonical": "威士忌",
+   "aliases": [
+    "威士卡",
+    "洋酒"
+   ]
+  },
+  {
+   "canonical": "金酒",
+   "aliases": [
+    "杜松子酒",
+    "琴酒"
+   ]
+  },
+  {
+   "canonical": "龙舌兰",
+   "aliases": [
+    "龙舌兰酒",
+    "特基拉"
+   ]
+  },
+  {
+   "canonical": "桂花酒",
+   "aliases": [
+    "桂花酿",
+    "桂花米酒"
+   ]
+  },
+  {
+   "canonical": "虾酱",
+   "aliases": [
+    "虾子酱",
+    "虾膏"
+   ]
+  },
+  {
+   "canonical": "鱼籽酱",
+   "aliases": [
+    "鱼子酱",
+    "鱼籽"
+   ]
+  },
+  {
+   "canonical": "松露酱",
+   "aliases": [
+    "松露蘑菇酱",
+    "黑松露酱"
+   ]
+  },
+  {
+   "canonical": "蓝莓酱",
+   "aliases": [
+    "蓝莓果酱"
+   ]
+  },
+  {
+   "canonical": "香砂",
+   "aliases": [
+    "香砂仁",
+    "砂仁果"
+   ]
+  },
+  {
+   "canonical": "百里香干",
+   "aliases": [
+    "干百里香"
+   ]
+  },
+  {
+   "canonical": "牛至干",
+   "aliases": [
+    "牛至",
+    "披萨草"
+   ]
+  },
+  {
+   "canonical": "迷迭香干",
+   "aliases": [
+    "干迷迭香"
+   ]
+  },
+  {
+   "canonical": "红豆蔻",
+   "aliases": [
+    "红蔻",
+    "红草蔻"
+   ]
+  },
+  {
+   "canonical": "肉豆蔻衣",
+   "aliases": [
+    "豆蔻衣",
+    "肉蔻衣"
+   ]
+  },
+  {
+   "canonical": "鼠尾草干",
+   "aliases": [
+    "鼠尾草",
+    "干鼠尾草"
+   ]
+  },
+  {
+   "canonical": "百里香粉",
+   "aliases": [
+    "百里香粉末"
+   ]
+  },
+  {
+   "canonical": "牛至粉",
+   "aliases": [
+    "披萨草粉"
+   ]
+  },
+  {
+   "canonical": "罗勒粉",
+   "aliases": [
+    "九层塔粉"
+   ]
+  },
+  {
+   "canonical": "欧芹粉",
+   "aliases": [
+    "洋香菜粉"
+   ]
+  },
+  {
+   "canonical": "小茴香粉",
+   "aliases": [
+    "茴香粉"
+   ]
+  },
+  {
+   "canonical": "鼠尾草粉",
+   "aliases": [
+    "鼠尾草粉末"
+   ]
+  },
+  {
+   "canonical": "瑶柱汁",
+   "aliases": [
+    "干贝汁",
+    "瑶柱露"
+   ]
+  },
+  {
+   "canonical": "猪骨汤块",
+   "aliases": [
+    "猪骨汤宝",
+    "猪骨高汤块"
+   ]
+  },
+  {
+   "canonical": "番茄汤底",
+   "aliases": [
+    "番茄锅底",
+    "番茄浓汤"
+   ]
+  },
+  {
+   "canonical": "海鲜汤块",
+   "aliases": [
+    "海鲜汤宝",
+    "海鲜高汤块"
+   ]
+  },
+  {
+   "canonical": "素高汤块",
+   "aliases": [
+    "素汤块",
+    "蔬菜高汤块"
+   ]
+  },
+  {
+   "canonical": "菌汤块",
+   "aliases": [
+    "菌菇汤块",
+    "菌汤宝"
+   ]
+  },
+  {
+   "canonical": "关东煮汤底",
+   "aliases": [
+    "关东煮汁",
+    "关东煮底料"
+   ]
+  },
+  {
+   "canonical": "大盘鸡料",
+   "aliases": [
+    "大盘鸡调料",
+    "新疆大盘鸡料"
+   ]
+  },
+  {
+   "canonical": "水煮鱼料",
+   "aliases": [
+    "水煮鱼调料",
+    "水煮鱼底料"
+   ]
+  },
+  {
+   "canonical": "回锅肉料",
+   "aliases": [
+    "回锅肉调料",
+    "回锅肉酱"
+   ]
+  },
+  {
+   "canonical": "黄焖鸡料",
+   "aliases": [
+    "黄焖鸡调料",
+    "黄焖鸡酱"
+   ]
+  },
+  {
+   "canonical": "酸汤肥牛料",
+   "aliases": [
+    "酸汤肥牛调料",
+    "酸汤料"
+   ]
+  },
+  {
+   "canonical": "盐焗粉",
+   "aliases": [
+    "盐焗调料"
+   ]
+  },
+  {
+   "canonical": "白灼汁",
+   "aliases": [
+    "白灼酱油",
+    "白灼蘸汁"
+   ]
+  }
+ ]
+}

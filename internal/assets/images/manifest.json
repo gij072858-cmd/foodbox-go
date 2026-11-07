@@ -1,0 +1,5188 @@
+{
+  "version": 3,
+  "generatedAt": "2026-10-24T23:20:36",
+  "items": {
+    "番茄": {
+      "slug": "fan-qie",
+      "image": "items/fan-qie.webp",
+      "status": "stock"
+    },
+    "黄瓜": {
+      "slug": "huang-gua",
+      "image": "items/huang-gua.webp",
+      "status": "stock"
+    },
+    "土豆": {
+      "slug": "tu-dou",
+      "image": "items/tu-dou.webp",
+      "status": "stock"
+    },
+    "胡萝卜": {
+      "slug": "hu-luo-bo",
+      "image": "items/hu-luo-bo.webp",
+      "status": "stock"
+    },
+    "洋葱": {
+      "slug": "yang-cong",
+      "image": "items/yang-cong.webp",
+      "status": "stock"
+    },
+    "生姜": {
+      "slug": "sheng-jiang",
+      "image": "items/sheng-jiang.webp",
+      "status": "stock"
+    },
+    "蒜": {
+      "slug": "suan",
+      "image": "items/suan.webp",
+      "status": "stock"
+    },
+    "小葱": {
+      "slug": "xiao-cong",
+      "image": "items/xiao-cong.webp",
+      "status": "stock"
+    },
+    "大葱": {
+      "slug": "da-cong",
+      "image": "items/da-cong.webp",
+      "status": "stock"
+    },
+    "青椒": {
+      "slug": "qing-jiao",
+      "image": "items/qing-jiao.webp",
+      "status": "stock"
+    },
+    "彩椒": {
+      "slug": "cai-jiao",
+      "image": "items/cai-jiao.webp",
+      "status": "stock"
+    },
+    "西兰花": {
+      "slug": "xi-lan-hua",
+      "image": "items/xi-lan-hua.webp",
+      "status": "stock"
+    },
+    "大白菜": {
+      "slug": "da-bai-cai",
+      "image": "items/da-bai-cai.webp",
+      "status": "stock"
+    },
+    "小白菜": {
+      "slug": "xiao-bai-cai",
+      "image": "items/xiao-bai-cai.webp",
+      "status": "stock"
+    },
+    "娃娃菜": {
+      "slug": "wa-wa-cai",
+      "image": "items/wa-wa-cai.webp",
+      "status": "stock"
+    },
+    "油菜": {
+      "slug": "you-cai",
+      "image": "items/you-cai.webp",
+      "status": "stock"
+    },
+    "菠菜": {
+      "slug": "bo-cai",
+      "image": "items/bo-cai.webp",
+      "status": "stock"
+    },
+    "油麦菜": {
+      "slug": "you-mai-cai",
+      "image": "items/you-mai-cai.webp",
+      "status": "stock"
+    },
+    "生菜": {
+      "slug": "sheng-cai",
+      "image": "items/sheng-cai.webp",
+      "status": "stock"
+    },
+    "空心菜": {
+      "slug": "kong-xin-cai",
+      "image": "items/kong-xin-cai.webp",
+      "status": "stock"
+    },
+    "韭菜": {
+      "slug": "jiu-cai",
+      "image": "items/jiu-cai.ai.webp",
+      "status": "ai"
+    },
+    "芹菜": {
+      "slug": "qin-cai",
+      "image": "items/qin-cai.webp",
+      "status": "stock"
+    },
+    "西芹": {
+      "slug": "xi-qin",
+      "image": "items/xi-qin.webp",
+      "status": "stock"
+    },
+    "茼蒿": {
+      "slug": "tong-hao",
+      "image": "items/tong-hao.webp",
+      "status": "stock"
+    },
+    "芥蓝": {
+      "slug": "jie-lan",
+      "image": "items/jie-lan.webp",
+      "status": "stock"
+    },
+    "菜心": {
+      "slug": "cai-xin",
+      "image": "items/cai-xin.webp",
+      "status": "stock"
+    },
+    "香菜": {
+      "slug": "xiang-cai",
+      "image": "items/xiang-cai.webp",
+      "status": "stock"
+    },
+    "苋菜": {
+      "slug": "xian-cai",
+      "image": "items/xian-cai.webp",
+      "status": "stock"
+    },
+    "荠菜": {
+      "slug": "ji-cai",
+      "image": "items/ji-cai.webp",
+      "status": "stock"
+    },
+    "香椿": {
+      "slug": "xiang-chun",
+      "image": "items/xiang-chun.webp",
+      "status": "stock"
+    },
+    "莴笋": {
+      "slug": "wo-sun",
+      "image": "items/wo-sun.webp",
+      "status": "stock"
+    },
+    "白萝卜": {
+      "slug": "bai-luo-bo",
+      "image": "items/bai-luo-bo.webp",
+      "status": "stock"
+    },
+    "山药": {
+      "slug": "shan-yao",
+      "image": "items/shan-yao.webp",
+      "status": "stock"
+    },
+    "芋头": {
+      "slug": "yu-tou",
+      "image": "items/yu-tou.webp",
+      "status": "stock"
+    },
+    "荸荠": {
+      "slug": "bi-ji",
+      "image": "items/bi-ji.webp",
+      "status": "stock"
+    },
+    "竹笋": {
+      "slug": "zhu-sun",
+      "image": "items/zhu-sun.webp",
+      "status": "stock"
+    },
+    "芦笋": {
+      "slug": "lu-sun",
+      "image": "items/lu-sun.webp",
+      "status": "stock"
+    },
+    "红薯": {
+      "slug": "hong-shu",
+      "image": "items/hong-shu.webp",
+      "status": "stock"
+    },
+    "紫薯": {
+      "slug": "zi-shu",
+      "image": "items/zi-shu.webp",
+      "status": "stock"
+    },
+    "蒜黄": {
+      "slug": "suan-huang",
+      "image": "items/suan-huang.webp",
+      "status": "stock"
+    },
+    "茄子": {
+      "slug": "qie-zi",
+      "image": "items/qie-zi.webp",
+      "status": "stock"
+    },
+    "冬瓜": {
+      "slug": "dong-gua",
+      "image": "items/dong-gua.webp",
+      "status": "stock"
+    },
+    "丝瓜": {
+      "slug": "si-gua",
+      "image": "items/si-gua.webp",
+      "status": "stock"
+    },
+    "南瓜": {
+      "slug": "nan-gua",
+      "image": "items/nan-gua.webp",
+      "status": "stock"
+    },
+    "苦瓜": {
+      "slug": "ku-gua",
+      "image": "items/ku-gua.webp",
+      "status": "stock"
+    },
+    "秋葵": {
+      "slug": "qiu-kui",
+      "image": "items/qiu-kui.webp",
+      "status": "stock"
+    },
+    "西葫芦": {
+      "slug": "xi-hu-lu",
+      "image": "items/xi-hu-lu.webp",
+      "status": "stock"
+    },
+    "佛手瓜": {
+      "slug": "fo-shou-gua",
+      "image": "items/fo-shou-gua.webp",
+      "status": "stock"
+    },
+    "尖椒": {
+      "slug": "jian-jiao",
+      "image": "items/jian-jiao.webp",
+      "status": "stock"
+    },
+    "螺丝椒": {
+      "slug": "luo-si-jiao",
+      "image": "items/luo-si-jiao.webp",
+      "status": "stock"
+    },
+    "四季豆": {
+      "slug": "si-ji-dou",
+      "image": "items/si-ji-dou.webp",
+      "status": "stock"
+    },
+    "豇豆": {
+      "slug": "jiang-dou",
+      "image": "items/jiang-dou.webp",
+      "status": "stock"
+    },
+    "荷兰豆": {
+      "slug": "he-lan-dou",
+      "image": "items/he-lan-dou.webp",
+      "status": "stock"
+    },
+    "甜豆": {
+      "slug": "tian-dou",
+      "image": "items/tian-dou.webp",
+      "status": "stock"
+    },
+    "豌豆": {
+      "slug": "wan-dou",
+      "image": "items/wan-dou.webp",
+      "status": "stock"
+    },
+    "玉米": {
+      "slug": "yu-mi",
+      "image": "items/yu-mi.webp",
+      "status": "stock"
+    },
+    "黄豆芽": {
+      "slug": "huang-dou-ya",
+      "image": "items/huang-dou-ya.webp",
+      "status": "stock"
+    },
+    "绿豆芽": {
+      "slug": "lv-dou-ya",
+      "image": "items/lv-dou-ya.webp",
+      "status": "stock"
+    },
+    "香菇": {
+      "slug": "xiang-gu",
+      "image": "items/xiang-gu.webp",
+      "status": "stock"
+    },
+    "金针菇": {
+      "slug": "jin-zhen-gu",
+      "image": "items/jin-zhen-gu.webp",
+      "status": "stock"
+    },
+    "平菇": {
+      "slug": "ping-gu",
+      "image": "items/ping-gu.webp",
+      "status": "stock"
+    },
+    "杏鲍菇": {
+      "slug": "xing-bao-gu",
+      "image": "items/xing-bao-gu.webp",
+      "status": "stock"
+    },
+    "口蘑": {
+      "slug": "kou-mo",
+      "image": "items/kou-mo.webp",
+      "status": "stock"
+    },
+    "白玉菇": {
+      "slug": "bai-yu-gu",
+      "image": "items/bai-yu-gu.webp",
+      "status": "stock"
+    },
+    "蟹味菇": {
+      "slug": "xie-wei-gu",
+      "image": "items/xie-wei-gu.webp",
+      "status": "stock"
+    },
+    "秀珍菇": {
+      "slug": "xiu-zhen-gu",
+      "image": "items/xiu-zhen-gu.webp",
+      "status": "stock"
+    },
+    "木耳": {
+      "slug": "mu-er",
+      "image": "items/mu-er.webp",
+      "status": "stock"
+    },
+    "银耳": {
+      "slug": "yin-er",
+      "image": "items/yin-er.webp",
+      "status": "stock"
+    },
+    "茶树菇": {
+      "slug": "cha-shu-gu",
+      "image": "items/cha-shu-gu.webp",
+      "status": "stock"
+    },
+    "竹荪": {
+      "slug": "zhu-sheng",
+      "image": "items/zhu-sheng.webp",
+      "status": "stock"
+    },
+    "干香菇": {
+      "slug": "gan-xiang-gu",
+      "image": "items/gan-xiang-gu.webp",
+      "status": "stock"
+    },
+    "黄花菜": {
+      "slug": "huang-hua-cai",
+      "image": "items/huang-hua-cai.webp",
+      "status": "stock"
+    },
+    "海带": {
+      "slug": "hai-dai",
+      "image": "items/hai-dai.webp",
+      "status": "stock"
+    },
+    "紫菜": {
+      "slug": "zi-cai",
+      "image": "items/zi-cai.ai.webp",
+      "status": "ai"
+    },
+    "虾皮": {
+      "slug": "xia-pi",
+      "image": "items/xia-pi.webp",
+      "status": "stock"
+    },
+    "红枣": {
+      "slug": "hong-zao",
+      "image": "items/hong-zao.webp",
+      "status": "stock"
+    },
+    "莲子": {
+      "slug": "lian-zi",
+      "image": "items/lian-zi.webp",
+      "status": "stock"
+    },
+    "百合干": {
+      "slug": "bai-he-gan",
+      "image": "items/bai-he-gan.webp",
+      "status": "stock"
+    },
+    "干豆角": {
+      "slug": "gan-dou-jiao",
+      "image": "items/gan-dou-jiao.webp",
+      "status": "stock"
+    },
+    "腐竹": {
+      "slug": "fu-zhu",
+      "image": "items/fu-zhu.webp",
+      "status": "stock"
+    },
+    "花生米": {
+      "slug": "hua-sheng-mi",
+      "image": "items/hua-sheng-mi.webp",
+      "status": "stock"
+    },
+    "腰果": {
+      "slug": "yao-guo",
+      "image": "items/yao-guo.webp",
+      "status": "stock"
+    },
+    "核桃": {
+      "slug": "he-tao",
+      "image": "items/he-tao.webp",
+      "status": "stock"
+    },
+    "嫩豆腐": {
+      "slug": "nen-dou-fu",
+      "image": "items/nen-dou-fu.webp",
+      "status": "stock"
+    },
+    "老豆腐": {
+      "slug": "lao-dou-fu",
+      "image": "items/lao-dou-fu.webp",
+      "status": "stock"
+    },
+    "豆腐干": {
+      "slug": "dou-fu-gan",
+      "image": "items/dou-fu-gan.webp",
+      "status": "stock"
+    },
+    "内酯豆腐": {
+      "slug": "nei-zhi-dou-fu",
+      "image": "items/nei-zhi-dou-fu.webp",
+      "status": "stock"
+    },
+    "豆腐皮": {
+      "slug": "dou-fu-pi",
+      "image": "items/dou-fu-pi.webp",
+      "status": "stock"
+    },
+    "千张": {
+      "slug": "qian-zhang",
+      "image": "items/qian-zhang.webp",
+      "status": "stock"
+    },
+    "油豆腐": {
+      "slug": "you-dou-fu",
+      "image": "items/you-dou-fu.webp",
+      "status": "stock"
+    },
+    "素鸡": {
+      "slug": "su-ji",
+      "image": "items/su-ji.webp",
+      "status": "stock"
+    },
+    "豆浆": {
+      "slug": "dou-jiang",
+      "image": "items/dou-jiang.webp",
+      "status": "stock"
+    },
+    "冻豆腐": {
+      "slug": "dong-dou-fu",
+      "image": "items/dong-dou-fu.webp",
+      "status": "stock"
+    },
+    "鸡蛋": {
+      "slug": "ji-dan",
+      "image": "items/ji-dan.webp",
+      "status": "stock"
+    },
+    "鸭蛋": {
+      "slug": "ya-dan",
+      "image": "items/ya-dan.webp",
+      "status": "stock"
+    },
+    "鹌鹑蛋": {
+      "slug": "an-chun-dan",
+      "image": "items/an-chun-dan.webp",
+      "status": "stock"
+    },
+    "咸鸭蛋": {
+      "slug": "xian-ya-dan",
+      "image": "items/xian-ya-dan.webp",
+      "status": "stock"
+    },
+    "皮蛋": {
+      "slug": "pi-dan",
+      "image": "items/pi-dan.webp",
+      "status": "stock"
+    },
+    "牛奶": {
+      "slug": "niu-nai",
+      "image": "items/niu-nai.webp",
+      "status": "stock"
+    },
+    "酸奶": {
+      "slug": "suan-nai",
+      "image": "items/suan-nai.webp",
+      "status": "stock"
+    },
+    "奶酪": {
+      "slug": "nai-lao",
+      "image": "items/nai-lao.webp",
+      "status": "stock"
+    },
+    "黄油": {
+      "slug": "huang-you",
+      "image": "items/huang-you.webp",
+      "status": "stock"
+    },
+    "淡奶油": {
+      "slug": "dan-nai-you",
+      "image": "items/dan-nai-you.webp",
+      "status": "stock"
+    },
+    "苹果": {
+      "slug": "ping-guo",
+      "image": "items/ping-guo.webp",
+      "status": "stock"
+    },
+    "香蕉": {
+      "slug": "xiang-jiao",
+      "image": "items/xiang-jiao.webp",
+      "status": "stock"
+    },
+    "橙子": {
+      "slug": "cheng-zi",
+      "image": "items/cheng-zi.webp",
+      "status": "stock"
+    },
+    "梨": {
+      "slug": "li",
+      "image": "items/li.webp",
+      "status": "stock"
+    },
+    "葡萄": {
+      "slug": "pu-tao",
+      "image": "items/pu-tao.webp",
+      "status": "stock"
+    },
+    "西瓜": {
+      "slug": "xi-gua",
+      "image": "items/xi-gua.webp",
+      "status": "stock"
+    },
+    "草莓": {
+      "slug": "cao-mei",
+      "image": "items/cao-mei.webp",
+      "status": "stock"
+    },
+    "猕猴桃": {
+      "slug": "mi-hou-tao",
+      "image": "items/mi-hou-tao.webp",
+      "status": "stock"
+    },
+    "芒果": {
+      "slug": "mang-guo",
+      "image": "items/mang-guo.webp",
+      "status": "stock"
+    },
+    "菠萝": {
+      "slug": "bo-luo",
+      "image": "items/bo-luo.webp",
+      "status": "stock"
+    },
+    "柠檬": {
+      "slug": "ning-meng",
+      "image": "items/ning-meng.webp",
+      "status": "stock"
+    },
+    "桃": {
+      "slug": "tao",
+      "image": "items/tao.webp",
+      "status": "stock"
+    },
+    "柚子": {
+      "slug": "you-zi",
+      "image": "items/you-zi.webp",
+      "status": "stock"
+    },
+    "蓝莓": {
+      "slug": "lan-mei",
+      "image": "items/lan-mei.webp",
+      "status": "stock"
+    },
+    "鸡爪": {
+      "slug": "ji-zhao",
+      "image": "items/ji-zhao.webp",
+      "status": "stock"
+    },
+    "鸡胗": {
+      "slug": "ji-zhen",
+      "image": "items/ji-zhen.webp",
+      "status": "stock"
+    },
+    "鸡肝": {
+      "slug": "ji-gan",
+      "image": "items/ji-gan.webp",
+      "status": "stock"
+    },
+    "鸭胸": {
+      "slug": "ya-xiong",
+      "image": "items/ya-xiong.webp",
+      "status": "stock"
+    },
+    "鸭翅": {
+      "slug": "ya-chi",
+      "image": "items/ya-chi.webp",
+      "status": "stock"
+    },
+    "整鸭": {
+      "slug": "zheng-ya",
+      "image": "items/zheng-ya.webp",
+      "status": "stock"
+    },
+    "鹅肉": {
+      "slug": "e-rou",
+      "image": "items/e-rou.webp",
+      "status": "stock"
+    },
+    "猪梅花肉": {
+      "slug": "zhu-mei-hua-rou",
+      "image": "items/zhu-mei-hua-rou.webp",
+      "status": "stock"
+    },
+    "猪蹄": {
+      "slug": "zhu-ti",
+      "image": "items/zhu-ti.webp",
+      "status": "stock"
+    },
+    "猪肝": {
+      "slug": "zhu-gan",
+      "image": "items/zhu-gan.webp",
+      "status": "stock"
+    },
+    "牛腱子": {
+      "slug": "niu-jian-zi",
+      "image": "items/niu-jian-zi.webp",
+      "status": "stock"
+    },
+    "牛排": {
+      "slug": "niu-pai",
+      "image": "items/niu-pai.webp",
+      "status": "stock"
+    },
+    "羊肉卷": {
+      "slug": "yang-rou-juan",
+      "image": "items/yang-rou-juan.webp",
+      "status": "stock"
+    },
+    "羊腿": {
+      "slug": "yang-tui",
+      "image": "items/yang-tui.webp",
+      "status": "stock"
+    },
+    "草鱼": {
+      "slug": "cao-yu",
+      "image": "items/cao-yu.webp",
+      "status": "stock"
+    },
+    "鲫鱼": {
+      "slug": "ji-yu",
+      "image": "items/ji-yu.webp",
+      "status": "stock"
+    },
+    "黄鱼": {
+      "slug": "huang-yu",
+      "image": "items/huang-yu.webp",
+      "status": "stock"
+    },
+    "三文鱼": {
+      "slug": "san-wen-yu",
+      "image": "items/san-wen-yu.webp",
+      "status": "stock"
+    },
+    "鳕鱼": {
+      "slug": "xue-yu",
+      "image": "items/xue-yu.webp",
+      "status": "stock"
+    },
+    "对虾": {
+      "slug": "dui-xia",
+      "image": "items/dui-xia.webp",
+      "status": "stock"
+    },
+    "蛤蜊": {
+      "slug": "ge-li",
+      "image": "items/ge-li.webp",
+      "status": "stock"
+    },
+    "生蚝": {
+      "slug": "sheng-hao",
+      "image": "items/sheng-hao.webp",
+      "status": "stock"
+    },
+    "鱿鱼": {
+      "slug": "you-yu",
+      "image": "items/you-yu.webp",
+      "status": "stock"
+    },
+    "墨鱼": {
+      "slug": "mo-yu",
+      "image": "items/mo-yu.webp",
+      "status": "stock"
+    },
+    "螃蟹": {
+      "slug": "pang-xie",
+      "image": "items/pang-xie.webp",
+      "status": "stock"
+    },
+    "蛏子": {
+      "slug": "yi-cheng",
+      "image": "items/yi-cheng.webp",
+      "status": "stock"
+    },
+    "青口贝": {
+      "slug": "qing-kou-bei",
+      "image": "items/qing-kou-bei.webp",
+      "status": "stock"
+    },
+    "糯米": {
+      "slug": "nuo-mi",
+      "image": "items/nuo-mi.webp",
+      "status": "stock"
+    },
+    "小米": {
+      "slug": "xiao-mi",
+      "image": "items/xiao-mi.webp",
+      "status": "stock"
+    },
+    "黑米": {
+      "slug": "hei-mi",
+      "image": "items/hei-mi.webp",
+      "status": "stock"
+    },
+    "燕麦": {
+      "slug": "yan-mai",
+      "image": "items/yan-mai.webp",
+      "status": "stock"
+    },
+    "糙米": {
+      "slug": "cao-mi",
+      "image": "items/cao-mi.webp",
+      "status": "stock"
+    },
+    "玉米面": {
+      "slug": "yu-mi-mian",
+      "image": "items/yu-mi-mian.webp",
+      "status": "stock"
+    },
+    "荞麦面": {
+      "slug": "qiao-mai-mian",
+      "image": "items/qiao-mai-mian.webp",
+      "status": "stock"
+    },
+    "意面": {
+      "slug": "yi-mian",
+      "image": "items/yi-mian.webp",
+      "status": "stock"
+    },
+    "米粉": {
+      "slug": "mi-fen",
+      "image": "items/mi-fen.webp",
+      "status": "stock"
+    },
+    "河粉": {
+      "slug": "he-fen",
+      "image": "items/he-fen.webp",
+      "status": "stock"
+    },
+    "年糕": {
+      "slug": "nian-gao",
+      "image": "items/nian-gao.webp",
+      "status": "stock"
+    },
+    "馒头": {
+      "slug": "man-tou",
+      "image": "items/man-tou.webp",
+      "status": "stock"
+    },
+    "花卷": {
+      "slug": "hua-juan",
+      "image": "items/hua-juan.webp",
+      "status": "stock"
+    },
+    "饺子皮": {
+      "slug": "jiao-zi-pi",
+      "image": "items/jiao-zi-pi.webp",
+      "status": "stock"
+    },
+    "馄饨皮": {
+      "slug": "hun-tun-pi",
+      "image": "items/hun-tun-pi.webp",
+      "status": "stock"
+    },
+    "手抓饼": {
+      "slug": "shou-zhua-bing",
+      "image": "items/shou-zhua-bing.webp",
+      "status": "stock"
+    },
+    "吐司": {
+      "slug": "tu-si",
+      "image": "items/tu-si.webp",
+      "status": "stock"
+    },
+    "面包": {
+      "slug": "mian-bao",
+      "image": "items/mian-bao.webp",
+      "status": "stock"
+    },
+    "速冻饺子": {
+      "slug": "su-dong-jiao-zi",
+      "image": "items/su-dong-jiao-zi.webp",
+      "status": "stock"
+    },
+    "速冻汤圆": {
+      "slug": "su-dong-tang-yuan",
+      "image": "items/su-dong-tang-yuan.webp",
+      "status": "stock"
+    },
+    "火锅丸子": {
+      "slug": "huo-guo-wan-zi",
+      "image": "items/huo-guo-wan-zi.webp",
+      "status": "stock"
+    },
+    "冻玉米粒": {
+      "slug": "dong-yu-mi-li",
+      "image": "items/dong-yu-mi-li.webp",
+      "status": "stock"
+    },
+    "冻薯条": {
+      "slug": "dong-shu-tiao",
+      "image": "items/dong-shu-tiao.webp",
+      "status": "stock"
+    },
+    "泡菜": {
+      "slug": "pao-cai",
+      "image": "items/pao-cai.webp",
+      "status": "stock"
+    },
+    "榨菜": {
+      "slug": "zha-cai",
+      "image": "items/zha-cai.webp",
+      "status": "stock"
+    },
+    "四川酸菜": {
+      "slug": "si-chuan-suan-cai",
+      "image": "items/si-chuan-suan-cai.webp",
+      "status": "stock"
+    },
+    "雪里蕻": {
+      "slug": "xue-li-hong",
+      "image": "items/xue-li-hong.webp",
+      "status": "stock"
+    },
+    "酱菜": {
+      "slug": "jiang-cai",
+      "image": "items/jiang-cai.webp",
+      "status": "stock"
+    },
+    "橄榄菜": {
+      "slug": "gan-lan-cai",
+      "image": "items/gan-lan-cai.webp",
+      "status": "stock"
+    },
+    "午餐肉": {
+      "slug": "wu-can-rou",
+      "image": "items/wu-can-rou.webp",
+      "status": "stock"
+    },
+    "罐头鱼": {
+      "slug": "guan-tou-yu",
+      "image": "items/guan-tou-yu.webp",
+      "status": "stock"
+    },
+    "番茄罐头": {
+      "slug": "fan-qie-guan-tou",
+      "image": "items/fan-qie-guan-tou.webp",
+      "status": "stock"
+    },
+    "罐头玉米": {
+      "slug": "guan-tou-yu-mi",
+      "image": "items/guan-tou-yu-mi.webp",
+      "status": "stock"
+    },
+    "鹰嘴豆罐头": {
+      "slug": "ying-zui-dou-guan-tou",
+      "image": "items/ying-zui-dou-guan-tou.webp",
+      "status": "stock"
+    },
+    "花生油": {
+      "slug": "hua-sheng-you",
+      "image": "items/hua-sheng-you.webp",
+      "status": "stock"
+    },
+    "菜籽油": {
+      "slug": "cai-zi-you",
+      "image": "items/cai-zi-you.webp",
+      "status": "stock"
+    },
+    "橄榄油": {
+      "slug": "gan-lan-you",
+      "image": "items/gan-lan-you.webp",
+      "status": "stock"
+    },
+    "香油": {
+      "slug": "xiang-you",
+      "image": "items/xiang-you.ai.webp",
+      "status": "ai"
+    },
+    "辣椒油": {
+      "slug": "la-jiao-you",
+      "image": "items/la-jiao-you.webp",
+      "status": "stock"
+    },
+    "小苏打": {
+      "slug": "xiao-su-da",
+      "image": "items/xiao-su-da.webp",
+      "status": "stock"
+    },
+    "泡打粉": {
+      "slug": "pao-da-fen",
+      "image": "items/pao-da-fen.webp",
+      "status": "stock"
+    },
+    "米醋": {
+      "slug": "mi-cu",
+      "image": "items/mi-cu.webp",
+      "status": "stock"
+    },
+    "红醋": {
+      "slug": "hong-cu",
+      "image": "items/hong-cu.webp",
+      "status": "stock"
+    },
+    "味淋": {
+      "slug": "wei-lin",
+      "image": "items/wei-lin.webp",
+      "status": "stock"
+    },
+    "黄酒": {
+      "slug": "huang-jiu",
+      "image": "items/huang-jiu.webp",
+      "status": "stock"
+    },
+    "白酒": {
+      "slug": "bai-jiu",
+      "image": "items/bai-jiu.webp",
+      "status": "stock"
+    },
+    "米酒": {
+      "slug": "mi-jiu",
+      "image": "items/mi-jiu.webp",
+      "status": "stock"
+    },
+    "花生酱": {
+      "slug": "hua-sheng-jiang",
+      "image": "items/hua-sheng-jiang.webp",
+      "status": "stock"
+    },
+    "腐乳": {
+      "slug": "fu-ru",
+      "image": "items/fu-ru.webp",
+      "status": "stock"
+    },
+    "蒜蓉辣酱": {
+      "slug": "suan-rong-la-jiang",
+      "image": "items/suan-rong-la-jiang.webp",
+      "status": "stock"
+    },
+    "芥末": {
+      "slug": "jie-mo",
+      "image": "items/jie-mo.webp",
+      "status": "stock"
+    },
+    "麻椒": {
+      "slug": "ma-jiao",
+      "image": "items/ma-jiao.webp",
+      "status": "stock"
+    },
+    "草果": {
+      "slug": "cao-guo",
+      "image": "items/cao-guo.webp",
+      "status": "stock"
+    },
+    "干姜": {
+      "slug": "gan-jiang",
+      "image": "items/gan-jiang.webp",
+      "status": "stock"
+    },
+    "白芷": {
+      "slug": "bai-zhi",
+      "image": "items/bai-zhi.webp",
+      "status": "stock"
+    },
+    "十三香": {
+      "slug": "shi-san-xiang",
+      "image": "items/shi-san-xiang.webp",
+      "status": "stock"
+    },
+    "孜然粉": {
+      "slug": "zi-ran-fen",
+      "image": "items/zi-ran-fen.webp",
+      "status": "stock"
+    },
+    "咖喱粉": {
+      "slug": "ka-li-fen",
+      "image": "items/ka-li-fen.webp",
+      "status": "stock"
+    },
+    "高汤": {
+      "slug": "gao-tang",
+      "image": "items/gao-tang.webp",
+      "status": "stock"
+    },
+    "浓汤宝": {
+      "slug": "nong-tang-bao",
+      "image": "items/nong-tang-bao.webp",
+      "status": "stock"
+    },
+    "鸡汁": {
+      "slug": "ji-zhi",
+      "image": "items/ji-zhi.webp",
+      "status": "stock"
+    },
+    "干贝素": {
+      "slug": "gan-bei-su",
+      "image": "items/gan-bei-su.webp",
+      "status": "stock"
+    },
+    "咖喱块": {
+      "slug": "ka-li-kuai",
+      "image": "items/ka-li-kuai.webp",
+      "status": "stock"
+    },
+    "照烧汁": {
+      "slug": "zhao-shao-zhi",
+      "image": "items/zhao-shao-zhi.webp",
+      "status": "stock"
+    },
+    "火锅底料": {
+      "slug": "huo-guo-di-liao",
+      "image": "items/huo-guo-di-liao.webp",
+      "status": "stock"
+    },
+    "沙拉酱": {
+      "slug": "sha-la-jiang",
+      "image": "items/sha-la-jiang.webp",
+      "status": "stock"
+    },
+    "黑椒汁": {
+      "slug": "hei-jiao-zhi",
+      "image": "items/hei-jiao-zhi.webp",
+      "status": "stock"
+    },
+    "糖醋汁": {
+      "slug": "tang-cu-zhi",
+      "image": "items/tang-cu-zhi.webp",
+      "status": "stock"
+    },
+    "蒸肉粉": {
+      "slug": "zheng-rou-fen",
+      "image": "items/zheng-rou-fen.webp",
+      "status": "stock"
+    },
+    "大米": {
+      "slug": "da-mi",
+      "image": "items/da-mi.webp",
+      "status": "stock"
+    },
+    "挂面": {
+      "slug": "gua-mian",
+      "image": "items/gua-mian.webp",
+      "status": "stock"
+    },
+    "淀粉": {
+      "slug": "dian-fen",
+      "image": "items/dian-fen.webp",
+      "status": "stock"
+    },
+    "面粉": {
+      "slug": "mian-fen",
+      "image": "items/mian-fen.webp",
+      "status": "stock"
+    },
+    "粉丝": {
+      "slug": "fen-si",
+      "image": "items/fen-si.webp",
+      "status": "stock"
+    },
+    "莲藕": {
+      "slug": "lian-ou",
+      "image": "items/lian-ou.webp",
+      "status": "stock"
+    },
+    "杭椒": {
+      "slug": "hang-jiao",
+      "image": "items/hang-jiao.webp",
+      "status": "stock"
+    },
+    "鸡腿": {
+      "slug": "ji-tui",
+      "image": "items/ji-tui.webp",
+      "status": "stock"
+    },
+    "鸡翅": {
+      "slug": "ji-chi",
+      "image": "items/ji-chi.ai.webp",
+      "status": "ai"
+    },
+    "鸡胸肉": {
+      "slug": "ji-xiong-rou",
+      "image": "items/ji-xiong-rou.webp",
+      "status": "stock"
+    },
+    "鸭肉": {
+      "slug": "ya-rou",
+      "image": "items/ya-rou.webp",
+      "status": "stock"
+    },
+    "猪五花": {
+      "slug": "zhu-wu-hua",
+      "image": "items/zhu-wu-hua.ai.webp",
+      "status": "ai"
+    },
+    "猪里脊": {
+      "slug": "zhu-li-ji",
+      "image": "items/zhu-li-ji.webp",
+      "status": "stock"
+    },
+    "猪肉末": {
+      "slug": "zhu-rou-mo",
+      "image": "items/zhu-rou-mo.webp",
+      "status": "stock"
+    },
+    "牛腩": {
+      "slug": "niu-nan",
+      "image": "items/niu-nan.ai.webp",
+      "status": "ai"
+    },
+    "牛里脊": {
+      "slug": "niu-li-ji",
+      "image": "items/niu-li-ji.webp",
+      "status": "stock"
+    },
+    "猪排骨": {
+      "slug": "zhu-pai-gu",
+      "image": "items/zhu-pai-gu.webp",
+      "status": "stock"
+    },
+    "虾仁": {
+      "slug": "xia-ren",
+      "image": "items/xia-ren.webp",
+      "status": "stock"
+    },
+    "鲈鱼": {
+      "slug": "lu-yu",
+      "image": "items/lu-yu.webp",
+      "status": "stock"
+    },
+    "带鱼": {
+      "slug": "dai-yu",
+      "image": "items/dai-yu.webp",
+      "status": "stock"
+    },
+    "花蛤": {
+      "slug": "hua-ge",
+      "image": "items/hua-ge.ai.webp",
+      "status": "ai"
+    },
+    "龙利鱼": {
+      "slug": "long-li-yu",
+      "image": "items/long-li-yu.webp",
+      "status": "stock"
+    },
+    "扇贝": {
+      "slug": "shan-bei",
+      "image": "items/shan-bei.webp",
+      "status": "stock"
+    },
+    "生抽": {
+      "slug": "sheng-chou",
+      "image": "items/sheng-chou.webp",
+      "status": "stock"
+    },
+    "老抽": {
+      "slug": "lao-chou",
+      "image": "items/lao-chou.webp",
+      "status": "stock"
+    },
+    "香醋": {
+      "slug": "xiang-cu",
+      "image": "items/xiang-cu.ai.webp",
+      "status": "ai"
+    },
+    "陈醋": {
+      "slug": "chen-cu",
+      "image": "items/chen-cu.webp",
+      "status": "stock"
+    },
+    "白醋": {
+      "slug": "bai-cu",
+      "image": "items/bai-cu.ai.webp",
+      "status": "ai"
+    },
+    "料酒": {
+      "slug": "liao-jiu",
+      "image": "items/liao-jiu.ai.webp",
+      "status": "ai"
+    },
+    "啤酒": {
+      "slug": "pi-jiu",
+      "image": "items/pi-jiu.webp",
+      "status": "stock"
+    },
+    "蚝油": {
+      "slug": "hao-you",
+      "image": "items/hao-you.ai.webp",
+      "status": "ai"
+    },
+    "豆瓣酱": {
+      "slug": "dou-ban-jiang",
+      "image": "items/dou-ban-jiang.webp",
+      "status": "stock"
+    },
+    "黄豆酱": {
+      "slug": "huang-dou-jiang",
+      "image": "items/huang-dou-jiang.webp",
+      "status": "stock"
+    },
+    "甜面酱": {
+      "slug": "tian-mian-jiang",
+      "image": "items/tian-mian-jiang.webp",
+      "status": "stock"
+    },
+    "番茄酱": {
+      "slug": "fan-qie-jiang",
+      "image": "items/fan-qie-jiang.webp",
+      "status": "stock"
+    },
+    "辣椒酱": {
+      "slug": "la-jiao-jiang",
+      "image": "items/la-jiao-jiang.webp",
+      "status": "stock"
+    },
+    "芝麻酱": {
+      "slug": "zhi-ma-jiang",
+      "image": "items/zhi-ma-jiang.webp",
+      "status": "stock"
+    },
+    "豆豉": {
+      "slug": "dou-chi",
+      "image": "items/dou-chi.webp",
+      "status": "stock"
+    },
+    "干辣椒": {
+      "slug": "gan-la-jiao",
+      "image": "items/gan-la-jiao.webp",
+      "status": "stock"
+    },
+    "花椒": {
+      "slug": "hua-jiao",
+      "image": "items/hua-jiao.webp",
+      "status": "stock"
+    },
+    "八角": {
+      "slug": "ba-jiao",
+      "image": "items/ba-jiao.webp",
+      "status": "stock"
+    },
+    "桂皮": {
+      "slug": "gui-pi",
+      "image": "items/gui-pi.webp",
+      "status": "stock"
+    },
+    "香叶": {
+      "slug": "xiang-ye",
+      "image": "items/xiang-ye.webp",
+      "status": "stock"
+    },
+    "孜然": {
+      "slug": "zi-ran",
+      "image": "items/zi-ran.webp",
+      "status": "stock"
+    },
+    "小茴香": {
+      "slug": "xiao-hui-xiang",
+      "image": "items/xiao-hui-xiang.webp",
+      "status": "stock"
+    },
+    "陈皮": {
+      "slug": "chen-pi",
+      "image": "items/chen-pi.webp",
+      "status": "stock"
+    },
+    "白胡椒粉": {
+      "slug": "bai-hu-jiao-fen",
+      "image": "items/bai-hu-jiao-fen.ai.webp",
+      "status": "ai"
+    },
+    "五香粉": {
+      "slug": "wu-xiang-fen",
+      "image": "items/wu-xiang-fen.webp",
+      "status": "stock"
+    },
+    "辣椒面": {
+      "slug": "la-jiao-mian",
+      "image": "items/la-jiao-mian.webp",
+      "status": "stock"
+    },
+    "食用油": {
+      "slug": "shi-yong-you",
+      "image": "items/shi-yong-you.ai.webp",
+      "status": "ai"
+    },
+    "猪油": {
+      "slug": "zhu-you",
+      "image": "items/zhu-you.webp",
+      "status": "stock"
+    },
+    "盐": {
+      "slug": "yan",
+      "image": "items/yan.webp",
+      "status": "stock"
+    },
+    "白糖": {
+      "slug": "bai-tang",
+      "image": "items/bai-tang.ai.webp",
+      "status": "ai"
+    },
+    "冰糖": {
+      "slug": "bing-tang",
+      "image": "items/bing-tang.webp",
+      "status": "stock"
+    },
+    "红糖": {
+      "slug": "hong-tang",
+      "image": "items/hong-tang.webp",
+      "status": "stock"
+    },
+    "蜂蜜": {
+      "slug": "feng-mi",
+      "image": "items/feng-mi.webp",
+      "status": "stock"
+    },
+    "味精": {
+      "slug": "wei-jing",
+      "image": "items/wei-jing.webp",
+      "status": "stock"
+    },
+    "鸡精": {
+      "slug": "ji-jing",
+      "image": "items/ji-jing.ai.webp",
+      "status": "ai"
+    },
+    "上海青": {
+      "slug": "shang-hai-qing",
+      "image": "items/shang-hai-qing.webp",
+      "status": "stock"
+    },
+    "小米辣": {
+      "slug": "xiao-mi-la",
+      "image": "items/xiao-mi-la.webp",
+      "status": "stock"
+    },
+    "红薯粉条": {
+      "slug": "hong-shu-fen-tiao",
+      "image": "items/hong-shu-fen-tiao.webp",
+      "status": "stock"
+    },
+    "隔夜米饭": {
+      "slug": "ge-ye-mi-fan",
+      "image": "items/ge-ye-mi-fan.webp",
+      "status": "stock"
+    },
+    "萝卜干": {
+      "slug": "luo-bo-gan",
+      "image": "items/luo-bo-gan.webp",
+      "status": "stock"
+    },
+    "二荆条": {
+      "slug": "er-jing-tiao",
+      "image": "items/er-jing-tiao.webp",
+      "status": "stock"
+    },
+    "食用碱": {
+      "slug": "shi-yong-jian",
+      "image": "items/shi-yong-jian.webp",
+      "status": "stock"
+    },
+    "羊肉": {
+      "slug": "yang-rou",
+      "image": "items/yang-rou.webp",
+      "status": "stock"
+    },
+    "酸菜": {
+      "slug": "suan-cai",
+      "image": "items/suan-cai.webp",
+      "status": "stock"
+    },
+    "梅干菜": {
+      "slug": "mei-gan-cai",
+      "image": "items/mei-gan-cai.webp",
+      "status": "stock"
+    },
+    "猪肉馅": {
+      "slug": "zhu-rou-xian",
+      "image": "items/zhu-rou-xian.webp",
+      "status": "stock"
+    },
+    "椒盐": {
+      "slug": "jiao-yan",
+      "image": "items/jiao-yan.webp",
+      "status": "stock"
+    },
+    "蛋黄酱": {
+      "slug": "dan-huang-jiang",
+      "image": "items/dan-huang-jiang.webp",
+      "status": "stock"
+    },
+    "棉花糖": {
+      "slug": "mian-hua-tang",
+      "image": "items/mian-hua-tang.webp",
+      "status": "stock"
+    },
+    "饼干": {
+      "slug": "bing-gan",
+      "image": "items/bing-gan.webp",
+      "status": "stock"
+    },
+    "螺蛳粉": {
+      "slug": "luo-si-fen",
+      "image": "items/luo-si-fen.webp",
+      "status": "stock"
+    },
+    "韭菜花酱": {
+      "slug": "jiu-cai-hua-jiang",
+      "image": "items/jiu-cai-hua-jiang.webp",
+      "status": "stock"
+    },
+    "泡椒": {
+      "slug": "pao-jiao",
+      "image": "items/pao-jiao.webp",
+      "status": "stock"
+    },
+    "青花椒": {
+      "slug": "qing-hua-jiao",
+      "image": "items/qing-hua-jiao.webp",
+      "status": "stock"
+    },
+    "土豆淀粉": {
+      "slug": "tu-dou-dian-fen",
+      "image": "items/tu-dou-dian-fen.webp",
+      "status": "stock"
+    },
+    "包菜": {
+      "slug": "bao-cai",
+      "image": "items/bao-cai.webp",
+      "status": "stock"
+    },
+    "多宝鱼": {
+      "slug": "duo-bao-yu",
+      "image": "items/duo-bao-yu.webp",
+      "status": "stock"
+    },
+    "小龙虾": {
+      "slug": "xiao-long-xia",
+      "image": "items/xiao-long-xia.webp",
+      "status": "stock"
+    },
+    "干葱头": {
+      "slug": "gan-cong-tou",
+      "image": "items/gan-cong-tou.webp",
+      "status": "stock"
+    },
+    "毛肚": {
+      "slug": "mao-du",
+      "image": "items/mao-du.webp",
+      "status": "stock"
+    },
+    "沙姜粉": {
+      "slug": "sha-jiang-fen",
+      "image": "items/sha-jiang-fen.webp",
+      "status": "stock"
+    },
+    "牛肉末": {
+      "slug": "niu-rou-mo",
+      "image": "items/niu-rou-mo.webp",
+      "status": "stock"
+    },
+    "猪腱子": {
+      "slug": "zhu-jian-zi",
+      "image": "items/zhu-jian-zi.webp",
+      "status": "stock"
+    },
+    "白芝麻": {
+      "slug": "bai-zhi-ma",
+      "image": "items/bai-zhi-ma.webp",
+      "status": "stock"
+    },
+    "皮皮虾": {
+      "slug": "pi-pi-xia",
+      "image": "items/pi-pi-xia.webp",
+      "status": "stock"
+    },
+    "笋干": {
+      "slug": "sun-gan",
+      "image": "items/sun-gan.webp",
+      "status": "stock"
+    },
+    "紫苏": {
+      "slug": "zi-su",
+      "image": "items/zi-su.webp",
+      "status": "stock"
+    },
+    "红椒": {
+      "slug": "hong-jiao",
+      "image": "items/hong-jiao.webp",
+      "status": "stock"
+    },
+    "芝麻": {
+      "slug": "zhi-ma",
+      "image": "items/zhi-ma.webp",
+      "status": "stock"
+    },
+    "苏子叶": {
+      "slug": "su-zi-ye",
+      "image": "items/su-zi-ye.webp",
+      "status": "stock"
+    },
+    "话梅": {
+      "slug": "hua-mei",
+      "image": "items/hua-mei.webp",
+      "status": "stock"
+    },
+    "豌豆荚": {
+      "slug": "wan-dou-jia",
+      "image": "items/wan-dou-jia.webp",
+      "status": "stock"
+    },
+    "贡菜": {
+      "slug": "gong-cai",
+      "image": "items/gong-cai.webp",
+      "status": "stock"
+    },
+    "醋": {
+      "slug": "cu",
+      "image": "items/cu.webp",
+      "status": "stock"
+    },
+    "魔芋": {
+      "slug": "ju-ruo",
+      "image": "items/ju-ruo.webp",
+      "status": "stock"
+    },
+    "鲳鱼": {
+      "slug": "chang-yu",
+      "image": "items/chang-yu.webp",
+      "status": "stock"
+    },
+    "黑虎虾": {
+      "slug": "hei-hu-xia",
+      "image": "items/hei-hu-xia.webp",
+      "status": "stock"
+    },
+    "牛肉": {
+      "slug": "niu-rou",
+      "image": "items/niu-rou.webp",
+      "status": "stock"
+    },
+    "猪肉": {
+      "slug": "zhu-rou",
+      "image": "items/zhu-rou.webp",
+      "status": "stock"
+    },
+    "青菜": {
+      "slug": "qing-cai",
+      "image": "items/qing-cai.webp",
+      "status": "stock"
+    },
+    "米饭": {
+      "slug": "mi-fan",
+      "image": "items/mi-fan.webp",
+      "status": "stock"
+    },
+    "火腿": {
+      "slug": "huo-tui",
+      "image": "items/huo-tui.webp",
+      "status": "stock"
+    },
+    "蒜苔": {
+      "slug": "suan-tai",
+      "image": "items/suan-tai.webp",
+      "status": "stock"
+    },
+    "酸豆角": {
+      "slug": "suan-dou-jiao",
+      "image": "items/suan-dou-jiao.webp",
+      "status": "stock"
+    },
+    "青豆": {
+      "slug": "qing-dou",
+      "image": "items/qing-dou.webp",
+      "status": "stock"
+    },
+    "糯米粉": {
+      "slug": "nuo-mi-fen",
+      "image": "items/nuo-mi-fen.webp",
+      "status": "stock"
+    },
+    "黑胡椒粉": {
+      "slug": "hei-hu-jiao-fen",
+      "image": "items/hei-hu-jiao-fen.webp",
+      "status": "stock"
+    },
+    "绿豆": {
+      "slug": "lv-dou",
+      "image": "items/lv-dou.webp",
+      "status": "stock"
+    },
+    "鸭血": {
+      "slug": "ya-xie",
+      "image": "items/ya-xie.webp",
+      "status": "stock"
+    },
+    "糖色": {
+      "slug": "tang-se",
+      "image": "items/tang-se.webp",
+      "status": "stock"
+    },
+    "清酒": {
+      "slug": "qing-jiu",
+      "image": "items/qing-jiu.webp",
+      "status": "stock"
+    },
+    "鱼饼": {
+      "slug": "yu-bing",
+      "image": "items/yu-bing.webp",
+      "status": "stock"
+    },
+    "木鱼花": {
+      "slug": "mu-yu-hua",
+      "image": "items/mu-yu-hua.webp",
+      "status": "stock"
+    },
+    "糊辣椒": {
+      "slug": "hu-la-jiao",
+      "image": "items/hu-la-jiao.webp",
+      "status": "stock"
+    },
+    "冬菜": {
+      "slug": "dong-cai",
+      "image": "items/dong-cai.webp",
+      "status": "stock"
+    },
+    "韭黄": {
+      "slug": "jiu-huang",
+      "image": "items/jiu-huang.webp",
+      "status": "stock"
+    },
+    "罗非鱼": {
+      "slug": "luo-fei-yu",
+      "image": "items/luo-fei-yu.webp",
+      "status": "stock"
+    },
+    "青芒": {
+      "slug": "qing-mang",
+      "image": "items/qing-mang.webp",
+      "status": "stock"
+    },
+    "韩式辣酱": {
+      "slug": "han-shi-la-jiang",
+      "image": "items/han-shi-la-jiang.webp",
+      "status": "stock"
+    },
+    "土豆粉": {
+      "slug": "tu-dou-fen",
+      "image": "items/tu-dou-fen.webp",
+      "status": "stock"
+    },
+    "柱侯酱": {
+      "slug": "zhu-hou-jiang",
+      "image": "items/zhu-hou-jiang.webp",
+      "status": "stock"
+    },
+    "方便面": {
+      "slug": "fang-bian-mian",
+      "image": "items/fang-bian-mian.webp",
+      "status": "stock"
+    },
+    "小油条": {
+      "slug": "xiao-you-tiao",
+      "image": "items/xiao-you-tiao.webp",
+      "status": "stock"
+    },
+    "青柠": {
+      "slug": "qing-ning",
+      "image": "items/qing-ning.webp",
+      "status": "stock"
+    },
+    "乌龙茶": {
+      "slug": "wu-long-cha",
+      "image": "items/wu-long-cha.webp",
+      "status": "stock"
+    },
+    "鱼露": {
+      "slug": "yu-lou",
+      "image": "items/yu-lou.webp",
+      "status": "stock"
+    },
+    "沙茶酱": {
+      "slug": "sha-cha-jiang",
+      "image": "items/sha-cha-jiang.webp",
+      "status": "stock"
+    },
+    "干贝": {
+      "slug": "gan-bei",
+      "image": "items/gan-bei.webp",
+      "status": "stock"
+    },
+    "花椒油": {
+      "slug": "hua-jiao-you",
+      "image": "items/hua-jiao-you.webp",
+      "status": "stock"
+    },
+    "猪腰": {
+      "slug": "zhu-yao",
+      "image": "items/zhu-yao.webp",
+      "status": "stock"
+    },
+    "蘑菇": {
+      "slug": "mo-gu",
+      "image": "items/mo-gu.webp",
+      "status": "stock"
+    },
+    "虾滑": {
+      "slug": "xia-hua",
+      "image": "items/xia-hua.webp",
+      "status": "stock"
+    },
+    "宽粉": {
+      "slug": "kuan-fen",
+      "image": "items/kuan-fen.webp",
+      "status": "stock"
+    },
+    "萝卜丸子": {
+      "slug": "luo-bo-wan-zi",
+      "image": "items/luo-bo-wan-zi.webp",
+      "status": "stock"
+    },
+    "蟹棒": {
+      "slug": "xie-bang",
+      "image": "items/xie-bang.webp",
+      "status": "stock"
+    },
+    "石锅拌饭酱": {
+      "slug": "shi-guo-ban-fan-jiang",
+      "image": "items/shi-guo-ban-fan-jiang.webp",
+      "status": "stock"
+    },
+    "饺子馅": {
+      "slug": "jiao-zi-xian",
+      "image": "items/jiao-zi-xian.webp",
+      "status": "stock"
+    },
+    "海参": {
+      "slug": "hai-can",
+      "image": "items/hai-can.webp",
+      "status": "stock"
+    },
+    "二刀肉": {
+      "slug": "er-dao-rou",
+      "image": "items/er-dao-rou.webp",
+      "status": "stock"
+    },
+    "整鸡": {
+      "slug": "zheng-ji",
+      "image": "items/zheng-ji.webp",
+      "status": "stock"
+    },
+    "猪肘子": {
+      "slug": "zhu-zhou-zi",
+      "image": "items/zhu-zhou-zi.webp",
+      "status": "stock"
+    },
+    "牛肉丸": {
+      "slug": "niu-rou-wan",
+      "image": "items/niu-rou-wan.webp",
+      "status": "stock"
+    },
+    "葱油": {
+      "slug": "cong-you",
+      "image": "items/cong-you.webp",
+      "status": "stock"
+    },
+    "藤椒油": {
+      "slug": "teng-jiao-you",
+      "image": "items/teng-jiao-you.webp",
+      "status": "stock"
+    },
+    "咸蛋黄": {
+      "slug": "xian-dan-huang",
+      "image": "items/xian-dan-huang.webp",
+      "status": "stock"
+    },
+    "虫草花": {
+      "slug": "chong-cao-hua",
+      "image": "items/chong-cao-hua.webp",
+      "status": "stock"
+    },
+    "带子": {
+      "slug": "dai-zi",
+      "image": "items/dai-zi.webp",
+      "status": "stock"
+    },
+    "橡皮鱼": {
+      "slug": "xiang-pi-yu",
+      "image": "items/xiang-pi-yu.webp",
+      "status": "stock"
+    },
+    "猪脚": {
+      "slug": "zhu-jiao",
+      "image": "items/zhu-jiao.webp",
+      "status": "stock"
+    },
+    "火腿肠": {
+      "slug": "huo-tui-chang",
+      "image": "items/huo-tui-chang.webp",
+      "status": "stock"
+    },
+    "椰浆": {
+      "slug": "ye-jiang",
+      "image": "items/ye-jiang.webp",
+      "status": "stock"
+    },
+    "甜辣酱": {
+      "slug": "tian-la-jiang",
+      "image": "items/tian-la-jiang.webp",
+      "status": "stock"
+    },
+    "盐焗鸡粉": {
+      "slug": "yan-ju-ji-fen",
+      "image": "items/yan-ju-ji-fen.webp",
+      "status": "stock"
+    },
+    "红小豆": {
+      "slug": "hong-xiao-dou",
+      "image": "items/hong-xiao-dou.webp",
+      "status": "stock"
+    },
+    "虾头": {
+      "slug": "xia-tou",
+      "image": "items/xia-tou.webp",
+      "status": "stock"
+    },
+    "海蛎": {
+      "slug": "hai-li",
+      "image": "items/hai-li.webp",
+      "status": "stock"
+    },
+    "红薯淀粉": {
+      "slug": "hong-shu-dian-fen",
+      "image": "items/hong-shu-dian-fen.webp",
+      "status": "stock"
+    },
+    "冬笋": {
+      "slug": "dong-sun",
+      "image": "items/dong-sun.webp",
+      "status": "stock"
+    },
+    "嫩姜": {
+      "slug": "nen-jiang",
+      "image": "items/nen-jiang.webp",
+      "status": "stock"
+    },
+    "山楂": {
+      "slug": "shan-zha",
+      "image": "items/shan-zha.webp",
+      "status": "stock"
+    },
+    "明虾": {
+      "slug": "ming-xia",
+      "image": "items/ming-xia.webp",
+      "status": "stock"
+    },
+    "河虾": {
+      "slug": "he-xia",
+      "image": "items/he-xia.webp",
+      "status": "stock"
+    },
+    "西瓜皮": {
+      "slug": "xi-gua-pi",
+      "image": "items/xi-gua-pi.webp",
+      "status": "stock"
+    },
+    "鸡油": {
+      "slug": "ji-you",
+      "image": "items/ji-you.webp",
+      "status": "stock"
+    },
+    "鸭头": {
+      "slug": "ya-tou",
+      "image": "items/ya-tou.webp",
+      "status": "stock"
+    },
+    "鸭肠": {
+      "slug": "ya-chang",
+      "image": "items/ya-chang.webp",
+      "status": "stock"
+    },
+    "鸭胗": {
+      "slug": "ya-zhen",
+      "image": "items/ya-zhen.webp",
+      "status": "stock"
+    },
+    "黄椒": {
+      "slug": "huang-jiao",
+      "image": "items/huang-jiao.webp",
+      "status": "stock"
+    },
+    "肥牛": {
+      "slug": "fei-niu",
+      "image": "items/fei-niu.webp",
+      "status": "stock"
+    },
+    "辣椒": {
+      "slug": "la-jiao",
+      "image": "items/la-jiao.webp",
+      "status": "stock"
+    },
+    "豆腐": {
+      "slug": "dou-fu",
+      "image": "items/dou-fu.webp",
+      "status": "stock"
+    },
+    "米线": {
+      "slug": "mi-xian",
+      "image": "items/mi-xian.webp",
+      "status": "stock"
+    },
+    "海米": {
+      "slug": "hai-mi",
+      "image": "items/hai-mi.webp",
+      "status": "stock"
+    },
+    "田螺": {
+      "slug": "tian-luo",
+      "image": "items/tian-luo.webp",
+      "status": "stock"
+    },
+    "乌梅": {
+      "slug": "wu-mei",
+      "image": "items/wu-mei.webp",
+      "status": "stock"
+    },
+    "藜麦": {
+      "slug": "li-mai",
+      "image": "items/li-mai.webp",
+      "status": "stock"
+    },
+    "罗勒": {
+      "slug": "luo-le",
+      "image": "items/luo-le.webp",
+      "status": "stock"
+    },
+    "欧芹碎": {
+      "slug": "ou-qin-sui",
+      "image": "items/ou-qin-sui.webp",
+      "status": "stock"
+    },
+    "XO酱": {
+      "slug": "x-o-jiang",
+      "image": "items/x-o-jiang.webp",
+      "status": "stock"
+    },
+    "芥菜": {
+      "slug": "jie-cai",
+      "image": "items/jie-cai.webp",
+      "status": "stock"
+    },
+    "香肠": {
+      "slug": "xiang-chang",
+      "image": "items/xiang-chang.webp",
+      "status": "stock"
+    },
+    "豆花": {
+      "slug": "dou-hua",
+      "image": "items/dou-hua.webp",
+      "status": "stock"
+    },
+    "黄酱": {
+      "slug": "huang-jiang",
+      "image": "items/huang-jiang.webp",
+      "status": "stock"
+    },
+    "牛肉粉": {
+      "slug": "niu-rou-fen",
+      "image": "items/niu-rou-fen.webp",
+      "status": "stock"
+    },
+    "鸡粉": {
+      "slug": "ji-fen",
+      "image": "items/ji-fen.webp",
+      "status": "stock"
+    },
+    "膏蟹": {
+      "slug": "gao-xie",
+      "image": "items/gao-xie.webp",
+      "status": "stock"
+    },
+    "牛肋条": {
+      "slug": "niu-lei-tiao",
+      "image": "items/niu-lei-tiao.webp",
+      "status": "stock"
+    },
+    "牛上脑": {
+      "slug": "niu-shang-nao",
+      "image": "items/niu-shang-nao.webp",
+      "status": "stock"
+    },
+    "大白豆": {
+      "slug": "da-bai-dou",
+      "image": "items/da-bai-dou.webp",
+      "status": "stock"
+    },
+    "麻辣鲜露": {
+      "slug": "ma-la-xian-lou",
+      "image": "items/ma-la-xian-lou.webp",
+      "status": "stock"
+    },
+    "鸡肉": {
+      "slug": "ji-rou",
+      "image": "items/ji-rou.webp",
+      "status": "stock"
+    },
+    "玉米淀粉": {
+      "slug": "yu-mi-dian-fen",
+      "image": "items/yu-mi-dian-fen.webp",
+      "status": "stock"
+    },
+    "花生碎": {
+      "slug": "hua-sheng-sui",
+      "image": "items/hua-sheng-sui.webp",
+      "status": "stock"
+    },
+    "红葱头": {
+      "slug": "hong-cong-tou",
+      "image": "items/hong-cong-tou.webp",
+      "status": "stock"
+    },
+    "猪头肉": {
+      "slug": "zhu-tou-rou",
+      "image": "items/zhu-tou-rou.webp",
+      "status": "stock"
+    },
+    "杂菜": {
+      "slug": "za-cai",
+      "image": "items/za-cai.webp",
+      "status": "stock"
+    },
+    "烤馕": {
+      "slug": "kao-nang",
+      "image": "items/kao-nang.webp",
+      "status": "stock"
+    },
+    "面包糠": {
+      "slug": "mian-bao-kang",
+      "image": "items/mian-bao-kang.webp",
+      "status": "stock"
+    },
+    "黑鱼": {
+      "slug": "hei-yu",
+      "image": "items/hei-yu.webp",
+      "status": "stock"
+    },
+    "金枪鱼罐头": {
+      "slug": "jin-qiang-yu-guan-tou",
+      "image": "items/jin-qiang-yu-guan-tou.webp",
+      "status": "stock"
+    },
+    "味噌": {
+      "slug": "wei-ceng",
+      "image": "items/wei-ceng.webp",
+      "status": "stock"
+    },
+    "香其酱": {
+      "slug": "xiang-qi-jiang",
+      "image": "items/xiang-qi-jiang.webp",
+      "status": "stock"
+    },
+    "酵母": {
+      "slug": "jiao-mu",
+      "image": "items/jiao-mu.webp",
+      "status": "stock"
+    },
+    "丁香": {
+      "slug": "ding-xiang",
+      "image": "items/ding-xiang.webp",
+      "status": "stock"
+    },
+    "荜拨": {
+      "slug": "bi-bo",
+      "image": "items/bi-bo.webp",
+      "status": "stock"
+    },
+    "葡萄酒": {
+      "slug": "pu-tao-jiu",
+      "image": "items/pu-tao-jiu.webp",
+      "status": "stock"
+    },
+    "香蒜油": {
+      "slug": "xiang-suan-you",
+      "image": "items/xiang-suan-you.webp",
+      "status": "stock"
+    },
+    "剁椒": {
+      "slug": "duo-jiao",
+      "image": "items/duo-jiao.webp",
+      "status": "stock"
+    },
+    "黑胡椒盐": {
+      "slug": "hei-hu-jiao-yan",
+      "image": "items/hei-hu-jiao-yan.webp",
+      "status": "stock"
+    },
+    "木薯淀粉": {
+      "slug": "mu-shu-dian-fen",
+      "image": "items/mu-shu-dian-fen.webp",
+      "status": "stock"
+    },
+    "百里香": {
+      "slug": "bai-li-xiang",
+      "image": "items/bai-li-xiang.webp",
+      "status": "stock"
+    },
+    "荷叶": {
+      "slug": "he-ye",
+      "image": "items/he-ye.webp",
+      "status": "stock"
+    },
+    "黄豆": {
+      "slug": "huang-dou",
+      "image": "items/huang-dou.webp",
+      "status": "stock"
+    },
+    "猪大排": {
+      "slug": "zhu-da-pai",
+      "image": "items/zhu-da-pai.webp",
+      "status": "stock"
+    },
+    "咸肉": {
+      "slug": "xian-rou",
+      "image": "items/xian-rou.webp",
+      "status": "stock"
+    },
+    "鲍鱼": {
+      "slug": "bao-yu",
+      "image": "items/bao-yu.webp",
+      "status": "stock"
+    },
+    "罗氏虾": {
+      "slug": "luo-shi-xia",
+      "image": "items/luo-shi-xia.webp",
+      "status": "stock"
+    },
+    "八爪鱼": {
+      "slug": "ba-zhao-yu",
+      "image": "items/ba-zhao-yu.webp",
+      "status": "stock"
+    },
+    "油泼辣子": {
+      "slug": "you-po-la-zi",
+      "image": "items/you-po-la-zi.webp",
+      "status": "stock"
+    },
+    "小龙虾底料": {
+      "slug": "xiao-long-xia-di-liao",
+      "image": "items/xiao-long-xia-di-liao.webp",
+      "status": "stock"
+    },
+    "栀子": {
+      "slug": "zhi-zi",
+      "image": "items/zhi-zi.webp",
+      "status": "stock"
+    },
+    "粉条": {
+      "slug": "fen-tiao",
+      "image": "items/fen-tiao.webp",
+      "status": "stock"
+    },
+    "肉丸": {
+      "slug": "rou-wan",
+      "image": "items/rou-wan.webp",
+      "status": "stock"
+    },
+    "猪板筋": {
+      "slug": "zhu-ban-jin",
+      "image": "items/zhu-ban-jin.webp",
+      "status": "stock"
+    },
+    "培根": {
+      "slug": "pei-gen",
+      "image": "items/pei-gen.webp",
+      "status": "stock"
+    },
+    "番茄膏": {
+      "slug": "fan-qie-gao",
+      "image": "items/fan-qie-gao.webp",
+      "status": "stock"
+    },
+    "荷兰芹": {
+      "slug": "he-lan-qin",
+      "image": "items/he-lan-qin.webp",
+      "status": "stock"
+    },
+    "党参": {
+      "slug": "dang-can",
+      "image": "items/dang-can.webp",
+      "status": "stock"
+    },
+    "当归": {
+      "slug": "dang-gui",
+      "image": "items/dang-gui.webp",
+      "status": "stock"
+    },
+    "红酸汤": {
+      "slug": "hong-suan-tang",
+      "image": "items/hong-suan-tang.webp",
+      "status": "stock"
+    },
+    "木姜子油": {
+      "slug": "mu-jiang-zi-you",
+      "image": "items/mu-jiang-zi-you.webp",
+      "status": "stock"
+    },
+    "松鲜鲜": {
+      "slug": "song-xian-xian",
+      "image": "items/song-xian-xian.webp",
+      "status": "stock"
+    },
+    "素毛肚": {
+      "slug": "su-mao-du",
+      "image": "items/su-mao-du.webp",
+      "status": "stock"
+    },
+    "魔芋丝": {
+      "slug": "mo-yu-si",
+      "image": "items/mo-yu-si.webp",
+      "status": "stock"
+    },
+    "香茅": {
+      "slug": "xiang-mao",
+      "image": "items/xiang-mao.webp",
+      "status": "stock"
+    },
+    "苏子油": {
+      "slug": "su-zi-you",
+      "image": "items/su-zi-you.webp",
+      "status": "stock"
+    },
+    "海苔": {
+      "slug": "hai-tai",
+      "image": "items/hai-tai.webp",
+      "status": "stock"
+    },
+    "香菜籽粉": {
+      "slug": "xiang-cai-zi-fen",
+      "image": "items/xiang-cai-zi-fen.webp",
+      "status": "stock"
+    },
+    "海鲜酱": {
+      "slug": "hai-xian-jiang",
+      "image": "items/hai-xian-jiang.webp",
+      "status": "stock"
+    },
+    "香芹": {
+      "slug": "xiang-qin",
+      "image": "items/xiang-qin.webp",
+      "status": "stock"
+    },
+    "雪碧": {
+      "slug": "xue-bi",
+      "image": "items/xue-bi.webp",
+      "status": "stock"
+    },
+    "双孢菇": {
+      "slug": "shuang-bao-gu",
+      "image": "items/shuang-bao-gu.webp",
+      "status": "stock"
+    },
+    "甘草": {
+      "slug": "gan-cao",
+      "image": "items/gan-cao.webp",
+      "status": "stock"
+    },
+    "寿喜烧酱油": {
+      "slug": "shou-xi-shao-jiang-you",
+      "image": "items/shou-xi-shao-jiang-you.webp",
+      "status": "stock"
+    },
+    "醪糟": {
+      "slug": "lao-zao",
+      "image": "items/lao-zao.webp",
+      "status": "stock"
+    },
+    "猪小排": {
+      "slug": "zhu-xiao-pai",
+      "image": "items/zhu-xiao-pai.webp",
+      "status": "stock"
+    },
+    "猪软骨": {
+      "slug": "zhu-ruan-gu",
+      "image": "items/zhu-ruan-gu.webp",
+      "status": "stock"
+    },
+    "龙骨": {
+      "slug": "long-gu",
+      "image": "items/long-gu.webp",
+      "status": "stock"
+    },
+    "大骨": {
+      "slug": "da-gu",
+      "image": "items/da-gu.webp",
+      "status": "stock"
+    },
+    "鸡翅根": {
+      "slug": "ji-chi-gen",
+      "image": "items/ji-chi-gen.webp",
+      "status": "stock"
+    },
+    "波士顿龙虾": {
+      "slug": "bo-shi-dun-long-xia",
+      "image": "items/bo-shi-dun-long-xia.webp",
+      "status": "stock"
+    },
+    "金鲳鱼": {
+      "slug": "jin-chang-yu",
+      "image": "items/jin-chang-yu.webp",
+      "status": "stock"
+    },
+    "咸鱼": {
+      "slug": "xian-yu",
+      "image": "items/xian-yu.webp",
+      "status": "stock"
+    },
+    "毛豆": {
+      "slug": "mao-dou",
+      "image": "items/mao-dou.webp",
+      "status": "stock"
+    },
+    "魔芋爽": {
+      "slug": "mo-yu-shuang",
+      "image": "items/mo-yu-shuang.webp",
+      "status": "stock"
+    },
+    "泡姜": {
+      "slug": "pao-jiang",
+      "image": "items/pao-jiang.webp",
+      "status": "stock"
+    },
+    "叉烧酱": {
+      "slug": "cha-shao-jiang",
+      "image": "items/cha-shao-jiang.webp",
+      "status": "stock"
+    },
+    "蒜蓉酱": {
+      "slug": "suan-rong-jiang",
+      "image": "items/suan-rong-jiang.webp",
+      "status": "stock"
+    },
+    "卤肉料包": {
+      "slug": "lu-rou-liao-bao",
+      "image": "items/lu-rou-liao-bao.webp",
+      "status": "stock"
+    },
+    "胡椒粒": {
+      "slug": "hu-jiao-li",
+      "image": "items/hu-jiao-li.webp",
+      "status": "stock"
+    },
+    "奥尔良粉": {
+      "slug": "ao-er-liang-fen",
+      "image": "items/ao-er-liang-fen.webp",
+      "status": "stock"
+    },
+    "小豆蔻": {
+      "slug": "xiao-dou-kou",
+      "image": "items/xiao-dou-kou.webp",
+      "status": "stock"
+    },
+    "朗姆酒": {
+      "slug": "lang-mu-jiu",
+      "image": "items/lang-mu-jiu.webp",
+      "status": "stock"
+    },
+    "桂圆": {
+      "slug": "gui-yuan",
+      "image": "items/gui-yuan.webp",
+      "status": "stock"
+    },
+    "糖粉": {
+      "slug": "tang-fen",
+      "image": "items/tang-fen.webp",
+      "status": "stock"
+    },
+    "羊排": {
+      "slug": "yang-pai",
+      "image": "items/yang-pai.webp",
+      "status": "stock"
+    },
+    "美人椒": {
+      "slug": "mei-ren-jiao",
+      "image": "items/mei-ren-jiao.webp",
+      "status": "stock"
+    },
+    "苏打水": {
+      "slug": "su-da-shui",
+      "image": "items/su-da-shui.webp",
+      "status": "stock"
+    },
+    "草莓酱": {
+      "slug": "cao-mei-jiang",
+      "image": "items/cao-mei-jiang.webp",
+      "status": "stock"
+    },
+    "鸡架": {
+      "slug": "ji-jia",
+      "image": "items/ji-jia.webp",
+      "status": "stock"
+    },
+    "鸭架": {
+      "slug": "ya-jia",
+      "image": "items/ya-jia.webp",
+      "status": "stock"
+    },
+    "黑糖": {
+      "slug": "hei-tang",
+      "image": "items/hei-tang.webp",
+      "status": "stock"
+    },
+    "小番茄": {
+      "slug": "xiao-fan-qie",
+      "image": "items/xiao-fan-qie.webp",
+      "status": "stock"
+    },
+    "低筋面粉": {
+      "slug": "di-jin-mian-fen",
+      "image": "items/di-jin-mian-fen.webp",
+      "status": "stock"
+    },
+    "竹轮": {
+      "slug": "zhu-lun",
+      "image": "items/zhu-lun.webp",
+      "status": "stock"
+    },
+    "柚子胡椒": {
+      "slug": "you-zi-hu-jiao",
+      "image": "items/you-zi-hu-jiao.webp",
+      "status": "stock"
+    },
+    "椰汁": {
+      "slug": "ye-zhi",
+      "image": "items/ye-zhi.webp",
+      "status": "stock"
+    },
+    "烧烤料": {
+      "slug": "shao-kao-liao",
+      "image": "items/shao-kao-liao.webp",
+      "status": "stock"
+    },
+    "猪油渣": {
+      "slug": "zhu-you-zha",
+      "image": "items/zhu-you-zha.webp",
+      "status": "stock"
+    },
+    "麻辣鲜": {
+      "slug": "ma-la-xian",
+      "image": "items/ma-la-xian.webp",
+      "status": "stock"
+    },
+    "黄灯笼辣椒酱": {
+      "slug": "huang-deng-long-la-jiao-jiang",
+      "image": "items/huang-deng-long-la-jiao-jiang.webp",
+      "status": "stock"
+    },
+    "鲍鱼汁": {
+      "slug": "bao-yu-zhi",
+      "image": "items/bao-yu-zhi.webp",
+      "status": "stock"
+    },
+    "七星椒": {
+      "slug": "qi-xing-jiao",
+      "image": "items/qi-xing-jiao.webp",
+      "status": "stock"
+    },
+    "子弹头": {
+      "slug": "zi-dan-tou",
+      "image": "items/zi-dan-tou.webp",
+      "status": "stock"
+    },
+    "香菜籽": {
+      "slug": "xiang-cai-zi",
+      "image": "items/xiang-cai-zi.webp",
+      "status": "stock"
+    },
+    "洋葱粉": {
+      "slug": "yang-cong-fen",
+      "image": "items/yang-cong-fen.webp",
+      "status": "stock"
+    },
+    "大蒜粉": {
+      "slug": "da-suan-fen",
+      "image": "items/da-suan-fen.webp",
+      "status": "stock"
+    },
+    "奶粉": {
+      "slug": "nai-fen",
+      "image": "items/nai-fen.webp",
+      "status": "stock"
+    },
+    "小酥肉粉": {
+      "slug": "xiao-su-rou-fen",
+      "image": "items/xiao-su-rou-fen.webp",
+      "status": "stock"
+    },
+    "乌冬面": {
+      "slug": "wu-dong-mian",
+      "image": "items/wu-dong-mian.webp",
+      "status": "stock"
+    },
+    "冷面": {
+      "slug": "leng-mian",
+      "image": "items/leng-mian.webp",
+      "status": "stock"
+    },
+    "咸菜": {
+      "slug": "xian-cai-yan",
+      "image": "items/xian-cai-yan.webp",
+      "status": "stock"
+    },
+    "寿司醋": {
+      "slug": "shou-si-cu",
+      "image": "items/shou-si-cu.webp",
+      "status": "stock"
+    },
+    "桂鱼": {
+      "slug": "gui-yu",
+      "image": "items/gui-yu.webp",
+      "status": "stock"
+    },
+    "炒米粉料包": {
+      "slug": "chao-mi-fen-liao-bao",
+      "image": "items/chao-mi-fen-liao-bao.webp",
+      "status": "stock"
+    },
+    "炼乳": {
+      "slug": "lian-ru",
+      "image": "items/lian-ru.webp",
+      "status": "stock"
+    },
+    "牛油果": {
+      "slug": "niu-you-guo",
+      "image": "items/niu-you-guo.webp",
+      "status": "stock"
+    },
+    "玉米片": {
+      "slug": "yu-mi-pian",
+      "image": "items/yu-mi-pian.webp",
+      "status": "stock"
+    },
+    "甜不辣": {
+      "slug": "tian-bu-la",
+      "image": "items/tian-bu-la.webp",
+      "status": "stock"
+    },
+    "百香果茶": {
+      "slug": "bai-xiang-guo-cha",
+      "image": "items/bai-xiang-guo-cha.webp",
+      "status": "stock"
+    },
+    "红椒粉": {
+      "slug": "hong-jiao-fen",
+      "image": "items/hong-jiao-fen.webp",
+      "status": "stock"
+    },
+    "花生": {
+      "slug": "hua-sheng",
+      "image": "items/hua-sheng.webp",
+      "status": "stock"
+    },
+    "蜜豆": {
+      "slug": "mi-dou",
+      "image": "items/mi-dou.webp",
+      "status": "stock"
+    },
+    "鳝鱼": {
+      "slug": "shan-yu",
+      "image": "items/shan-yu.webp",
+      "status": "stock"
+    },
+    "黑芝麻": {
+      "slug": "hei-zhi-ma",
+      "image": "items/hei-zhi-ma.webp",
+      "status": "stock"
+    },
+    "青蒜": {
+      "slug": "qing-suan",
+      "image": "items/qing-suan.webp",
+      "status": "stock"
+    },
+    "咖喱酱": {
+      "slug": "ka-li-jiang",
+      "image": "items/ka-li-jiang.webp",
+      "status": "stock"
+    },
+    "海鲜菇": {
+      "slug": "hai-xian-gu",
+      "image": "items/hai-xian-gu.webp",
+      "status": "stock"
+    },
+    "豆豉酱": {
+      "slug": "dou-chi-jiang",
+      "image": "items/dou-chi-jiang.webp",
+      "status": "stock"
+    },
+    "花菜": {
+      "slug": "hua-cai",
+      "image": "items/hua-cai.webp",
+      "status": "stock"
+    },
+    "小麦淀粉": {
+      "slug": "xiao-mai-dian-fen",
+      "image": "items/xiao-mai-dian-fen.webp",
+      "status": "stock"
+    },
+    "鸡心": {
+      "slug": "ji-xin",
+      "image": "items/ji-xin.webp",
+      "status": "stock"
+    },
+    "鸭脖": {
+      "slug": "ya-bo",
+      "image": "items/ya-bo.webp",
+      "status": "stock"
+    },
+    "鲤鱼": {
+      "slug": "li-yu",
+      "image": "items/li-yu.webp",
+      "status": "stock"
+    },
+    "大闸蟹": {
+      "slug": "da-zha-xie",
+      "image": "items/da-zha-xie.webp",
+      "status": "stock"
+    },
+    "海螺": {
+      "slug": "hai-luo",
+      "image": "items/hai-luo.webp",
+      "status": "stock"
+    },
+    "茭白": {
+      "slug": "jiao-bai",
+      "image": "items/jiao-bai.webp",
+      "status": "stock"
+    },
+    "黄骨鱼": {
+      "slug": "huang-gu-yu",
+      "image": "items/huang-gu-yu.webp",
+      "status": "stock"
+    },
+    "地瓜叶": {
+      "slug": "di-gua-ye",
+      "image": "items/di-gua-ye.webp",
+      "status": "stock"
+    },
+    "后臀肉": {
+      "slug": "hou-tun-rou",
+      "image": "items/hou-tun-rou.webp",
+      "status": "stock"
+    },
+    "大红浙醋": {
+      "slug": "da-hong-zhe-cu",
+      "image": "items/da-hong-zhe-cu.webp",
+      "status": "stock"
+    },
+    "苹果醋": {
+      "slug": "ping-guo-cu",
+      "image": "items/ping-guo-cu.webp",
+      "status": "stock"
+    },
+    "辣鲜露": {
+      "slug": "la-xian-lou",
+      "image": "items/la-xian-lou.webp",
+      "status": "stock"
+    },
+    "通脊肉": {
+      "slug": "tong-ji-rou",
+      "image": "items/tong-ji-rou.webp",
+      "status": "stock"
+    },
+    "米血": {
+      "slug": "mi-xie",
+      "image": "items/mi-xie.webp",
+      "status": "stock"
+    },
+    "欧芹": {
+      "slug": "ou-qin",
+      "image": "items/ou-qin.webp",
+      "status": "stock"
+    },
+    "牛腿": {
+      "slug": "niu-tui",
+      "image": "items/niu-tui.webp",
+      "status": "stock"
+    },
+    "肥肠": {
+      "slug": "fei-chang",
+      "image": "items/fei-chang.webp",
+      "status": "stock"
+    },
+    "鱼豆腐": {
+      "slug": "yu-dou-fu",
+      "image": "items/yu-dou-fu.webp",
+      "status": "stock"
+    },
+    "绿豆淀粉": {
+      "slug": "lv-dou-dian-fen",
+      "image": "items/lv-dou-dian-fen.webp",
+      "status": "stock"
+    },
+    "碱面": {
+      "slug": "jian-mian",
+      "image": "items/jian-mian.webp",
+      "status": "stock"
+    },
+    "糟卤": {
+      "slug": "zao-lu",
+      "image": "items/zao-lu.webp",
+      "status": "stock"
+    },
+    "百香果": {
+      "slug": "bai-xiang-guo",
+      "image": "items/bai-xiang-guo.webp",
+      "status": "stock"
+    },
+    "海蜇": {
+      "slug": "hai-zhe",
+      "image": "items/hai-zhe.webp",
+      "status": "stock"
+    },
+    "杨梅": {
+      "slug": "yang-mei",
+      "image": "items/yang-mei.webp",
+      "status": "stock"
+    },
+    "辣条": {
+      "slug": "la-tiao",
+      "image": "items/la-tiao.webp",
+      "status": "stock"
+    },
+    "高筋面粉": {
+      "slug": "gao-jin-mian-fen",
+      "image": "items/gao-jin-mian-fen.webp",
+      "status": "stock"
+    },
+    "黑胡椒汁": {
+      "slug": "hei-hu-jiao-zhi",
+      "image": "items/hei-hu-jiao-zhi.webp",
+      "status": "stock"
+    },
+    "晒醋": {
+      "slug": "shai-cu",
+      "image": "items/shai-cu.webp",
+      "status": "stock"
+    },
+    "大头鲢": {
+      "slug": "da-tou-lian",
+      "image": "items/da-tou-lian.webp",
+      "status": "stock"
+    },
+    "鱼泡": {
+      "slug": "yu-pao",
+      "image": "items/yu-pao.webp",
+      "status": "stock"
+    },
+    "香辣酱": {
+      "slug": "xiang-la-jiang",
+      "image": "items/xiang-la-jiang.webp",
+      "status": "stock"
+    },
+    "仙草干": {
+      "slug": "xian-cao-gan",
+      "image": "items/xian-cao-gan.webp",
+      "status": "stock"
+    },
+    "姜黄粉": {
+      "slug": "jiang-huang-fen",
+      "image": "items/jiang-huang-fen.webp",
+      "status": "stock"
+    },
+    "粘米粉": {
+      "slug": "nian-mi-fen",
+      "image": "items/nian-mi-fen.webp",
+      "status": "stock"
+    },
+    "猪皮": {
+      "slug": "zhu-pi",
+      "image": "items/zhu-pi.webp",
+      "status": "stock"
+    },
+    "鸭舌": {
+      "slug": "ya-she",
+      "image": "items/ya-she.webp",
+      "status": "stock"
+    },
+    "关东煮料包": {
+      "slug": "guan-dong-zhu-liao-bao",
+      "image": "items/guan-dong-zhu-liao-bao.webp",
+      "status": "stock"
+    },
+    "牛骨头": {
+      "slug": "niu-gu-tou",
+      "image": "items/niu-gu-tou.webp",
+      "status": "stock"
+    },
+    "野苏子粉": {
+      "slug": "ye-su-zi-fen",
+      "image": "items/ye-su-zi-fen.webp",
+      "status": "stock"
+    },
+    "红线椒": {
+      "slug": "hong-xian-jiao",
+      "image": "items/hong-xian-jiao.webp",
+      "status": "stock"
+    },
+    "糖葫芦": {
+      "slug": "tang-hu-lu",
+      "image": "items/tang-hu-lu.webp",
+      "status": "stock"
+    },
+    "炸鸡": {
+      "slug": "zha-ji",
+      "image": "items/zha-ji.webp",
+      "status": "stock"
+    },
+    "薯条": {
+      "slug": "shu-tiao",
+      "image": "items/shu-tiao.webp",
+      "status": "stock"
+    },
+    "凉皮": {
+      "slug": "liang-pi",
+      "image": "items/liang-pi.webp",
+      "status": "stock"
+    },
+    "煎饼": {
+      "slug": "jian-bing",
+      "image": "items/jian-bing.webp",
+      "status": "stock"
+    },
+    "蛋挞皮": {
+      "slug": "dan-ta-pi",
+      "image": "items/dan-ta-pi.webp",
+      "status": "stock"
+    },
+    "巧克力": {
+      "slug": "qiao-ke-li",
+      "image": "items/qiao-ke-li.webp",
+      "status": "stock"
+    },
+    "烤肉酱": {
+      "slug": "kao-rou-jiang",
+      "image": "items/kao-rou-jiang.webp",
+      "status": "stock"
+    },
+    "饵块": {
+      "slug": "er-kuai",
+      "image": "items/er-kuai.webp",
+      "status": "stock"
+    },
+    "糟辣椒": {
+      "slug": "zao-la-jiao",
+      "image": "items/zao-la-jiao.webp",
+      "status": "stock"
+    },
+    "汤池老酱": {
+      "slug": "tang-chi-lao-jiang",
+      "image": "items/tang-chi-lao-jiang.webp",
+      "status": "stock"
+    },
+    "昭通酱": {
+      "slug": "zhao-tong-jiang",
+      "image": "items/zhao-tong-jiang.webp",
+      "status": "stock"
+    },
+    "羊骨": {
+      "slug": "yang-gu",
+      "image": "items/yang-gu.webp",
+      "status": "stock"
+    },
+    "牛排骨": {
+      "slug": "niu-pai-gu",
+      "image": "items/niu-pai-gu.webp",
+      "status": "stock"
+    },
+    "牛油": {
+      "slug": "niu-you",
+      "image": "items/niu-you.webp",
+      "status": "stock"
+    },
+    "百合": {
+      "slug": "bai-he",
+      "image": "items/bai-he.webp",
+      "status": "stock"
+    },
+    "山茶油": {
+      "slug": "shan-cha-you",
+      "image": "items/shan-cha-you.webp",
+      "status": "stock"
+    },
+    "鲜鱼": {
+      "slug": "xian-yu-huo",
+      "image": "items/xian-yu-huo.webp",
+      "status": "stock"
+    },
+    "青鱼": {
+      "slug": "qing-yu",
+      "image": "items/qing-yu.webp",
+      "status": "stock"
+    },
+    "柠檬叶": {
+      "slug": "ning-meng-ye",
+      "image": "items/ning-meng-ye.webp",
+      "status": "stock"
+    },
+    "薄荷": {
+      "slug": "bao-he",
+      "image": "items/bao-he.webp",
+      "status": "stock"
+    },
+    "紫甘蓝": {
+      "slug": "zi-gan-lan",
+      "image": "items/zi-gan-lan.webp",
+      "status": "stock"
+    },
+    "迷迭香": {
+      "slug": "mi-die-xiang",
+      "image": "items/mi-die-xiang.webp",
+      "status": "stock"
+    },
+    "肉豆蔻": {
+      "slug": "rou-dou-kou",
+      "image": "items/rou-dou-kou.webp",
+      "status": "stock"
+    },
+    "面筋": {
+      "slug": "mian-jin",
+      "image": "items/mian-jin.webp",
+      "status": "stock"
+    },
+    "凉糕粉": {
+      "slug": "liang-gao-fen",
+      "image": "items/liang-gao-fen.webp",
+      "status": "stock"
+    },
+    "卷章": {
+      "slug": "juan-zhang",
+      "image": "items/juan-zhang.webp",
+      "status": "stock"
+    },
+    "棠梨花": {
+      "slug": "tang-li-hua",
+      "image": "items/tang-li-hua.webp",
+      "status": "stock"
+    },
+    "豌豆苗": {
+      "slug": "wan-dou-miao",
+      "image": "items/wan-dou-miao.webp",
+      "status": "stock"
+    },
+    "菜干": {
+      "slug": "cai-gan",
+      "image": "items/cai-gan.webp",
+      "status": "stock"
+    },
+    "东北大酱": {
+      "slug": "dong-bei-da-jiang",
+      "image": "items/dong-bei-da-jiang.webp",
+      "status": "stock"
+    },
+    "虾饺": {
+      "slug": "xia-jiao",
+      "image": "items/xia-jiao.webp",
+      "status": "stock"
+    },
+    "皱皮青椒": {
+      "slug": "zhou-pi-qing-jiao",
+      "image": "items/zhou-pi-qing-jiao.webp",
+      "status": "stock"
+    },
+    "虾干": {
+      "slug": "xia-gan",
+      "image": "items/xia-gan.webp",
+      "status": "stock"
+    },
+    "梅花肉": {
+      "slug": "mei-hua-rou",
+      "image": "items/mei-hua-rou.webp",
+      "status": "stock"
+    },
+    "黄喉": {
+      "slug": "huang-hou",
+      "image": "items/huang-hou.webp",
+      "status": "stock"
+    },
+    "嫩肉粉": {
+      "slug": "nen-rou-fen",
+      "image": "items/nen-rou-fen.webp",
+      "status": "stock"
+    },
+    "黑牛肝菌": {
+      "slug": "hei-niu-gan-jun",
+      "image": "items/hei-niu-gan-jun.webp",
+      "status": "stock"
+    },
+    "臭鳜鱼": {
+      "slug": "chou-gui-yu",
+      "image": "items/chou-gui-yu.webp",
+      "status": "stock"
+    },
+    "藿香": {
+      "slug": "huo-xiang",
+      "image": "items/huo-xiang.webp",
+      "status": "stock"
+    },
+    "绿豆饼": {
+      "slug": "lv-dou-bing",
+      "image": "items/lv-dou-bing.webp",
+      "status": "stock"
+    },
+    "樱桃番茄": {
+      "slug": "ying-tao-fan-qie",
+      "image": "items/ying-tao-fan-qie.webp",
+      "status": "stock"
+    },
+    "黄彩椒": {
+      "slug": "huang-cai-jiao",
+      "image": "items/huang-cai-jiao.webp",
+      "status": "stock"
+    },
+    "红彩椒": {
+      "slug": "hong-cai-jiao",
+      "image": "items/hong-cai-jiao.webp",
+      "status": "stock"
+    },
+    "水果黄瓜": {
+      "slug": "shui-guo-huang-gua",
+      "image": "items/shui-guo-huang-gua.webp",
+      "status": "stock"
+    },
+    "白玉苦瓜": {
+      "slug": "bai-yu-ku-gua",
+      "image": "items/bai-yu-ku-gua.webp",
+      "status": "stock"
+    },
+    "手指胡萝卜": {
+      "slug": "shou-zhi-hu-luo-bo",
+      "image": "items/shou-zhi-hu-luo-bo.webp",
+      "status": "stock"
+    },
+    "铁棍山药": {
+      "slug": "tie-gun-shan-yao",
+      "image": "items/tie-gun-shan-yao.webp",
+      "status": "stock"
+    },
+    "香芋": {
+      "slug": "xiang-yu",
+      "image": "items/xiang-yu.webp",
+      "status": "stock"
+    },
+    "洋姜": {
+      "slug": "yang-jiang",
+      "image": "items/yang-jiang.webp",
+      "status": "stock"
+    },
+    "葛根": {
+      "slug": "ge-gen",
+      "image": "items/ge-gen.webp",
+      "status": "stock"
+    },
+    "苤蓝": {
+      "slug": "pie-lan",
+      "image": "items/pie-lan.webp",
+      "status": "stock"
+    },
+    "甜菜根": {
+      "slug": "tian-cai-gen",
+      "image": "items/tian-cai-gen.webp",
+      "status": "stock"
+    },
+    "水萝卜": {
+      "slug": "shui-luo-bo",
+      "image": "items/shui-luo-bo.webp",
+      "status": "stock"
+    },
+    "罗马生菜": {
+      "slug": "luo-ma-sheng-cai",
+      "image": "items/luo-ma-sheng-cai.webp",
+      "status": "stock"
+    },
+    "黄油生菜": {
+      "slug": "huang-you-sheng-cai",
+      "image": "items/huang-you-sheng-cai.webp",
+      "status": "stock"
+    },
+    "冰草": {
+      "slug": "bing-cao",
+      "image": "items/bing-cao.webp",
+      "status": "stock"
+    },
+    "羽衣甘蓝": {
+      "slug": "yu-yi-gan-lan",
+      "image": "items/yu-yi-gan-lan.webp",
+      "status": "stock"
+    },
+    "木耳菜": {
+      "slug": "mu-er-cai",
+      "image": "items/mu-er-cai.webp",
+      "status": "stock"
+    },
+    "马齿苋": {
+      "slug": "ma-chi-xian",
+      "image": "items/ma-chi-xian.webp",
+      "status": "stock"
+    },
+    "鸡枞菌": {
+      "slug": "ji-cong-jun",
+      "image": "items/ji-cong-jun.webp",
+      "status": "stock"
+    },
+    "松茸": {
+      "slug": "song-rong",
+      "image": "items/song-rong.webp",
+      "status": "stock"
+    },
+    "牛肝菌": {
+      "slug": "niu-gan-jun",
+      "image": "items/niu-gan-jun.webp",
+      "status": "stock"
+    },
+    "滑子菇": {
+      "slug": "hua-zi-gu",
+      "image": "items/hua-zi-gu.webp",
+      "status": "stock"
+    },
+    "鹿茸菇": {
+      "slug": "lu-rong-gu",
+      "image": "items/lu-rong-gu.webp",
+      "status": "stock"
+    },
+    "红枣干": {
+      "slug": "hong-zao-gan",
+      "image": "items/hong-zao-gan.webp",
+      "status": "stock"
+    },
+    "葡萄干": {
+      "slug": "pu-tao-gan",
+      "image": "items/pu-tao-gan.webp",
+      "status": "stock"
+    },
+    "无花果干": {
+      "slug": "wu-hua-guo-gan",
+      "image": "items/wu-hua-guo-gan.webp",
+      "status": "stock"
+    },
+    "海带结": {
+      "slug": "hai-dai-jie",
+      "image": "items/hai-dai-jie.webp",
+      "status": "stock"
+    },
+    "裙带菜": {
+      "slug": "qun-dai-cai",
+      "image": "items/qun-dai-cai.webp",
+      "status": "stock"
+    },
+    "豆泡": {
+      "slug": "dou-pao",
+      "image": "items/dou-pao.webp",
+      "status": "stock"
+    },
+    "纳豆": {
+      "slug": "na-dou",
+      "image": "items/na-dou.webp",
+      "status": "stock"
+    },
+    "豆腐脑": {
+      "slug": "dou-fu-nao",
+      "image": "items/dou-fu-nao.webp",
+      "status": "stock"
+    },
+    "茶干": {
+      "slug": "cha-gan",
+      "image": "items/cha-gan.webp",
+      "status": "stock"
+    },
+    "素肠": {
+      "slug": "su-chang",
+      "image": "items/su-chang.webp",
+      "status": "stock"
+    },
+    "鹅蛋": {
+      "slug": "e-dan",
+      "image": "items/e-dan.webp",
+      "status": "stock"
+    },
+    "溏心蛋": {
+      "slug": "tang-xin-dan",
+      "image": "items/tang-xin-dan.webp",
+      "status": "stock"
+    },
+    "卤蛋": {
+      "slug": "lu-dan",
+      "image": "items/lu-dan.webp",
+      "status": "stock"
+    },
+    "鸽子蛋": {
+      "slug": "ge-zi-dan",
+      "image": "items/ge-zi-dan.webp",
+      "status": "stock"
+    },
+    "马苏里拉芝士": {
+      "slug": "ma-su-li-la-zhi-shi",
+      "image": "items/ma-su-li-la-zhi-shi.webp",
+      "status": "stock"
+    },
+    "黄油块": {
+      "slug": "huang-you-kuai",
+      "image": "items/huang-you-kuai.webp",
+      "status": "stock"
+    },
+    "帕玛森芝士": {
+      "slug": "pa-ma-sen-zhi-shi",
+      "image": "items/pa-ma-sen-zhi-shi.webp",
+      "status": "stock"
+    },
+    "树莓": {
+      "slug": "shu-mei",
+      "image": "items/shu-mei.webp",
+      "status": "stock"
+    },
+    "火龙果": {
+      "slug": "huo-long-guo",
+      "image": "items/huo-long-guo.webp",
+      "status": "stock"
+    },
+    "青提": {
+      "slug": "qing-ti",
+      "image": "items/qing-ti.webp",
+      "status": "stock"
+    },
+    "红提": {
+      "slug": "hong-ti",
+      "image": "items/hong-ti.webp",
+      "status": "stock"
+    },
+    "山竹": {
+      "slug": "shan-zhu",
+      "image": "items/shan-zhu.webp",
+      "status": "stock"
+    },
+    "榴莲": {
+      "slug": "liu-lian",
+      "image": "items/liu-lian.webp",
+      "status": "stock"
+    },
+    "火鸡腿": {
+      "slug": "huo-ji-tui",
+      "image": "items/huo-ji-tui.webp",
+      "status": "stock"
+    },
+    "鸭掌": {
+      "slug": "ya-zhang",
+      "image": "items/ya-zhang.webp",
+      "status": "stock"
+    },
+    "乌鸡": {
+      "slug": "wu-ji",
+      "image": "items/wu-ji.webp",
+      "status": "stock"
+    },
+    "童子鸡": {
+      "slug": "tong-zi-ji",
+      "image": "items/tong-zi-ji.webp",
+      "status": "stock"
+    },
+    "鸡皮": {
+      "slug": "ji-pi",
+      "image": "items/ji-pi.webp",
+      "status": "stock"
+    },
+    "牛尾": {
+      "slug": "niu-wei",
+      "image": "items/niu-wei.webp",
+      "status": "stock"
+    },
+    "猪肋排": {
+      "slug": "zhu-lei-pai",
+      "image": "items/zhu-lei-pai.webp",
+      "status": "stock"
+    },
+    "猪大肠": {
+      "slug": "zhu-da-chang",
+      "image": "items/zhu-da-chang.webp",
+      "status": "stock"
+    },
+    "牛舌": {
+      "slug": "niu-she",
+      "image": "items/niu-she.webp",
+      "status": "stock"
+    },
+    "兔肉": {
+      "slug": "tu-rou",
+      "image": "items/tu-rou.webp",
+      "status": "stock"
+    },
+    "牛霖": {
+      "slug": "niu-lin",
+      "image": "items/niu-lin.webp",
+      "status": "stock"
+    },
+    "猪耳朵": {
+      "slug": "zhu-er-duo",
+      "image": "items/zhu-er-duo.webp",
+      "status": "stock"
+    },
+    "金枪鱼": {
+      "slug": "jin-qiang-yu",
+      "image": "items/jin-qiang-yu.webp",
+      "status": "stock"
+    },
+    "虾夷扇贝": {
+      "slug": "xia-yi-shan-bei",
+      "image": "items/xia-yi-shan-bei.webp",
+      "status": "stock"
+    },
+    "花螺": {
+      "slug": "hua-luo",
+      "image": "items/hua-luo.webp",
+      "status": "stock"
+    },
+    "香螺": {
+      "slug": "xiang-luo",
+      "image": "items/xiang-luo.webp",
+      "status": "stock"
+    },
+    "蛤蜊肉": {
+      "slug": "ge-li-rou",
+      "image": "items/ge-li-rou.webp",
+      "status": "stock"
+    },
+    "沙丁鱼": {
+      "slug": "sha-ding-yu",
+      "image": "items/sha-ding-yu.webp",
+      "status": "stock"
+    },
+    "秋刀鱼": {
+      "slug": "qiu-dao-yu",
+      "image": "items/qiu-dao-yu.webp",
+      "status": "stock"
+    },
+    "燕麦米": {
+      "slug": "yan-mai-mi",
+      "image": "items/yan-mai-mi.webp",
+      "status": "stock"
+    },
+    "意大利面": {
+      "slug": "yi-da-li-mian",
+      "image": "items/yi-da-li-mian.webp",
+      "status": "stock"
+    },
+    "紫米": {
+      "slug": "zi-mi",
+      "image": "items/zi-mi.webp",
+      "status": "stock"
+    },
+    "玉米糁": {
+      "slug": "yu-mi-san",
+      "image": "items/yu-mi-san.webp",
+      "status": "stock"
+    },
+    "高粱米": {
+      "slug": "gao-liang-mi",
+      "image": "items/gao-liang-mi.webp",
+      "status": "stock"
+    },
+    "薏米": {
+      "slug": "yi-mi",
+      "image": "items/yi-mi.webp",
+      "status": "stock"
+    },
+    "葱油饼": {
+      "slug": "cong-you-bing",
+      "image": "items/cong-you-bing.webp",
+      "status": "stock"
+    },
+    "烧卖": {
+      "slug": "shao-mai",
+      "image": "items/shao-mai.webp",
+      "status": "stock"
+    },
+    "奶黄包": {
+      "slug": "nai-huang-bao",
+      "image": "items/nai-huang-bao.webp",
+      "status": "stock"
+    },
+    "小笼包": {
+      "slug": "xiao-long-bao",
+      "image": "items/xiao-long-bao.webp",
+      "status": "stock"
+    },
+    "生煎包": {
+      "slug": "sheng-jian-bao",
+      "image": "items/sheng-jian-bao.webp",
+      "status": "stock"
+    },
+    "冷冻虾仁": {
+      "slug": "leng-dong-xia-ren",
+      "image": "items/leng-dong-xia-ren.webp",
+      "status": "stock"
+    },
+    "冷冻玉米粒": {
+      "slug": "leng-dong-yu-mi-li",
+      "image": "items/leng-dong-yu-mi-li.webp",
+      "status": "stock"
+    },
+    "冷冻豌豆": {
+      "slug": "leng-dong-wan-dou",
+      "image": "items/leng-dong-wan-dou.webp",
+      "status": "stock"
+    },
+    "冷冻薯条": {
+      "slug": "leng-dong-shu-tiao",
+      "image": "items/leng-dong-shu-tiao.webp",
+      "status": "stock"
+    },
+    "糖蒜": {
+      "slug": "tang-suan",
+      "image": "items/tang-suan.webp",
+      "status": "stock"
+    },
+    "酸白菜": {
+      "slug": "suan-bai-cai",
+      "image": "items/suan-bai-cai.webp",
+      "status": "stock"
+    },
+    "腌黄瓜": {
+      "slug": "a-huang-gua",
+      "image": "items/a-huang-gua.webp",
+      "status": "stock"
+    },
+    "黄桃罐头": {
+      "slug": "huang-tao-guan-tou",
+      "image": "items/huang-tao-guan-tou.webp",
+      "status": "stock"
+    },
+    "午餐肉罐头": {
+      "slug": "wu-can-rou-guan-tou",
+      "image": "items/wu-can-rou-guan-tou.webp",
+      "status": "stock"
+    },
+    "玉米罐头": {
+      "slug": "yu-mi-guan-tou",
+      "image": "items/yu-mi-guan-tou.webp",
+      "status": "stock"
+    },
+    "亚麻籽油": {
+      "slug": "ya-ma-zi-you",
+      "image": "items/ya-ma-zi-you.webp",
+      "status": "stock"
+    },
+    "玉米油": {
+      "slug": "yu-mi-you",
+      "image": "items/yu-mi-you.webp",
+      "status": "stock"
+    },
+    "椰子油": {
+      "slug": "ye-zi-you",
+      "image": "items/ye-zi-you.webp",
+      "status": "stock"
+    },
+    "核桃油": {
+      "slug": "he-tao-you",
+      "image": "items/he-tao-you.webp",
+      "status": "stock"
+    },
+    "粗盐": {
+      "slug": "cu-yan",
+      "image": "items/cu-yan.webp",
+      "status": "stock"
+    },
+    "岩盐": {
+      "slug": "yan-yan",
+      "image": "items/yan-yan.webp",
+      "status": "stock"
+    },
+    "麦芽糖": {
+      "slug": "mai-ya-tang",
+      "image": "items/mai-ya-tang.webp",
+      "status": "stock"
+    },
+    "黑醋": {
+      "slug": "hei-cu",
+      "image": "items/hei-cu.webp",
+      "status": "stock"
+    },
+    "白酱油": {
+      "slug": "bai-jiang-you",
+      "image": "items/bai-jiang-you.webp",
+      "status": "stock"
+    },
+    "蒸鱼酱油": {
+      "slug": "zheng-yu-jiang-you",
+      "image": "items/zheng-yu-jiang-you.webp",
+      "status": "stock"
+    },
+    "喼汁": {
+      "slug": "jie-zhi",
+      "image": "items/jie-zhi.webp",
+      "status": "stock"
+    },
+    "黄芥末酱": {
+      "slug": "huang-jie-mo-jiang",
+      "image": "items/huang-jie-mo-jiang.webp",
+      "status": "stock"
+    },
+    "塔塔酱": {
+      "slug": "ta-ta-jiang",
+      "image": "items/ta-ta-jiang.webp",
+      "status": "stock"
+    },
+    "辣椒仔": {
+      "slug": "la-jiao-zi",
+      "image": "items/la-jiao-zi.webp",
+      "status": "stock"
+    },
+    "是拉差辣酱": {
+      "slug": "shi-la-cha-la-jiang",
+      "image": "items/shi-la-cha-la-jiang.webp",
+      "status": "stock"
+    },
+    "橄榄酱": {
+      "slug": "gan-lan-jiang",
+      "image": "items/gan-lan-jiang.webp",
+      "status": "stock"
+    },
+    "砂仁": {
+      "slug": "sha-ren",
+      "image": "items/sha-ren.webp",
+      "status": "stock"
+    },
+    "山奈": {
+      "slug": "shan-nai",
+      "image": "items/shan-nai.webp",
+      "status": "stock"
+    },
+    "罗汉果": {
+      "slug": "luo-han-guo",
+      "image": "items/luo-han-guo.webp",
+      "status": "stock"
+    },
+    "肉蔻": {
+      "slug": "rou-kou",
+      "image": "items/rou-kou.webp",
+      "status": "stock"
+    },
+    "姜粉": {
+      "slug": "jiang-fen",
+      "image": "items/jiang-fen.webp",
+      "status": "stock"
+    },
+    "肉桂粉": {
+      "slug": "rou-gui-fen",
+      "image": "items/rou-gui-fen.webp",
+      "status": "stock"
+    },
+    "豆蔻粉": {
+      "slug": "dou-kou-fen",
+      "image": "items/dou-kou-fen.webp",
+      "status": "stock"
+    },
+    "高汤块": {
+      "slug": "gao-tang-kuai",
+      "image": "items/gao-tang-kuai.webp",
+      "status": "stock"
+    },
+    "牛骨汤块": {
+      "slug": "niu-gu-tang-kuai",
+      "image": "items/niu-gu-tang-kuai.webp",
+      "status": "stock"
+    },
+    "菌菇粉": {
+      "slug": "jun-gu-fen",
+      "image": "items/jun-gu-fen.webp",
+      "status": "stock"
+    },
+    "卡真粉": {
+      "slug": "ka-zhen-fen",
+      "image": "items/ka-zhen-fen.webp",
+      "status": "stock"
+    },
+    "酸菜鱼调料": {
+      "slug": "suan-cai-yu-tiao-liao",
+      "image": "items/suan-cai-yu-tiao-liao.webp",
+      "status": "stock"
+    },
+    "麻婆豆腐调料": {
+      "slug": "ma-po-dou-fu-tiao-liao",
+      "image": "items/ma-po-dou-fu-tiao-liao.webp",
+      "status": "stock"
+    },
+    "火锅蘸料": {
+      "slug": "huo-guo-zhan-liao",
+      "image": "items/huo-guo-zhan-liao.webp",
+      "status": "stock"
+    },
+    "卤料包": {
+      "slug": "lu-liao-bao",
+      "image": "items/lu-liao-bao.webp",
+      "status": "stock"
+    },
+    "梅酒": {
+      "slug": "mei-jiu",
+      "image": "items/mei-jiu.webp",
+      "status": "stock"
+    },
+    "伏特加": {
+      "slug": "fu-te-jia",
+      "image": "items/fu-te-jia.webp",
+      "status": "stock"
+    },
+    "紫长茄": {
+      "slug": "zi-chang-qie",
+      "image": "items/zi-chang-qie.webp",
+      "status": "stock"
+    },
+    "圆茄": {
+      "slug": "yuan-qie",
+      "image": "items/yuan-qie.webp",
+      "status": "stock"
+    },
+    "青线椒": {
+      "slug": "qing-xian-jiao",
+      "image": "items/qing-xian-jiao.webp",
+      "status": "stock"
+    },
+    "薄皮辣椒": {
+      "slug": "bao-pi-la-jiao",
+      "image": "items/bao-pi-la-jiao.webp",
+      "status": "stock"
+    },
+    "贝贝南瓜": {
+      "slug": "bei-bei-nan-gua",
+      "image": "items/bei-bei-nan-gua.webp",
+      "status": "stock"
+    },
+    "板栗南瓜": {
+      "slug": "ban-li-nan-gua",
+      "image": "items/ban-li-nan-gua.webp",
+      "status": "stock"
+    },
+    "丝瓜尖": {
+      "slug": "si-gua-jian",
+      "image": "items/si-gua-jian.webp",
+      "status": "stock"
+    },
+    "红皮萝卜": {
+      "slug": "hong-pi-luo-bo",
+      "image": "items/hong-pi-luo-bo.webp",
+      "status": "stock"
+    },
+    "牛蒡": {
+      "slug": "niu-bang",
+      "image": "items/niu-bang.webp",
+      "status": "stock"
+    },
+    "藕带": {
+      "slug": "ou-dai",
+      "image": "items/ou-dai.webp",
+      "status": "stock"
+    },
+    "慈姑": {
+      "slug": "ci-gu",
+      "image": "items/ci-gu.webp",
+      "status": "stock"
+    },
+    "魔芋块": {
+      "slug": "mo-yu-kuai",
+      "image": "items/mo-yu-kuai.webp",
+      "status": "stock"
+    },
+    "葛根粉块": {
+      "slug": "ge-gen-fen-kuai",
+      "image": "items/ge-gen-fen-kuai.webp",
+      "status": "stock"
+    },
+    "白山药": {
+      "slug": "bai-shan-yao",
+      "image": "items/bai-shan-yao.webp",
+      "status": "stock"
+    },
+    "红芽姜": {
+      "slug": "hong-ya-jiang",
+      "image": "items/hong-ya-jiang.webp",
+      "status": "stock"
+    },
+    "菜心苗": {
+      "slug": "cai-xin-miao",
+      "image": "items/cai-xin-miao.webp",
+      "status": "stock"
+    },
+    "娃娃菜苗": {
+      "slug": "wa-wa-cai-miao",
+      "image": "items/wa-wa-cai-miao.webp",
+      "status": "stock"
+    },
+    "紫叶生菜": {
+      "slug": "zi-ye-sheng-cai",
+      "image": "items/zi-ye-sheng-cai.webp",
+      "status": "stock"
+    },
+    "鸡毛菜": {
+      "slug": "ji-mao-cai",
+      "image": "items/ji-mao-cai.webp",
+      "status": "stock"
+    },
+    "苋菜苗": {
+      "slug": "xian-cai-miao",
+      "image": "items/xian-cai-miao.webp",
+      "status": "stock"
+    },
+    "豌豆尖": {
+      "slug": "wan-dou-jian",
+      "image": "items/wan-dou-jian.webp",
+      "status": "stock"
+    },
+    "南瓜尖": {
+      "slug": "nan-gua-jian",
+      "image": "items/nan-gua-jian.webp",
+      "status": "stock"
+    },
+    "红薯叶": {
+      "slug": "hong-shu-ye",
+      "image": "items/hong-shu-ye.webp",
+      "status": "stock"
+    },
+    "黑鸡枞": {
+      "slug": "hei-ji-cong",
+      "image": "items/hei-ji-cong.webp",
+      "status": "stock"
+    },
+    "羊肚菌": {
+      "slug": "yang-du-jun",
+      "image": "items/yang-du-jun.webp",
+      "status": "stock"
+    },
+    "竹荪蛋": {
+      "slug": "zhu-sun-dan",
+      "image": "items/zhu-sun-dan.webp",
+      "status": "stock"
+    },
+    "猴头菇": {
+      "slug": "hou-tou-gu",
+      "image": "items/hou-tou-gu.webp",
+      "status": "stock"
+    },
+    "球盖菇": {
+      "slug": "qiu-gai-gu",
+      "image": "items/qiu-gai-gu.webp",
+      "status": "stock"
+    },
+    "鲜香菇": {
+      "slug": "xian-xiang-gu",
+      "image": "items/xian-xiang-gu.webp",
+      "status": "stock"
+    },
+    "鲜茶树菇": {
+      "slug": "xian-cha-shu-gu",
+      "image": "items/xian-cha-shu-gu.webp",
+      "status": "stock"
+    },
+    "紫菜干": {
+      "slug": "zi-cai-gan",
+      "image": "items/zi-cai-gan.webp",
+      "status": "stock"
+    },
+    "干茶树菇": {
+      "slug": "gan-cha-shu-gu",
+      "image": "items/gan-cha-shu-gu.webp",
+      "status": "stock"
+    },
+    "腐竹结": {
+      "slug": "fu-zhu-jie",
+      "image": "items/fu-zhu-jie.webp",
+      "status": "stock"
+    },
+    "粉皮": {
+      "slug": "fen-pi",
+      "image": "items/fen-pi.webp",
+      "status": "stock"
+    },
+    "银耳碎": {
+      "slug": "yin-er-sui",
+      "image": "items/yin-er-sui.webp",
+      "status": "stock"
+    },
+    "木耳丝": {
+      "slug": "mu-er-si",
+      "image": "items/mu-er-si.webp",
+      "status": "stock"
+    },
+    "腐竹段": {
+      "slug": "fu-zhu-duan",
+      "image": "items/fu-zhu-duan.webp",
+      "status": "stock"
+    },
+    "豆腐丸子": {
+      "slug": "dou-fu-wan-zi",
+      "image": "items/dou-fu-wan-zi.webp",
+      "status": "stock"
+    },
+    "油豆皮": {
+      "slug": "you-dou-pi",
+      "image": "items/you-dou-pi.webp",
+      "status": "stock"
+    },
+    "千张结": {
+      "slug": "qian-zhang-jie",
+      "image": "items/qian-zhang-jie.webp",
+      "status": "stock"
+    },
+    "素鸭": {
+      "slug": "su-ya",
+      "image": "items/su-ya.webp",
+      "status": "stock"
+    },
+    "豆筋": {
+      "slug": "dou-jin",
+      "image": "items/dou-jin.webp",
+      "status": "stock"
+    },
+    "蛋饺": {
+      "slug": "dan-jiao",
+      "image": "items/dan-jiao.webp",
+      "status": "stock"
+    },
+    "茶叶蛋": {
+      "slug": "cha-ye-dan",
+      "image": "items/cha-ye-dan.webp",
+      "status": "stock"
+    },
+    "车打芝士": {
+      "slug": "che-da-zhi-shi",
+      "image": "items/che-da-zhi-shi.webp",
+      "status": "stock"
+    },
+    "奶酪片": {
+      "slug": "nai-lao-pian",
+      "image": "items/nai-lao-pian.webp",
+      "status": "stock"
+    },
+    "奶油芝士": {
+      "slug": "nai-you-zhi-shi",
+      "image": "items/nai-you-zhi-shi.webp",
+      "status": "stock"
+    },
+    "奶片": {
+      "slug": "nai-pian",
+      "image": "items/nai-pian.webp",
+      "status": "stock"
+    },
+    "荔枝": {
+      "slug": "li-zhi",
+      "image": "items/li-zhi.webp",
+      "status": "stock"
+    },
+    "龙眼": {
+      "slug": "long-yan",
+      "image": "items/long-yan.webp",
+      "status": "stock"
+    },
+    "枇杷": {
+      "slug": "pi-pa",
+      "image": "items/pi-pa.webp",
+      "status": "stock"
+    },
+    "柿子": {
+      "slug": "shi-zi",
+      "image": "items/shi-zi.webp",
+      "status": "stock"
+    },
+    "无花果": {
+      "slug": "wu-hua-guo",
+      "image": "items/wu-hua-guo.webp",
+      "status": "stock"
+    },
+    "木瓜": {
+      "slug": "mu-gua",
+      "image": "items/mu-gua.webp",
+      "status": "stock"
+    },
+    "车厘子": {
+      "slug": "che-li-zi",
+      "image": "items/che-li-zi.webp",
+      "status": "stock"
+    },
+    "鸡腿肉": {
+      "slug": "ji-tui-rou",
+      "image": "items/ji-tui-rou.webp",
+      "status": "stock"
+    },
+    "鹅掌": {
+      "slug": "e-zhang",
+      "image": "items/e-zhang.webp",
+      "status": "stock"
+    },
+    "鸡翅中": {
+      "slug": "ji-chi-zhong",
+      "image": "items/ji-chi-zhong.webp",
+      "status": "stock"
+    },
+    "猪尾巴": {
+      "slug": "zhu-wei-ba",
+      "image": "items/zhu-wei-ba.webp",
+      "status": "stock"
+    },
+    "羊蝎子": {
+      "slug": "yang-xie-zi",
+      "image": "items/yang-xie-zi.webp",
+      "status": "stock"
+    },
+    "驴肉": {
+      "slug": "lv-rou",
+      "image": "items/lv-rou.webp",
+      "status": "stock"
+    },
+    "鹿肉": {
+      "slug": "lu-rou",
+      "image": "items/lu-rou.webp",
+      "status": "stock"
+    },
+    "猪心": {
+      "slug": "zhu-xin",
+      "image": "items/zhu-xin.webp",
+      "status": "stock"
+    },
+    "牛肚": {
+      "slug": "niu-du",
+      "image": "items/niu-du.webp",
+      "status": "stock"
+    },
+    "牛筋": {
+      "slug": "niu-jin",
+      "image": "items/niu-jin.webp",
+      "status": "stock"
+    },
+    "多春鱼": {
+      "slug": "duo-chun-yu",
+      "image": "items/duo-chun-yu.webp",
+      "status": "stock"
+    },
+    "带鱼段": {
+      "slug": "dai-yu-duan",
+      "image": "items/dai-yu-duan.webp",
+      "status": "stock"
+    },
+    "鲜鲈鱼": {
+      "slug": "xian-lu-yu",
+      "image": "items/xian-lu-yu.webp",
+      "status": "stock"
+    },
+    "银鱼": {
+      "slug": "yin-yu",
+      "image": "items/yin-yu.webp",
+      "status": "stock"
+    },
+    "鲜虾皮": {
+      "slug": "xian-xia-pi",
+      "image": "items/xian-xia-pi.webp",
+      "status": "stock"
+    },
+    "鹰嘴豆": {
+      "slug": "ying-zui-dou",
+      "image": "items/ying-zui-dou.webp",
+      "status": "stock"
+    },
+    "红腰豆": {
+      "slug": "hong-yao-dou",
+      "image": "items/hong-yao-dou.webp",
+      "status": "stock"
+    },
+    "通心粉": {
+      "slug": "tong-xin-fen",
+      "image": "items/tong-xin-fen.webp",
+      "status": "stock"
+    },
+    "荞麦米": {
+      "slug": "qiao-mai-mi",
+      "image": "items/qiao-mai-mi.webp",
+      "status": "stock"
+    },
+    "燕麦片": {
+      "slug": "yan-mai-pian",
+      "image": "items/yan-mai-pian.webp",
+      "status": "stock"
+    },
+    "香米": {
+      "slug": "xiang-mi",
+      "image": "items/xiang-mi.webp",
+      "status": "stock"
+    },
+    "刀削面": {
+      "slug": "dao-xiao-mian",
+      "image": "items/dao-xiao-mian.webp",
+      "status": "stock"
+    },
+    "蒸饺": {
+      "slug": "zheng-jiao",
+      "image": "items/zheng-jiao.webp",
+      "status": "stock"
+    },
+    "春卷皮": {
+      "slug": "chun-juan-pi",
+      "image": "items/chun-juan-pi.webp",
+      "status": "stock"
+    },
+    "发面饼": {
+      "slug": "fa-mian-bing",
+      "image": "items/fa-mian-bing.webp",
+      "status": "stock"
+    },
+    "糖糕": {
+      "slug": "tang-gao",
+      "image": "items/tang-gao.webp",
+      "status": "stock"
+    },
+    "麻团": {
+      "slug": "ma-tuan",
+      "image": "items/ma-tuan.webp",
+      "status": "stock"
+    },
+    "冷冻鸡块": {
+      "slug": "leng-dong-ji-kuai",
+      "image": "items/leng-dong-ji-kuai.webp",
+      "status": "stock"
+    },
+    "冷冻鱼排": {
+      "slug": "leng-dong-yu-pai",
+      "image": "items/leng-dong-yu-pai.webp",
+      "status": "stock"
+    },
+    "冷冻丸子": {
+      "slug": "leng-dong-wan-zi",
+      "image": "items/leng-dong-wan-zi.webp",
+      "status": "stock"
+    },
+    "冷冻菠菜": {
+      "slug": "leng-dong-bo-cai",
+      "image": "items/leng-dong-bo-cai.webp",
+      "status": "stock"
+    },
+    "冷冻饺子": {
+      "slug": "leng-dong-jiao-zi",
+      "image": "items/leng-dong-jiao-zi.webp",
+      "status": "stock"
+    },
+    "腌辣椒": {
+      "slug": "a-la-jiao",
+      "image": "items/a-la-jiao.webp",
+      "status": "stock"
+    },
+    "酸豇豆": {
+      "slug": "suan-jiang-dou",
+      "image": "items/suan-jiang-dou.webp",
+      "status": "stock"
+    },
+    "泡萝卜": {
+      "slug": "pao-luo-bo",
+      "image": "items/pao-luo-bo.webp",
+      "status": "stock"
+    },
+    "腌笃鲜": {
+      "slug": "a-du-xian",
+      "image": "items/a-du-xian.webp",
+      "status": "stock"
+    },
+    "酱黄瓜": {
+      "slug": "jiang-huang-gua",
+      "image": "items/jiang-huang-gua.webp",
+      "status": "stock"
+    },
+    "蘑菇罐头": {
+      "slug": "mo-gu-guan-tou",
+      "image": "items/mo-gu-guan-tou.webp",
+      "status": "stock"
+    },
+    "沙丁鱼罐头": {
+      "slug": "sha-ding-yu-guan-tou",
+      "image": "items/sha-ding-yu-guan-tou.webp",
+      "status": "stock"
+    },
+    "八宝粥罐头": {
+      "slug": "ba-bao-zhou-guan-tou",
+      "image": "items/ba-bao-zhou-guan-tou.webp",
+      "status": "stock"
+    },
+    "豆豉鲮鱼罐头": {
+      "slug": "dou-chi-ling-yu-guan-tou",
+      "image": "items/dou-chi-ling-yu-guan-tou.webp",
+      "status": "stock"
+    },
+    "茶籽油": {
+      "slug": "cha-zi-you",
+      "image": "items/cha-zi-you.webp",
+      "status": "stock"
+    },
+    "米糠油": {
+      "slug": "mi-kang-you",
+      "image": "items/mi-kang-you.webp",
+      "status": "stock"
+    },
+    "牛油果油": {
+      "slug": "niu-you-guo-you",
+      "image": "items/niu-you-guo-you.webp",
+      "status": "stock"
+    },
+    "南瓜籽油": {
+      "slug": "nan-gua-zi-you",
+      "image": "items/nan-gua-zi-you.webp",
+      "status": "stock"
+    },
+    "粗砂糖": {
+      "slug": "cu-sha-tang",
+      "image": "items/cu-sha-tang.webp",
+      "status": "stock"
+    },
+    "糖霜": {
+      "slug": "tang-shuang",
+      "image": "items/tang-shuang.webp",
+      "status": "stock"
+    },
+    "竹盐": {
+      "slug": "zhu-yan",
+      "image": "items/zhu-yan.webp",
+      "status": "stock"
+    },
+    "味极鲜": {
+      "slug": "wei-ji-xian",
+      "image": "items/wei-ji-xian.webp",
+      "status": "stock"
+    },
+    "生抽王": {
+      "slug": "sheng-chou-wang",
+      "image": "items/sheng-chou-wang.webp",
+      "status": "stock"
+    },
+    "老抽王": {
+      "slug": "lao-chou-wang",
+      "image": "items/lao-chou-wang.webp",
+      "status": "stock"
+    },
+    "日式酱油": {
+      "slug": "ri-shi-jiang-you",
+      "image": "items/ri-shi-jiang-you.webp",
+      "status": "stock"
+    },
+    "白兰地": {
+      "slug": "bai-lan-di",
+      "image": "items/bai-lan-di.webp",
+      "status": "stock"
+    },
+    "果酒": {
+      "slug": "guo-jiu",
+      "image": "items/guo-jiu.webp",
+      "status": "stock"
+    },
+    "良姜": {
+      "slug": "liang-jiang",
+      "image": "items/liang-jiang.webp",
+      "status": "stock"
+    },
+    "辛夷": {
+      "slug": "xin-yi",
+      "image": "items/xin-yi.webp",
+      "status": "stock"
+    },
+    "孜然粒": {
+      "slug": "zi-ran-li",
+      "image": "items/zi-ran-li.webp",
+      "status": "stock"
+    },
+    "花椒粒": {
+      "slug": "hua-jiao-li",
+      "image": "items/hua-jiao-li.webp",
+      "status": "stock"
+    },
+    "迷迭香粉": {
+      "slug": "mi-die-xiang-fen",
+      "image": "items/mi-die-xiang-fen.webp",
+      "status": "stock"
+    },
+    "咖喱叶粉": {
+      "slug": "ka-li-ye-fen",
+      "image": "items/ka-li-ye-fen.webp",
+      "status": "stock"
+    },
+    "柴鱼片": {
+      "slug": "chai-yu-pian",
+      "image": "items/chai-yu-pian.webp",
+      "status": "stock"
+    },
+    "海带汤料": {
+      "slug": "hai-dai-tang-liao",
+      "image": "items/hai-dai-tang-liao.webp",
+      "status": "stock"
+    },
+    "鸡汤块": {
+      "slug": "ji-tang-kuai",
+      "image": "items/ji-tang-kuai.webp",
+      "status": "stock"
+    },
+    "黑椒腌料": {
+      "slug": "hei-jiao-a-liao",
+      "image": "items/hei-jiao-a-liao.webp",
+      "status": "stock"
+    },
+    "辣椒蘸料": {
+      "slug": "la-jiao-zhan-liao",
+      "image": "items/la-jiao-zhan-liao.webp",
+      "status": "stock"
+    },
+    "炖肉料": {
+      "slug": "dun-rou-liao",
+      "image": "items/dun-rou-liao.webp",
+      "status": "stock"
+    },
+    "千岛酱": {
+      "slug": "qian-dao-jiang",
+      "image": "items/qian-dao-jiang.webp",
+      "status": "stock"
+    },
+    "沙嗲酱": {
+      "slug": "sha-dia-jiang",
+      "image": "items/sha-dia-jiang.webp",
+      "status": "stock"
+    },
+    "芥末粉": {
+      "slug": "jie-mo-fen",
+      "image": "items/jie-mo-fen.webp",
+      "status": "stock"
+    },
+    "香叶粉": {
+      "slug": "xiang-ye-fen",
+      "image": "items/xiang-ye-fen.webp",
+      "status": "stock"
+    },
+    "炖肉料包": {
+      "slug": "dun-rou-liao-bao",
+      "image": "items/dun-rou-liao-bao.webp",
+      "status": "stock"
+    },
+    "蒜香粉": {
+      "slug": "suan-xiang-fen",
+      "image": "items/suan-xiang-fen.webp",
+      "status": "stock"
+    },
+    "红葡萄酒": {
+      "slug": "hong-pu-tao-jiu",
+      "image": "items/hong-pu-tao-jiu.webp",
+      "status": "stock"
+    },
+    "起泡酒": {
+      "slug": "qi-pao-jiu",
+      "image": "items/qi-pao-jiu.webp",
+      "status": "stock"
+    },
+    "鲷鱼": {
+      "slug": "diao-yu",
+      "image": "items/diao-yu.webp",
+      "status": "stock"
+    },
+    "鲅鱼": {
+      "slug": "ba-yu",
+      "image": "items/ba-yu.webp",
+      "status": "stock"
+    },
+    "蒜蓉辣椒酱": {
+      "slug": "suan-rong-la-jiao-jiang",
+      "image": "items/suan-rong-la-jiao-jiang.webp",
+      "status": "stock"
+    },
+    "韩式辣椒酱": {
+      "slug": "han-shi-la-jiao-jiang",
+      "image": "items/han-shi-la-jiao-jiang.webp",
+      "status": "stock"
+    },
+    "泰式甜辣酱": {
+      "slug": "tai-shi-tian-la-jiang",
+      "image": "items/tai-shi-tian-la-jiang.webp",
+      "status": "stock"
+    },
+    "薄荷粉": {
+      "slug": "bao-he-fen",
+      "image": "items/bao-he-fen.webp",
+      "status": "stock"
+    },
+    "草蔻": {
+      "slug": "cao-kou",
+      "image": "items/cao-kou.webp",
+      "status": "stock"
+    },
+    "鸡脖": {
+      "slug": "ji-bo",
+      "image": "items/ji-bo.webp",
+      "status": "stock"
+    },
+    "鸭翅根": {
+      "slug": "ya-chi-gen",
+      "image": "items/ya-chi-gen.webp",
+      "status": "stock"
+    },
+    "鹅胸": {
+      "slug": "e-xiong",
+      "image": "items/e-xiong.webp",
+      "status": "stock"
+    },
+    "柴鸡蛋": {
+      "slug": "chai-ji-dan",
+      "image": "items/chai-ji-dan.webp",
+      "status": "stock"
+    },
+    "白茄子": {
+      "slug": "bai-qie-zi",
+      "image": "items/bai-qie-zi.webp",
+      "status": "stock"
+    },
+    "花茄": {
+      "slug": "hua-qie",
+      "image": "items/hua-qie.webp",
+      "status": "stock"
+    },
+    "小米椒": {
+      "slug": "xiao-mi-jiao",
+      "image": "items/xiao-mi-jiao.webp",
+      "status": "stock"
+    },
+    "灯笼椒": {
+      "slug": "deng-long-jiao",
+      "image": "items/deng-long-jiao.webp",
+      "status": "stock"
+    },
+    "青圆椒": {
+      "slug": "qing-yuan-jiao",
+      "image": "items/qing-yuan-jiao.webp",
+      "status": "stock"
+    },
+    "独头蒜": {
+      "slug": "du-tou-suan",
+      "image": "items/du-tou-suan.webp",
+      "status": "stock"
+    },
+    "沙姜鲜": {
+      "slug": "sha-jiang-xian",
+      "image": "items/sha-jiang-xian.webp",
+      "status": "stock"
+    },
+    "南姜": {
+      "slug": "nan-jiang",
+      "image": "items/nan-jiang.webp",
+      "status": "stock"
+    },
+    "山柰鲜": {
+      "slug": "shan-nai-xian",
+      "image": "items/shan-nai-xian.webp",
+      "status": "stock"
+    },
+    "百合鲜": {
+      "slug": "bai-he-xian",
+      "image": "items/bai-he-xian.webp",
+      "status": "stock"
+    },
+    "菱角": {
+      "slug": "ling-jiao",
+      "image": "items/ling-jiao.webp",
+      "status": "stock"
+    },
+    "白茅根": {
+      "slug": "bai-mao-gen",
+      "image": "items/bai-mao-gen.webp",
+      "status": "stock"
+    },
+    "鱼腥草根": {
+      "slug": "yu-xing-cao-gen",
+      "image": "items/yu-xing-cao-gen.webp",
+      "status": "stock"
+    },
+    "芥蓝苗": {
+      "slug": "jie-lan-miao",
+      "image": "items/jie-lan-miao.webp",
+      "status": "stock"
+    },
+    "菜薹": {
+      "slug": "cai-tai",
+      "image": "items/cai-tai.webp",
+      "status": "stock"
+    },
+    "红苋菜": {
+      "slug": "hong-xian-cai",
+      "image": "items/hong-xian-cai.webp",
+      "status": "stock"
+    },
+    "绿苋菜": {
+      "slug": "lv-xian-cai",
+      "image": "items/lv-xian-cai.webp",
+      "status": "stock"
+    },
+    "包菜苗": {
+      "slug": "bao-cai-miao",
+      "image": "items/bao-cai-miao.webp",
+      "status": "stock"
+    },
+    "水芹菜": {
+      "slug": "shui-qin-cai",
+      "image": "items/shui-qin-cai.webp",
+      "status": "stock"
+    },
+    "鸡腿菇": {
+      "slug": "ji-tui-gu",
+      "image": "items/ji-tui-gu.webp",
+      "status": "stock"
+    },
+    "榆黄蘑": {
+      "slug": "yu-huang-mo",
+      "image": "items/yu-huang-mo.webp",
+      "status": "stock"
+    },
+    "草菇": {
+      "slug": "cao-gu",
+      "image": "items/cao-gu.webp",
+      "status": "stock"
+    },
+    "白灵菇": {
+      "slug": "bai-ling-gu",
+      "image": "items/bai-ling-gu.webp",
+      "status": "stock"
+    },
+    "榛蘑": {
+      "slug": "zhen-mo",
+      "image": "items/zhen-mo.webp",
+      "status": "stock"
+    },
+    "元蘑": {
+      "slug": "yuan-mo",
+      "image": "items/yuan-mo.webp",
+      "status": "stock"
+    },
+    "姬松茸干": {
+      "slug": "ji-song-rong-gan",
+      "image": "items/ji-song-rong-gan.webp",
+      "status": "stock"
+    },
+    "黄花菜干": {
+      "slug": "huang-hua-cai-gan",
+      "image": "items/huang-hua-cai-gan.webp",
+      "status": "stock"
+    },
+    "干萝卜丝": {
+      "slug": "gan-luo-bo-si",
+      "image": "items/gan-luo-bo-si.webp",
+      "status": "stock"
+    },
+    "笋衣": {
+      "slug": "sun-yi",
+      "image": "items/sun-yi.webp",
+      "status": "stock"
+    },
+    "干海米": {
+      "slug": "gan-hai-mi",
+      "image": "items/gan-hai-mi.webp",
+      "status": "stock"
+    },
+    "豆腐皮结": {
+      "slug": "dou-fu-pi-jie",
+      "image": "items/dou-fu-pi-jie.webp",
+      "status": "stock"
+    },
+    "素鸡块": {
+      "slug": "su-ji-kuai",
+      "image": "items/su-ji-kuai.webp",
+      "status": "stock"
+    },
+    "豆干丝": {
+      "slug": "dou-gan-si",
+      "image": "items/dou-gan-si.webp",
+      "status": "stock"
+    },
+    "油豆腐泡": {
+      "slug": "you-dou-fu-pao",
+      "image": "items/you-dou-fu-pao.webp",
+      "status": "stock"
+    },
+    "初生蛋": {
+      "slug": "chu-sheng-dan",
+      "image": "items/chu-sheng-dan.webp",
+      "status": "stock"
+    },
+    "绿壳蛋": {
+      "slug": "lv-ke-dan",
+      "image": "items/lv-ke-dan.webp",
+      "status": "stock"
+    },
+    "双黄蛋": {
+      "slug": "shuang-huang-dan",
+      "image": "items/shuang-huang-dan.webp",
+      "status": "stock"
+    },
+    "马苏里拉碎": {
+      "slug": "ma-su-li-la-sui",
+      "image": "items/ma-su-li-la-sui.webp",
+      "status": "stock"
+    },
+    "帕玛森粉": {
+      "slug": "pa-ma-sen-fen",
+      "image": "items/pa-ma-sen-fen.webp",
+      "status": "stock"
+    },
+    "奶酪棒": {
+      "slug": "nai-lao-bang",
+      "image": "items/nai-lao-bang.webp",
+      "status": "stock"
+    },
+    "奶豆腐": {
+      "slug": "nai-dou-fu",
+      "image": "items/nai-dou-fu.webp",
+      "status": "stock"
+    },
+    "杏": {
+      "slug": "xing",
+      "image": "items/xing.webp",
+      "status": "stock"
+    },
+    "李子": {
+      "slug": "li-zi",
+      "image": "items/li-zi.webp",
+      "status": "stock"
+    },
+    "西梅": {
+      "slug": "xi-mei",
+      "image": "items/xi-mei.webp",
+      "status": "stock"
+    },
+    "黄桃": {
+      "slug": "huang-tao",
+      "image": "items/huang-tao.webp",
+      "status": "stock"
+    },
+    "蟠桃": {
+      "slug": "pan-tao",
+      "image": "items/pan-tao.webp",
+      "status": "stock"
+    },
+    "油桃": {
+      "slug": "you-tao",
+      "image": "items/you-tao.webp",
+      "status": "stock"
+    },
+    "杨桃": {
+      "slug": "yang-tao",
+      "image": "items/yang-tao.webp",
+      "status": "stock"
+    },
+    "鸡胗花": {
+      "slug": "ji-zhen-hua",
+      "image": "items/ji-zhen-hua.webp",
+      "status": "stock"
+    },
+    "鸭锁骨": {
+      "slug": "ya-suo-gu",
+      "image": "items/ya-suo-gu.webp",
+      "status": "stock"
+    },
+    "鸡腿排": {
+      "slug": "ji-tui-pai",
+      "image": "items/ji-tui-pai.webp",
+      "status": "stock"
+    },
+    "鸭腿肉": {
+      "slug": "ya-tui-rou",
+      "image": "items/ya-tui-rou.webp",
+      "status": "stock"
+    },
+    "鹅翅": {
+      "slug": "e-chi",
+      "image": "items/e-chi.webp",
+      "status": "stock"
+    },
+    "牛腱芯": {
+      "slug": "niu-jian-xin",
+      "image": "items/niu-jian-xin.webp",
+      "status": "stock"
+    },
+    "猪肘": {
+      "slug": "zhu-zhou",
+      "image": "items/zhu-zhou.webp",
+      "status": "stock"
+    },
+    "猪肚尖": {
+      "slug": "zhu-du-jian",
+      "image": "items/zhu-du-jian.webp",
+      "status": "stock"
+    },
+    "猪大肠头": {
+      "slug": "zhu-da-chang-tou",
+      "image": "items/zhu-da-chang-tou.webp",
+      "status": "stock"
+    },
+    "羊腿肉": {
+      "slug": "yang-tui-rou",
+      "image": "items/yang-tui-rou.webp",
+      "status": "stock"
+    },
+    "羊排肉": {
+      "slug": "yang-pai-rou",
+      "image": "items/yang-pai-rou.webp",
+      "status": "stock"
+    },
+    "鲈鱼段": {
+      "slug": "lu-yu-duan",
+      "image": "items/lu-yu-duan.webp",
+      "status": "stock"
+    },
+    "鲳鱼段": {
+      "slug": "chang-yu-duan",
+      "image": "items/chang-yu-duan.webp",
+      "status": "stock"
+    },
+    "黄花鱼": {
+      "slug": "huang-hua-yu",
+      "image": "items/huang-hua-yu.webp",
+      "status": "stock"
+    },
+    "小黄鱼": {
+      "slug": "xiao-huang-yu",
+      "image": "items/xiao-huang-yu.webp",
+      "status": "stock"
+    },
+    "梅童鱼": {
+      "slug": "mei-tong-yu",
+      "image": "items/mei-tong-yu.webp",
+      "status": "stock"
+    },
+    "龙头鱼": {
+      "slug": "long-tou-yu",
+      "image": "items/long-tou-yu.webp",
+      "status": "stock"
+    },
+    "年糕条": {
+      "slug": "nian-gao-tiao",
+      "image": "items/nian-gao-tiao.webp",
+      "status": "stock"
+    },
+    "米粉干": {
+      "slug": "mi-fen-gan",
+      "image": "items/mi-fen-gan.webp",
+      "status": "stock"
+    },
+    "螺旋面": {
+      "slug": "luo-xuan-mian",
+      "image": "items/luo-xuan-mian.webp",
+      "status": "stock"
+    },
+    "蝴蝶面": {
+      "slug": "hu-die-mian",
+      "image": "items/hu-die-mian.webp",
+      "status": "stock"
+    },
+    "贝壳面": {
+      "slug": "bei-ke-mian",
+      "image": "items/bei-ke-mian.webp",
+      "status": "stock"
+    },
+    "细面": {
+      "slug": "xi-mian",
+      "image": "items/xi-mian.webp",
+      "status": "stock"
+    },
+    "锅贴": {
+      "slug": "guo-tie",
+      "image": "items/guo-tie.webp",
+      "status": "stock"
+    },
+    "包子皮": {
+      "slug": "bao-zi-pi",
+      "image": "items/bao-zi-pi.webp",
+      "status": "stock"
+    },
+    "酥饼": {
+      "slug": "su-bing",
+      "image": "items/su-bing.webp",
+      "status": "stock"
+    },
+    "月饼": {
+      "slug": "yue-bing",
+      "image": "items/yue-bing.webp",
+      "status": "stock"
+    },
+    "蛋黄酥": {
+      "slug": "dan-huang-su",
+      "image": "items/dan-huang-su.webp",
+      "status": "stock"
+    },
+    "冷冻馄饨": {
+      "slug": "leng-dong-hun-tun",
+      "image": "items/leng-dong-hun-tun.webp",
+      "status": "stock"
+    },
+    "冷冻南瓜块": {
+      "slug": "leng-dong-nan-gua-kuai",
+      "image": "items/leng-dong-nan-gua-kuai.webp",
+      "status": "stock"
+    },
+    "冷冻芦笋": {
+      "slug": "leng-dong-lu-sun",
+      "image": "items/leng-dong-lu-sun.webp",
+      "status": "stock"
+    },
+    "冷冻蓝莓": {
+      "slug": "leng-dong-lan-mei",
+      "image": "items/leng-dong-lan-mei.webp",
+      "status": "stock"
+    },
+    "冷冻芋圆": {
+      "slug": "leng-dong-yu-yuan",
+      "image": "items/leng-dong-yu-yuan.webp",
+      "status": "stock"
+    },
+    "酸笋": {
+      "slug": "suan-sun",
+      "image": "items/suan-sun.webp",
+      "status": "stock"
+    },
+    "腌芥菜": {
+      "slug": "a-jie-cai",
+      "image": "items/a-jie-cai.webp",
+      "status": "stock"
+    },
+    "腌白菜": {
+      "slug": "a-bai-cai",
+      "image": "items/a-bai-cai.webp",
+      "status": "stock"
+    },
+    "腌萝卜条": {
+      "slug": "a-luo-bo-tiao",
+      "image": "items/a-luo-bo-tiao.webp",
+      "status": "stock"
+    },
+    "红烧肉罐头": {
+      "slug": "hong-shao-rou-guan-tou",
+      "image": "items/hong-shao-rou-guan-tou.webp",
+      "status": "stock"
+    },
+    "鹌鹑蛋罐头": {
+      "slug": "an-chun-dan-guan-tou",
+      "image": "items/an-chun-dan-guan-tou.webp",
+      "status": "stock"
+    },
+    "糖水橘子罐头": {
+      "slug": "tang-shui-ju-zi-guan-tou",
+      "image": "items/tang-shui-ju-zi-guan-tou.webp",
+      "status": "stock"
+    },
+    "竹笋罐头": {
+      "slug": "zhu-sun-guan-tou",
+      "image": "items/zhu-sun-guan-tou.webp",
+      "status": "stock"
+    },
+    "紫苏籽油": {
+      "slug": "zi-su-zi-you",
+      "image": "items/zi-su-zi-you.webp",
+      "status": "stock"
+    },
+    "棕榈油": {
+      "slug": "zong-lv-you",
+      "image": "items/zong-lv-you.webp",
+      "status": "stock"
+    },
+    "芥花油": {
+      "slug": "jie-hua-you",
+      "image": "items/jie-hua-you.webp",
+      "status": "stock"
+    },
+    "棉籽油": {
+      "slug": "mian-zi-you",
+      "image": "items/mian-zi-you.webp",
+      "status": "stock"
+    },
+    "冰糖碎": {
+      "slug": "bing-tang-sui",
+      "image": "items/bing-tang-sui.webp",
+      "status": "stock"
+    },
+    "片糖": {
+      "slug": "pian-tang",
+      "image": "items/pian-tang.webp",
+      "status": "stock"
+    },
+    "焦糖糖浆": {
+      "slug": "jiao-tang-tang-jiang",
+      "image": "items/jiao-tang-tang-jiang.webp",
+      "status": "stock"
+    },
+    "高粱酒": {
+      "slug": "gao-liang-jiu",
+      "image": "items/gao-liang-jiu.webp",
+      "status": "stock"
+    },
+    "威士忌": {
+      "slug": "wei-shi-ji",
+      "image": "items/wei-shi-ji.webp",
+      "status": "stock"
+    },
+    "金酒": {
+      "slug": "jin-jiu",
+      "image": "items/jin-jiu.webp",
+      "status": "stock"
+    },
+    "龙舌兰": {
+      "slug": "long-she-lan",
+      "image": "items/long-she-lan.webp",
+      "status": "stock"
+    },
+    "桂花酒": {
+      "slug": "gui-hua-jiu",
+      "image": "items/gui-hua-jiu.webp",
+      "status": "stock"
+    },
+    "虾酱": {
+      "slug": "xia-jiang",
+      "image": "items/xia-jiang.webp",
+      "status": "stock"
+    },
+    "鱼籽酱": {
+      "slug": "yu-zi-jiang",
+      "image": "items/yu-zi-jiang.webp",
+      "status": "stock"
+    },
+    "松露酱": {
+      "slug": "song-lou-jiang",
+      "image": "items/song-lou-jiang.webp",
+      "status": "stock"
+    },
+    "蓝莓酱": {
+      "slug": "lan-mei-jiang",
+      "image": "items/lan-mei-jiang.webp",
+      "status": "stock"
+    },
+    "香砂": {
+      "slug": "xiang-sha",
+      "image": "items/xiang-sha.webp",
+      "status": "stock"
+    },
+    "百里香干": {
+      "slug": "bai-li-xiang-gan",
+      "image": "items/bai-li-xiang-gan.webp",
+      "status": "stock"
+    },
+    "牛至干": {
+      "slug": "niu-zhi-gan",
+      "image": "items/niu-zhi-gan.webp",
+      "status": "stock"
+    },
+    "迷迭香干": {
+      "slug": "mi-die-xiang-gan",
+      "image": "items/mi-die-xiang-gan.webp",
+      "status": "stock"
+    },
+    "红豆蔻": {
+      "slug": "hong-dou-kou",
+      "image": "items/hong-dou-kou.webp",
+      "status": "stock"
+    },
+    "肉豆蔻衣": {
+      "slug": "rou-dou-kou-yi",
+      "image": "items/rou-dou-kou-yi.webp",
+      "status": "stock"
+    },
+    "鼠尾草干": {
+      "slug": "shu-wei-cao-gan",
+      "image": "items/shu-wei-cao-gan.webp",
+      "status": "stock"
+    },
+    "百里香粉": {
+      "slug": "bai-li-xiang-fen",
+      "image": "items/bai-li-xiang-fen.webp",
+      "status": "stock"
+    },
+    "牛至粉": {
+      "slug": "niu-zhi-fen",
+      "image": "items/niu-zhi-fen.webp",
+      "status": "stock"
+    },
+    "罗勒粉": {
+      "slug": "luo-le-fen",
+      "image": "items/luo-le-fen.webp",
+      "status": "stock"
+    },
+    "欧芹粉": {
+      "slug": "ou-qin-fen",
+      "image": "items/ou-qin-fen.webp",
+      "status": "stock"
+    },
+    "小茴香粉": {
+      "slug": "xiao-hui-xiang-fen",
+      "image": "items/xiao-hui-xiang-fen.webp",
+      "status": "stock"
+    },
+    "鼠尾草粉": {
+      "slug": "shu-wei-cao-fen",
+      "image": "items/shu-wei-cao-fen.webp",
+      "status": "stock"
+    },
+    "瑶柱汁": {
+      "slug": "yao-zhu-zhi",
+      "image": "items/yao-zhu-zhi.webp",
+      "status": "stock"
+    },
+    "猪骨汤块": {
+      "slug": "zhu-gu-tang-kuai",
+      "image": "items/zhu-gu-tang-kuai.webp",
+      "status": "stock"
+    },
+    "番茄汤底": {
+      "slug": "fan-qie-tang-di",
+      "image": "items/fan-qie-tang-di.webp",
+      "status": "stock"
+    },
+    "海鲜汤块": {
+      "slug": "hai-xian-tang-kuai",
+      "image": "items/hai-xian-tang-kuai.webp",
+      "status": "stock"
+    },
+    "大盘鸡料": {
+      "slug": "da-pan-ji-liao",
+      "image": "items/da-pan-ji-liao.webp",
+      "status": "stock"
+    },
+    "水煮鱼料": {
+      "slug": "shui-zhu-yu-liao",
+      "image": "items/shui-zhu-yu-liao.webp",
+      "status": "stock"
+    },
+    "回锅肉料": {
+      "slug": "hui-guo-rou-liao",
+      "image": "items/hui-guo-rou-liao.webp",
+      "status": "stock"
+    },
+    "黄焖鸡料": {
+      "slug": "huang-men-ji-liao",
+      "image": "items/huang-men-ji-liao.webp",
+      "status": "stock"
+    },
+    "酸汤肥牛料": {
+      "slug": "suan-tang-fei-niu-liao",
+      "image": "items/suan-tang-fei-niu-liao.webp",
+      "status": "stock"
+    },
+    "盐焗粉": {
+      "slug": "yan-ju-fen",
+      "image": "items/yan-ju-fen.webp",
+      "status": "stock"
+    },
+    "白灼汁": {
+      "slug": "bai-zhuo-zhi",
+      "image": "items/bai-zhuo-zhi.webp",
+      "status": "stock"
+    },
+    "素高汤块": {
+      "slug": "su-gao-tang-kuai",
+      "image": "items/su-gao-tang-kuai.webp",
+      "status": "stock"
+    },
+    "菌汤块": {
+      "slug": "jun-tang-kuai",
+      "image": "items/jun-tang-kuai.webp",
+      "status": "stock"
+    },
+    "关东煮汤底": {
+      "slug": "guan-dong-zhu-tang-di",
+      "image": "items/guan-dong-zhu-tang-di.webp",
+      "status": "stock"
+    }
+  },
+  "categories": {
+    "猪肉": {
+      "slug": "zhu-rou",
+      "image": "categories/zhu-rou.webp",
+      "status": "stock"
+    },
+    "牛肉": {
+      "slug": "niu-rou",
+      "image": "categories/niu-rou.webp",
+      "status": "stock"
+    },
+    "羊肉": {
+      "slug": "yang-rou",
+      "image": "categories/yang-rou.webp",
+      "status": "stock"
+    },
+    "鸡肉": {
+      "slug": "ji-rou",
+      "image": "categories/ji-rou.webp",
+      "status": "stock"
+    },
+    "鸭肉": {
+      "slug": "ya-rou",
+      "image": "categories/ya-rou.webp",
+      "status": "stock"
+    },
+    "鱼类": {
+      "slug": "yu-lei",
+      "image": "categories/yu-lei.webp",
+      "status": "stock"
+    },
+    "虾蟹贝": {
+      "slug": "xia-xie-bei",
+      "image": "categories/xia-xie-bei.webp",
+      "status": "stock"
+    },
+    "其他海鲜": {
+      "slug": "qi-ta-hai-xian",
+      "image": "categories/qi-ta-hai-xian.webp",
+      "status": "stock"
+    },
+    "蔬菜": {
+      "slug": "shu-cai",
+      "image": "categories/shu-cai.webp",
+      "status": "stock"
+    },
+    "菌菇": {
+      "slug": "jun-gu",
+      "image": "categories/jun-gu.webp",
+      "status": "stock"
+    },
+    "蛋类": {
+      "slug": "dan-lei",
+      "image": "categories/dan-lei.webp",
+      "status": "stock"
+    },
+    "豆制品": {
+      "slug": "dou-zhi-pin",
+      "image": "categories/dou-zhi-pin.webp",
+      "status": "stock"
+    },
+    "主食": {
+      "slug": "zhu-shi",
+      "image": "categories/zhu-shi.webp",
+      "status": "stock"
+    },
+    "面点": {
+      "slug": "mian-dian",
+      "image": "categories/mian-dian.webp",
+      "status": "stock"
+    },
+    "川菜": {
+      "slug": "chuan-cai",
+      "image": "categories/chuan-cai.webp",
+      "status": "stock"
+    },
+    "粤菜": {
+      "slug": "yue-cai",
+      "image": "categories/yue-cai.webp",
+      "status": "stock"
+    },
+    "湘菜": {
+      "slug": "xiang-cai-hu-nan",
+      "image": "categories/xiang-cai-hu-nan.webp",
+      "status": "stock"
+    },
+    "鲁菜": {
+      "slug": "lu-cai",
+      "image": "categories/lu-cai.webp",
+      "status": "stock"
+    },
+    "苏菜": {
+      "slug": "su-cai",
+      "image": "categories/su-cai.webp",
+      "status": "stock"
+    },
+    "浙菜": {
+      "slug": "zhe-cai",
+      "image": "categories/zhe-cai.webp",
+      "status": "stock"
+    },
+    "闽菜": {
+      "slug": "min-cai",
+      "image": "categories/min-cai.webp",
+      "status": "stock"
+    },
+    "徽菜": {
+      "slug": "hui-cai",
+      "image": "categories/hui-cai.webp",
+      "status": "stock"
+    },
+    "东北菜": {
+      "slug": "dong-bei-cai",
+      "image": "categories/dong-bei-cai.webp",
+      "status": "stock"
+    },
+    "山西菜": {
+      "slug": "shan-xi-cai",
+      "image": "categories/shan-xi-cai.webp",
+      "status": "stock"
+    },
+    "潮汕菜": {
+      "slug": "chao-shan-cai",
+      "image": "categories/chao-shan-cai.webp",
+      "status": "stock"
+    },
+    "客家菜": {
+      "slug": "ke-jia-cai",
+      "image": "categories/ke-jia-cai.webp",
+      "status": "stock"
+    },
+    "云贵菜": {
+      "slug": "yun-gui-cai",
+      "image": "categories/yun-gui-cai.webp",
+      "status": "stock"
+    },
+    "西北菜": {
+      "slug": "xi-bei-cai",
+      "image": "categories/xi-bei-cai.webp",
+      "status": "stock"
+    },
+    "京津菜": {
+      "slug": "jing-jin-cai",
+      "image": "categories/jing-jin-cai.webp",
+      "status": "stock"
+    },
+    "西餐": {
+      "slug": "xi-can",
+      "image": "categories/xi-can.webp",
+      "status": "stock"
+    },
+    "东南亚菜": {
+      "slug": "dong-nan-ya-cai",
+      "image": "categories/dong-nan-ya-cai.webp",
+      "status": "stock"
+    },
+    "日韩菜": {
+      "slug": "ri-han-cai",
+      "image": "categories/ri-han-cai.webp",
+      "status": "stock"
+    },
+    "家常菜": {
+      "slug": "jia-chang-cai",
+      "image": "categories/jia-chang-cai.webp",
+      "status": "stock"
+    },
+    "快手菜": {
+      "slug": "kuai-shou-cai",
+      "image": "categories/kuai-shou-cai.webp",
+      "status": "stock"
+    },
+    "汤羹": {
+      "slug": "tang-geng",
+      "image": "categories/tang-geng.webp",
+      "status": "stock"
+    },
+    "凉菜": {
+      "slug": "liang-cai",
+      "image": "categories/liang-cai.webp",
+      "status": "stock"
+    }
+  }
+}

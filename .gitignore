@@ -1,0 +1,27 @@
+/build/
+/.mygo/
+mygo_windows_*.syso
+/app.test.exe
+*.test.exe
+/.workbuddy/
+/vibe_images/
+/.screenshots/
+
+# 本地数据与密钥
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+tool/ai/local_config.json
+
+# 截图实际产物（golden 保留）
+test/screenshots/**/*.actual.png
+test/screenshots/**/*.diff.png
+
+# 临时文件
+*.tmp
+*.log
+.DS_Store
+_debug-*.png

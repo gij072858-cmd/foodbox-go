@@ -1,0 +1,416 @@
+{
+  "source": {
+    "中国疾病预防控制中心营养与健康所·食物营养成分查询平台（中国食物成分表）": "https://nlc.chinanutri.cn/fq/",
+    "绵白糖（第 6 版成分表数据转载）": "https://www.360doc.cn/article/642066_1169363793.html",
+    "醋(均值)/白醋/豆瓣酱页": "https://nlc.chinanutri.cn/fq/foodinfo/1520.html · 1521 · 1523",
+    "甜面酱（中国营养学会面板转载）": "https://www.xn--ptua509t.com/tiao-wei-pin-lei/jiang/4924/",
+    "官方平台逐页转录（本轮补）": "https://nlc.chinanutri.cn/fq/ 食物详情页（料酒 1570 / 鸡精 1567 / 胡椒粉 1563 / 花椒 1583 / 豆豉 1572 / 腐乳 1545 / 冰糖 1450 / 红糖 1451 / 蜂蜜 1487 / 芝麻酱 1528 / 酱类 1524-1544 / 泡椒 1554 / 榨菜 1551 / 菜籽油 1495 / 猪油 1494 / 辣椒油 1502 / 香油 1508 / 啤酒 1406 / 米酒 1423）"
+  },
+  "note": "社区转录的成分表 CSV **缺整个「调味品」类**（盐 / 酱油 / 糖 / 味精 / 醋 / 料酒 / 蚝油 / 豆瓣酱…），于是这些名字在成分库里一直是 coverage:none —— 后果是**钠红绿灯对盐与酱油完全不生效**（高血压档形同虚设）、**糖的热量与碳水一次都没进过聚合**。本表按官方平台（中国疾控 NLC）逐条转录补齐最高频的几样；能量按平台 kJ ÷ 4.184 折算成 kcal（酱油/味精），绵白糖用第 6 版 kcal 原值。**没转录到的仍留 coverage:none**（不猜）。 2026-10-18 续补（油类不在此表：香油/菜籽油/猪油/辣椒油的成分表 CSV 本就有行，改由生成器 pin 到该行，避免两套口径打架）：官方平台**其实有**料酒/鸡精/胡椒粉/花椒/豆豉/腐乳/冰糖/红糖/蜂蜜/芝麻酱/酱类/泡椒/榨菜/菜籽油/猪油/辣椒油/香油/啤酒/米酒等页（此前\"官方无页\"的结论有误，本轮逐页转录）；仍无页的是**八角/桂皮/香叶/小茴香/孜然/十三香/白芷/草果/蚝油/高汤/酵母/小苏打**，继续如实留 coverage:none。",
+  "items": {
+    "酱油": {
+      "aliases": [
+        "生抽",
+        "老抽",
+        "酱油（均值）"
+      ],
+      "per100g": {
+        "energyKcal": 65,
+        "proteinG": 5.6,
+        "fatG": 0.1,
+        "carbG": 10.1,
+        "fiberG": 0.2,
+        "sodiumMg": 5757,
+        "calciumMg": 66,
+        "ironMg": 8.6,
+        "zincMg": 1.17,
+        "potassiumMg": 337,
+        "vitB1Mg": 0.05,
+        "vitB2Mg": 0.13
+      }
+    },
+    "精盐": {
+      "aliases": [
+        "盐",
+        "食盐"
+      ],
+      "per100g": {
+        "energyKcal": 0,
+        "carbG": 0.0,
+        "sodiumMg": 39311,
+        "calciumMg": 22,
+        "ironMg": 1.0,
+        "zincMg": 0.24,
+        "potassiumMg": 14
+      }
+    },
+    "绵白糖": {
+      "aliases": [
+        "白糖",
+        "砂糖",
+        "白砂糖",
+        "绵糖"
+      ],
+      "per100g": {
+        "energyKcal": 396,
+        "proteinG": 0.1,
+        "carbG": 98.9,
+        "sodiumMg": 2,
+        "calciumMg": 6,
+        "ironMg": 0.2,
+        "zincMg": 0.07,
+        "potassiumMg": 2
+      }
+    },
+    "味精": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 272,
+        "proteinG": 40.1,
+        "fatG": 0.2,
+        "carbG": 26.5,
+        "sodiumMg": 8160,
+        "calciumMg": 100,
+        "ironMg": 1.2,
+        "zincMg": 0.31,
+        "potassiumMg": 4,
+        "vitB1Mg": 0.08,
+        "vitB2Mg": 0.0
+      }
+    },
+    "醋（均值）": {
+      "aliases": [
+        "醋",
+        "陈醋",
+        "香醋",
+        "米醋"
+      ],
+      "per100g": {
+        "energyKcal": 31,
+        "proteinG": 2.1,
+        "fatG": 0.3,
+        "carbG": 4.9,
+        "sodiumMg": 262.1,
+        "calciumMg": 17,
+        "ironMg": 6.0,
+        "zincMg": 1.25,
+        "potassiumMg": 351,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.05
+      }
+    },
+    "白醋": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 6,
+        "proteinG": 0.1,
+        "fatG": 0.6,
+        "carbG": 0.0,
+        "sodiumMg": 225.9,
+        "calciumMg": 26,
+        "ironMg": 2.2,
+        "potassiumMg": 12
+      }
+    },
+    "豆瓣酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 185,
+        "proteinG": 13.6,
+        "fatG": 6.8,
+        "carbG": 17.1,
+        "sodiumMg": 6012,
+        "calciumMg": 53,
+        "ironMg": 16.4,
+        "zincMg": 1.47,
+        "potassiumMg": 772,
+        "vitB1Mg": 0.11,
+        "vitB2Mg": 0.46
+      }
+    },
+    "甜面酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 143,
+        "proteinG": 5.5,
+        "fatG": 0.6,
+        "carbG": 28.5,
+        "sodiumMg": 2097.2,
+        "calciumMg": 29,
+        "ironMg": 3.6,
+        "zincMg": 1.38,
+        "potassiumMg": 189,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.14
+      }
+    },
+    "料酒": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 1.2,
+        "proteinG": 0.3,
+        "fatG": 0.0,
+        "carbG": 0.0,
+        "fiberG": 0.0,
+        "vitAMcgRAE": 0.0,
+        "vitCMg": 0.0
+      }
+    },
+    "鸡精": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 198.9,
+        "proteinG": 10.7,
+        "fatG": 2.8,
+        "carbG": 32.5,
+        "fiberG": 0.7,
+        "vitAMcgRAE": 0.0,
+        "vitB1Mg": 0.09,
+        "vitB2Mg": 0.05,
+        "saturatedFatG": 0.9
+      }
+    },
+    "白胡椒粉": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 365.9,
+        "proteinG": 9.6,
+        "fatG": 2.2,
+        "carbG": 76.9,
+        "vitB1Mg": 0.09,
+        "vitB2Mg": 0.06
+      }
+    },
+    "黑胡椒粉": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 365.9,
+        "proteinG": 9.6,
+        "fatG": 2.2,
+        "carbG": 76.9,
+        "vitB1Mg": 0.09,
+        "vitB2Mg": 0.06
+      }
+    },
+    "五香粉": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 361.1,
+        "proteinG": 1.0,
+        "fatG": 8.0,
+        "carbG": 73.3,
+        "vitB2Mg": 0.03
+      }
+    },
+    "咖喱粉": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 338.4,
+        "proteinG": 13.0,
+        "fatG": 12.2,
+        "carbG": 63.3,
+        "fiberG": 36.9,
+        "vitAMcgRAE": 0.0,
+        "vitB1Mg": 0.41,
+        "vitB2Mg": 0.25,
+        "vitCMg": 2.0
+      }
+    },
+    "花椒": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 314.3,
+        "proteinG": 6.7,
+        "fatG": 8.9,
+        "carbG": 66.5,
+        "vitB1Mg": 0.12,
+        "vitB2Mg": 0.43
+      }
+    },
+    "青花椒": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 314.3,
+        "proteinG": 6.7,
+        "fatG": 8.9,
+        "carbG": 66.5,
+        "vitB1Mg": 0.12,
+        "vitB2Mg": 0.43
+      }
+    },
+    "豆豉": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 273.2,
+        "proteinG": 24.1,
+        "fatG": 3.0,
+        "carbG": 39.7,
+        "vitB1Mg": 0.02,
+        "vitB2Mg": 0.09
+      }
+    },
+    "腐乳": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 134.3,
+        "proteinG": 10.9,
+        "fatG": 8.2,
+        "carbG": 4.8,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.04,
+        "saturatedFatG": 1.2
+      }
+    },
+    "冰糖": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 403.4,
+        "carbG": 99.3,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.03
+      }
+    },
+    "红糖": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 395.3,
+        "proteinG": 0.7,
+        "carbG": 96.6,
+        "vitB1Mg": 0.01
+      }
+    },
+    "蜂蜜": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 325.5,
+        "proteinG": 0.4,
+        "fatG": 1.9,
+        "carbG": 75.6,
+        "vitB1Mg": 0.0,
+        "vitB2Mg": 0.05,
+        "vitCMg": 3.0
+      }
+    },
+    "芝麻酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 623.6,
+        "proteinG": 19.2,
+        "fatG": 52.7,
+        "carbG": 22.7,
+        "vitB1Mg": 0.16,
+        "vitB2Mg": 0.22,
+        "saturatedFatG": 7.3
+      }
+    },
+    "花生酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 593.0,
+        "proteinG": 6.9,
+        "fatG": 53.0,
+        "carbG": 25.3,
+        "vitB1Mg": 0.01,
+        "vitB2Mg": 0.15
+      }
+    },
+    "海鲜酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 490.2,
+        "proteinG": 3.0,
+        "fatG": 41.1,
+        "carbG": 28.2,
+        "vitAMcgRAE": 0.0,
+        "vitB1Mg": 0.02,
+        "vitB2Mg": 0.15,
+        "saturatedFatG": 1.9
+      }
+    },
+    "沙拉酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 712.2,
+        "proteinG": 2.8,
+        "fatG": 78.8,
+        "carbG": 1.0,
+        "vitAMcgRAE": 87.0,
+        "vitB1Mg": 0.07,
+        "vitB2Mg": 0.09,
+        "saturatedFatG": 11.2
+      }
+    },
+    "黄酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 139.1,
+        "proteinG": 12.1,
+        "fatG": 1.2,
+        "carbG": 21.3,
+        "vitB1Mg": 0.05,
+        "vitB2Mg": 0.28
+      }
+    },
+    "番茄酱": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 85.8,
+        "proteinG": 4.9,
+        "fatG": 0.2,
+        "carbG": 16.9,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.03
+      }
+    },
+    "榨菜": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 33.5,
+        "proteinG": 2.2,
+        "fatG": 0.3,
+        "carbG": 6.5,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.06,
+        "vitCMg": 2.0
+      }
+    },
+    "泡椒": {
+      "aliases": [
+        "剁椒"
+      ],
+      "per100g": {
+        "energyKcal": 41.3,
+        "proteinG": 1.4,
+        "fatG": 0.5,
+        "carbG": 10.8,
+        "fiberG": 5.9,
+        "vitAMcgRAE": 0.0,
+        "vitB1Mg": 0.0,
+        "vitB2Mg": 0.07,
+        "saturatedFatG": 0.1
+      }
+    },
+    "啤酒": {
+      "aliases": [],
+      "per100g": {
+        "energyKcal": 19.1,
+        "proteinG": 0.4,
+        "carbG": 4.3,
+        "vitB1Mg": 0.15,
+        "vitB2Mg": 0.04
+      }
+    },
+    "米酒": {
+      "aliases": [
+        "醪糟"
+      ],
+      "per100g": {
+        "energyKcal": 55.7,
+        "proteinG": 1.6,
+        "carbG": 12.1,
+        "vitB1Mg": 0.03,
+        "vitB2Mg": 0.01
+      }
+    }
+  }
+}

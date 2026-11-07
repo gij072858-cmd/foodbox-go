@@ -1,0 +1,146 @@
+{
+  "note": "动态页本地内容（构想 2.5.1 / Q10-B + 阶段六 T6.3）。全部为虚构内容：items = 关注 Tab 的单列信息流，recommend = 推荐 Tab 的双列瀑布流。换成服务端真实信息流后本文件整体删除。",
+  "version": 3,
+  "items": [
+    {
+      "id": 1,
+      "author": "阿樨",
+      "level": 6,
+      "dishName": "番茄炒蛋",
+      "cookedAt": "2026-09-08",
+      "durationMinutes": 15,
+      "likes": 128,
+      "saves": 34,
+      "body": "第一次把番茄炒蛋做出饭店味：番茄先下锅炒出沙，鸡蛋七分熟就盛出来，最后回锅十秒拌匀，蛋还是嫩的。"
+    },
+    {
+      "id": 2,
+      "author": "小满",
+      "level": 4,
+      "dishName": "蒜蓉西兰花",
+      "cookedAt": "2026-09-07",
+      "durationMinutes": 22,
+      "likes": 76,
+      "saves": 18,
+      "body": "焯水时加一勺盐和几滴油，捞出来颜色绿得发亮。蒜末分两次下，一半爆香一半出锅前撒。"
+    },
+    {
+      "id": 3,
+      "author": "老周",
+      "level": 8,
+      "dishName": "可乐鸡翅",
+      "cookedAt": "2026-09-06",
+      "durationMinutes": 30,
+      "likes": 213,
+      "saves": 58,
+      "body": "可乐只倒到没过一半，收汁最后两分钟必须盯着锅，糖分一糊就发苦。今天这锅颜色刚好。"
+    },
+    {
+      "id": 4,
+      "author": "阿樨",
+      "level": 6,
+      "dishName": "麻婆豆腐",
+      "cookedAt": "2026-09-05",
+      "durationMinutes": 22,
+      "likes": 94,
+      "saves": 21,
+      "body": "豆腐先用淡盐水泡十分钟，下锅轻轻推、不翻炒，一块都没碎。花椒粉是出锅前才撒的。"
+    },
+    {
+      "id": 5,
+      "author": "林深",
+      "level": 3,
+      "dishName": "白灼虾",
+      "cookedAt": "2026-09-04",
+      "durationMinutes": 15,
+      "likes": 61,
+      "saves": 12,
+      "body": "水大开再下虾，三十秒捞出过冰水，虾肉是脆的。蘸料只用了生抽、姜末和一点点糖。"
+    },
+    {
+      "id": 6,
+      "author": "小满",
+      "level": 4,
+      "dishName": "腊味煲仔饭",
+      "cookedAt": "2026-09-02",
+      "durationMinutes": 70,
+      "likes": 157,
+      "saves": 40,
+      "body": "锅巴的关键在最后三分钟：沿锅边淋一圈油，听见噼啪声就关火，焖五分钟再开盖。这次终于整片揭下来了。"
+    }
+  ],
+  "recommend": [
+    {
+      "id": 1,
+      "dishName": "酸辣土豆丝",
+      "category": "蔬菜",
+      "author": "小满",
+      "level": 4,
+      "likes": 236,
+      "caption": "土豆丝多泡两遍水，炒出来才根根分明不粘锅。"
+    },
+    {
+      "id": 2,
+      "dishName": "回锅肉",
+      "category": "畜肉",
+      "author": "老周",
+      "level": 8,
+      "likes": 412,
+      "caption": "肉片煸到微卷打卷再下豆瓣，油亮不腻。"
+    },
+    {
+      "id": 3,
+      "dishName": "辣炒花蛤",
+      "category": "水产",
+      "author": "林深",
+      "level": 3,
+      "likes": 158,
+      "caption": "花蛤提前吐净沙，大火快炒一分钟就够，开口即熟。"
+    },
+    {
+      "id": 4,
+      "dishName": "黄金蛋炒饭",
+      "category": "主食面点",
+      "author": "阿樨",
+      "level": 6,
+      "likes": 302,
+      "caption": "隔夜饭拌蛋黄再下锅，粒粒金黄。"
+    },
+    {
+      "id": 5,
+      "dishName": "香菇蒸滑鸡",
+      "category": "禽肉",
+      "author": "老周",
+      "level": 8,
+      "likes": 189,
+      "caption": "鸡肉用生粉抓一遍，蒸出来滑嫩不出水。"
+    },
+    {
+      "id": 6,
+      "dishName": "清蒸鲈鱼",
+      "category": "水产",
+      "author": "林深",
+      "level": 3,
+      "likes": 521,
+      "caption": "水开上锅蒸八分钟，出锅把盘里的腥水倒掉再淋豉油。"
+    },
+    {
+      "id": 7,
+      "dishName": "家常豆腐",
+      "category": "蛋豆制品",
+      "author": "小满",
+      "level": 4,
+      "likes": 143,
+      "caption": "豆腐先煎两面定形，再挂汁才不散。"
+    },
+    {
+      "id": 8,
+      "dishName": "莲藕排骨汤",
+      "category": "畜肉",
+      "author": "阿樨",
+      "level": 6,
+      "likes": 268,
+      "caption": "排骨冷水下锅焯净血沫，汤才清。藕切滚刀块，炖足四十分钟。"
+    }
+  ]
+}

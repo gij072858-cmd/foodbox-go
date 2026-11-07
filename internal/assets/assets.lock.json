@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-07T08:49:02Z",
+  "data": {
+    "README.md": "86d105a4f32790567212c6158286503ccf575ee323153d20071ce497588d69e8",
+    "alias_map.json": "02fd8dbf1f6dffa7cddd48aba6fa61dedcdb6bc2752e21323d260d7701304294",
+    "feed_demo.json": "0c1ce42032578df451db030bac8a67f0e2477090fcf3c20cda3c4ca24c2de1d8",
+    "food_items.json": "4f4ac2dd03b11902c1e85492a161aa27d91c7b3237f557c0c7aded41e253a53e",
+    "food_nutrition.json": "254ef1af4833f847f111191b2853f29d0f483ad6a79c72e1b7775516d6ec3e31",
+    "food_purine.json": "56035a2397c59f0fcae02e31c3694f9831042895b794f9284902ee52fc47c0d4",
+    "food_seasoning.json": "8616a4bc12faea474a53bdc9e0b4c3e66983f935a213237b1603281e82e81c0d",
+    "glossary.json": "e06b2dade2ca5680fd15915856a8e03e3aa0aef7fef3a3aafa8d6b3dcc8956ca",
+    "recipe_intake_rules.md": "2bc4deeaba64a747e3b7deefe3e3d1b9465cba1c728f7ca98511ba571f544970",
+    "recipes.json": "f1b2fe3e5ccca17d31a56bba56914e1b1c80dc74c86fc1d533c612d75682a9e0",
+    "sichu_rules.md": "85ba251570ea7182c7c73a4f9a41af4ef78623ca4d4883f83987f9970df27e2a",
+    "starter_packs.json": "4c67e31ab9914c6ab36e9cfaf80004a8bd4377a80bc21b6395a9c5858744332a",
+    "zhangxu_rules.md": "8d32335c9b83a1901e699b18d9e247b4a4fdc25d0802e7bc564022a7a0ad500b"
+  },
+  "images": {
+    "count": 1045,
+    "sha256": "b24a9eed233bcfc838bbf801b1cd7819847622c6fd6d07cf258111e902c5a784"
+  }
+}

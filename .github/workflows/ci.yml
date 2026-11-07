@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+          cache: true
+
+      - name: Assets lock
+        run: go test ./internal/assets -run TestAssetsLock -count=1
+
+      - name: Vet
+        run: |
+          go vet ./...
+          go tool mygo vet .
+
+      - name: Test
+        run: go test ./... -count=1
+
+      # The app's UI tests render through MyGo's raster package, which has a
+      # data race under -race that is upstream of this project. Race-check
+      # the pure services and data layers instead.
+      - name: Race (services and data)
+        run: go test -race ./internal/services/... ./internal/data/... ./internal/repository/... -count=1
+
+      - name: Build (no installer)
+        run: go tool mygo build -skip-installer
