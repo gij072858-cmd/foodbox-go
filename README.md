@@ -43,6 +43,28 @@ pwsh -File tools/sync-assets.ps1   # 从原 Flutter 项目同步数据/图片并
 pwsh -File tools/screenshot.ps1    # 用 ui.Tester 重新生成 test/screenshots
 ```
 
+## 下载与自动更新
+
+普通用户不需要安装 Go：到 [Releases](https://github.com/gij072858-cmd/foodbox-go/releases)
+下载 `foodbox-setup-<version>-amd64.exe`，用安装版装到当前用户目录即可。
+
+应用内置 MyGo 的签名更新器（`plugins/updater/native`）：
+
+- 启动约 10 秒后检查一次，之后每天检查 GitHub 的最新 Release；
+- 新版本会弹出更新窗口，可安装、稍后提醒或跳过；
+- 用户勾选自动下载后，更新在下次启动生效；菜谱、记录和设置保留。
+
+维护者发版：改 `mygo.json` 的 `version`、在 `CHANGELOG.md` 写对应小节，提交后打 tag
+并推送：
+
+```powershell
+git tag v0.1.1
+git push origin v0.1.1
+```
+
+`.github/workflows/release.yml` 会用仓库 Secret `MYGO_UPDATER_PRIVATE_KEY` 签名、
+构建安装包与更新清单，并发布 Release。私钥绝不能进仓库；丢失后老用户无法再自动更新。
+
 ## 架构
 
 ```text

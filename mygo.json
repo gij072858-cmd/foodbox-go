@@ -5,6 +5,10 @@
   "version": "0.1.0",
   "copyright": "© 2026",
   "out": "build",
+  "updates": {
+    "publicKey": "O7vcOSjfSCZtaV8OoIwB/xex80XsvfwlczRkVnl3S4U=",
+    "github": "gij072858-cmd/foodbox-go"
+  },
   "windows": {
     "displayName": "食匣",
     "installDirName": "FoodBox"

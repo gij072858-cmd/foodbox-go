@@ -7,6 +7,11 @@ mygo_windows_*.syso
 /vibe_images/
 /.screenshots/
 
+# 更新签名私钥（只放密码管理器或 GitHub Secret）
+mygo-update.key
+mygo-update.pub
+/update-keys/
+
 # 本地数据与密钥
 *.db
 *.db-wal
