@@ -2,7 +2,7 @@
   "name": "食匣",
   "slug": "foodbox",
   "identifier": "com.gij072858.foodbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "copyright": "© 2026",
   "out": "build",
   "updates": {

@@ -17,7 +17,7 @@ func appVersion() string {
 	if v := mygo.App.Version(); v != "" {
 		return v
 	}
-	return "0.1.0"
+	return "0.1.1"
 }
 
 // settingsChevron is the mark every navigating settings row wears. It is
