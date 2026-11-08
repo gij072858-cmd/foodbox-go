@@ -46,7 +46,7 @@ go tool mygo build
 - 所有页面读真实 SQLite；`ui.List` 虚拟化菜式、目录与长列表。
 - 掌序：备料、并行时间线、歌词流执行、挂起托盘、会话恢复、单事务结算（扣库存+日记）。
 - 私厨：本地确定性策略 + AI（DeepSeek，可配 Key，失败回退）；营养驾驶舱。
-- 食历/我的/设置/引导/帮助完成；设置页有备份、旧 Drift `.sqlite` 导入与 AI Key 入口。
+- 食历/我的/设置/引导/帮助完成；设置页有备份与 AI Key 入口。
 - **M-G 对齐 egoist 原生桌面改造已完成**（2026-11-06，阶段 0–9）：44px 顶栏与面包屑、
   `ui.GridView`/`ui.Split`/`ui.Calendar`/`ui.Table`/`ui.Meter` 落地、自绘月历与圆环删除、
   单行筛选与内联计时；计数口径与证据见 `docs/进度.md` 的 M-G 段与
@@ -145,19 +145,25 @@ go tool mygo build
 
 ## 外站视频（M-F）
 
-- 路径只有两条，按顺序：`internal/videoproxy.Resolve` 解析直链 → 交给外部
-  `mpv`（`FindPlayer`/`Launch`）；任何一步失败退回 `video.go` 的内嵌 WebView，
-  最后才 `c.OpenURL`。小红书**没有**可解析接口，`Supported` 返回 false，
-  按钮文案写「在应用内看视频」，不要伪造解析器。
-- 端点与参数对齐 `iawia002/lux`（Bilibili `playurl`、`fnval=16`、`qn=127`、
-  必带 `Referer`）。WBI 签名没做；站点返回 `-403` 时如实报原因并走 WebView。
-- Bilibili 的 DASH 是画面/声音两条流：只有 mpv 能 `--audio-file` 同时播，
-  VLC 必须被拒（`videoproxy.Launch` 里那条错误就是它）。
-- 两个真站点才暴露的坑，别改回去：`dash.video[].baseUrl` 是**字符串**（老回答是数组，
+- 路径：`internal/videoproxy.Resolve` 解析直链 → Windows 上交给 `video_embed_windows.go`
+  创建的子 HWND（mpv `--wid`），控制走 `--input-ipc-server` 的 JSON 管道；没有 mpv、
+  内嵌失败或非 Windows 平台时退回外部播放器（非 Windows）与 `video.go` 的 WebView，
+  最后才 `c.OpenURL`。WebView 回退打开时自动全屏，关闭时恢复原窗口状态。
+  小红书**没有**可解析接口，`Supported` 返回 false，按钮文案写「在应用内看视频」。
+- 端点与参数对齐 `iawia002/lux`：Bilibili `x/player/wbi/playurl`、`fnval=16`、`qn=127`、
+  必带 `Referer`。**WBI 签名已实现**（`wbi.go`：`x/web-interface/nav` 取 key、固定
+  permutation、`wts`+`w_rid` MD5，`x/frontend/finger/spi` 取 `buvid3/4`）；请求带
+  真实 Chrome UA、Origin、Accept 与匿名设备 Cookie，并对 `-352/-403/-412/-799` 刷新 key 重试。
+- Bilibili 的 DASH 是画面/声音两条流：只有 mpv 能 `--audio-file` 同时播；VLC 必须被拒
+  （`videoproxy.Launch` 里那条错误就是它），只装 VLC 的机器走 WebView。
+- 真站点才暴露的坑，别改回去：`dash.video[].baseUrl` 是**字符串**（老回答是数组，
   所以 `urlList` 两种都收）；mpv 的 `--http-header-fields` 用**逗号**分隔，
   用分号会把 UA 折进 Referer，CDN 直接 403。手机分享的 `b23.tv` 短链要跟随重定向
-  才拿得到 bvid（`shortBVID`）。BVID **大小写敏感**，`biliBVID` 必须原样返回匹配串
-  （曾经把前五位转大写，站点回 `-404`）。
+  才拿得到 bvid 和 `?p=`（`shortBVID`）。BVID **大小写敏感**，`biliBVID` 必须原样返回匹配串。
+- 内嵌播放：容器是 `STATIC` 子窗口，父窗口用 `Window.NativeHandle()`；它在 MyGo
+  surface 之后创建，保持在同级 z-order 顶部。`--wid` 的窗口属于本进程，mpv 收不到
+  键鼠事件，所以点击/空格/方向键/Esc 由子类化 WndProc 接住并发 IPC；`--force-window`
+  必须关闭，否则又会出现独立的系统窗口。
 - `SESSDATA` 只进 `mygo.Secrets`，**不进 prefsData**（备份不含密钥）。
 - 「自动下载 mpv portable」未启用：mpv 官方不发 Windows 构建，只有第三方
   release 仓。别替用户选源；`portablePath(appDir)` 这个槽位已留好，

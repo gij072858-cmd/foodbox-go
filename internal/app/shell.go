@@ -38,7 +38,6 @@ var leafTitles = map[string]string{
 	"/profile/edit":      "编辑资料",
 	"/profile/cooked":    "做过的菜",
 	"/profile/shelf":     "我的收藏",
-	"/settings/legacy":   "导入旧版数据库",
 	"/settings/ai":       "AI 与配额",
 }
 

@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 )
 
@@ -129,6 +130,36 @@ func LaunchArgs(player Player, exe string, s Stream) []string {
 		return append(args, s.VideoURL)
 	}
 	return nil
+}
+
+// EmbeddedMPVArgs is the command line for mpv rendering into a child window
+// the app owns, controlled over its JSON IPC pipe. --wid means mpv creates
+// no window of its own, so the app supplies the frame and every control.
+// --force-window stays off: with --wid a forced window would be a second,
+// system-chromed one, which is exactly what this path removes.
+func EmbeddedMPVArgs(exe string, hwnd uintptr, pipe string, s Stream) []string {
+	headers := make([]string, 0, len(s.Headers))
+	for k, v := range s.Headers {
+		headers = append(headers, k+": "+v)
+	}
+	args := []string{
+		exe,
+		"--wid=" + strconv.FormatUint(uint64(hwnd), 10),
+		"--input-ipc-server=" + pipe,
+		"--no-border",
+		"--force-window=no",
+		"--osc=no",
+		"--osd-level=0",
+		"--keep-open=yes",
+		"--idle=no",
+		"--hwdec=auto-safe",
+		"--really-quiet",
+		"--http-header-fields=" + strings.Join(headers, ","),
+	}
+	if s.AudioURL != "" {
+		args = append(args, "--audio-file="+s.AudioURL)
+	}
+	return append(args, s.VideoURL)
 }
 
 // Launch starts the player on a stream and returns the running command, so

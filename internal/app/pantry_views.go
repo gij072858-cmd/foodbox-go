@@ -448,6 +448,17 @@ func (a *App) itemDetailModal(c *ui.Context, p design.Palette) {
 		return
 	}
 	design.ModalDialog(c, p, &a.detailOpen, 540, a.level, func() {
+		ui.Row(c).FillWidth().Justify(ui.End).Children(func() {
+			close := ui.ButtonBase(c.Key("item-close")).Size(28, 28).
+				Radius(design.RadiusPill).Center().Label("关闭")
+			design.Wash(close, p.Surface.Alpha(0), p.Hover)
+			close.Children(func() {
+				ui.Icon(c, &icons.Close).Size(14, 14).TextColor(p.Ink)
+			})
+			if close.Clicked() {
+				a.detailOpen = false
+			}
+		})
 		ui.Row(c).FillWidth().Gap(14).Children(func() {
 			cover := ui.Box(c).Width(88).Height(88).Radius(12).Center()
 			cover.Draw(func(pnt *ui.Painter, r ui.Rect) {
@@ -525,9 +536,6 @@ func (a *App) itemDetailModal(c *ui.Context, p design.Palette) {
 			if design.Button(c, p, "item-remove", "移出仓库",
 				design.ButtonDanger).Clicked() {
 				a.deleteItem(it.ID)
-			}
-			if ui.Button(c, "关闭").Clicked() {
-				a.detailOpen = false
 			}
 		})
 	})

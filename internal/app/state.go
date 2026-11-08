@@ -16,7 +16,6 @@ func (a *App) initFeatureState() {
 	a.nutrition.init()
 	a.feed.init()
 	a.prefs.init()
-	a.legacy.init()
 }
 
 // loadFeatureState reads every feature's persisted state after bootstrap or

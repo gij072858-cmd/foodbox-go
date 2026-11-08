@@ -40,6 +40,25 @@ func TestOpenVideoWithoutWindowSaysSo(t *testing.T) {
 	}
 }
 
+// The embedded player's panel is MyGo-drawn chrome around the native child:
+// the close, seek and pause controls must all be present even while the
+// direct link is still resolving.
+func TestVideoPlayerOverlayControls(t *testing.T) {
+	a := newTestApp()
+	a.videoPlayerOpen = true
+	a.videoBusy = true
+	tt := ui.NewTester(a.View, 1280, 860)
+	settle(tt)
+	for _, label := range []string{"关闭视频", "暂停", "后退 10 秒", "前进 10 秒"} {
+		if _, ok := tt.Find(label); !ok {
+			t.Errorf("player control %q is missing: %q", label, tt.Texts())
+		}
+	}
+	if !tt.HasText("正在取这一页的直链…") {
+		t.Errorf("player loading state missing: %q", tt.Texts())
+	}
+}
+
 // The settings page must state, in the user's terms, which player will be
 // used and where the login cookie lives.
 func TestVideoSettingsSection(t *testing.T) {
@@ -49,7 +68,7 @@ func TestVideoSettingsSection(t *testing.T) {
 		t.Fatal(err)
 	}
 	tt.Advance(400 * time.Millisecond)
-	for _, want := range []string{"外部播放器", "哔哩哔哩 SESSDATA", "不进备份"} {
+	for _, want := range []string{"内置播放器", "哔哩哔哩 SESSDATA", "不进备份"} {
 		if !tt.HasText(want) {
 			t.Errorf("the video section is missing %q: %q", want, tt.Texts())
 		}

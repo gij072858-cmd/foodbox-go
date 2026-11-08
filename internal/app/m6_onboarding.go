@@ -32,9 +32,9 @@ type onboardingState struct {
 	salty        int
 	restrictions map[string]bool
 	allergy      string
-	adults       float64
-	kids         float64
-	elders       float64
+	adults       int
+	kids         int
+	elders       int
 }
 
 func (s *onboardingState) init() {
@@ -141,9 +141,9 @@ func onboardingFrom(up domain.UserProfile) onboardingState {
 	if up.HouseholdMix != "" {
 		var mix struct{ Adult, Kid, Elder int }
 		if json.Unmarshal([]byte(up.HouseholdMix), &mix) == nil {
-			o.adults = float64(max(mix.Adult, 0))
-			o.kids = float64(max(mix.Kid, 0))
-			o.elders = float64(max(mix.Elder, 0))
+			o.adults = max(mix.Adult, 0)
+			o.kids = max(mix.Kid, 0)
+			o.elders = max(mix.Elder, 0)
 		}
 	}
 	for i, ar := range onboardingAgeRanges {
@@ -184,7 +184,7 @@ func (o *onboardingState) toProfile() domain.UserProfile {
 		}
 	}
 	mix, _ := json.Marshal(map[string]int{
-		"adult": int(o.adults), "kid": int(o.kids), "elder": int(o.elders),
+		"adult": o.adults, "kid": o.kids, "elder": o.elders,
 	})
 	hometown := strings.TrimSpace(o.hometown)
 	if hometown == "不限" {
@@ -202,7 +202,7 @@ func (o *onboardingState) toProfile() domain.UserProfile {
 		Saltiness:     salty,
 		Restrictions:  strings.Join(restrictions, ","),
 		AllergyNote:   strings.TrimSpace(o.allergy),
-		HouseholdSize: int(o.adults + o.kids + o.elders),
+		HouseholdSize: o.adults + o.kids + o.elders,
 		HouseholdMix:  string(mix),
 		Onboarded:     true,
 		Version:       1,
@@ -345,17 +345,19 @@ func (a *App) onboardingHousehold(c *ui.Context, p design.Palette) {
 	a.onboardingSection(c, p, "家里几口人", "按成人 / 小孩 / 老人分开记", func() {
 		people := []struct {
 			label string
-			value *float64
+			key   string
+			value *int
 		}{
-			{"成人", &o.adults},
-			{"小孩", &o.kids},
-			{"老人", &o.elders},
+			{"成人", "onboard-adults", &o.adults},
+			{"小孩", "onboard-kids", &o.kids},
+			{"老人", "onboard-elders", &o.elders},
 		}
 		for _, person := range people {
 			person := person
 			ui.Row(c).FillWidth().Gap(10).AlignItems(ui.Center).Children(func() {
 				ui.Text(c, person.label).FontSize(12).TextColor(p.Muted).Width(40)
-				ui.Stepper(c, person.value, 0, 9, 1).Label(person.label + "人数")
+				design.StepperNamed(c, p, person.key, person.label+"人数",
+					person.value, 0, 9, "人", 130)
 			})
 		}
 		ui.Text(c, "一共 "+fmtCount(o.adults+o.kids+o.elders)+" 位。配餐与掌序份数会按这个人数来。").
@@ -518,7 +520,7 @@ func clampIndex(i, n int) int {
 	return i
 }
 
-// fmtCount renders a household count without a trailing ".0".
-func fmtCount(v float64) string {
-	return fmt.Sprintf("%.0f", v)
+// fmtCount renders a household count as a whole number.
+func fmtCount(v int) string {
+	return fmt.Sprintf("%d", v)
 }

@@ -95,11 +95,8 @@ func (a *App) profileHeader(c *ui.Context, p design.Palette) {
 			Border(1, p.Border).Role(ui.RoleImage).Label("头像")
 		ui.Column(c).Grow(1).MinWidth(0).Gap(4).Justify(ui.Center).Children(func() {
 			ui.Text(c, nickname).FontSize(20).FontWeight(700).TextColor(p.Text).SingleLine()
-			ui.Text(c, fmt.Sprintf("Lv.%d · 累计 %d XP", level, pf.profile.XP)).
-				FontSize(12).TextColor(p.Muted)
-			ui.Progress(c, float64(XPProgress(pf.profile.XP)))
-			ui.Text(c, fmt.Sprintf("再得 %d XP 升到 Lv.%d", 100-pf.profile.XP%100, level+1)).
-				FontSize(11).TextColor(p.Faint)
+			ui.Text(c, fmt.Sprintf("Lv.%d", level)).FontSize(12).TextColor(p.Muted)
+			ui.Progress(c, float64(XPProgress(pf.profile.XP))).Label("等级进度")
 		})
 		if ui.Button(c, "编辑资料").Clicked() {
 			a.router.Push("/profile/edit")

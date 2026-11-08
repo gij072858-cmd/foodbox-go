@@ -281,7 +281,7 @@ func TestSettleRun(t *testing.T) {
 		t.Fatal(err)
 	}
 	settle(tt)
-	if !tt.HasText("青椒肉丝") || !tt.HasText("+10 XP") {
+	if !tt.HasText("青椒肉丝") || tt.HasText("XP") {
 		t.Errorf("feed record missing: %q", tt.Texts())
 	}
 }

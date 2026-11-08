@@ -32,7 +32,7 @@ import (
 
 // openVideo plays the page, or falls back to showing it.
 func (a *App) openVideo(c *ui.Context, pageURL string) {
-	if a.videoBusy {
+	if a.videoBusy || a.videoPlayerOpen || a.videoOpen {
 		return
 	}
 	// Neither path can show anything without a window: an embedded page has
@@ -46,17 +46,86 @@ func (a *App) openVideo(c *ui.Context, pageURL string) {
 		a.openWebView(c, pageURL)
 		return
 	}
+	if a.videoEmbed == nil {
+		a.videoEmbed = newVideoEmbedder(a)
+	}
+	if !a.videoEmbed.Supported() {
+		// A platform without the native child window keeps the old external
+		// player path; if that fails the web fallback still runs.
+		a.videoBusy = true
+		a.videoPending = pageURL
+		a.notice = "正在取这一页的直链…"
+		go a.playExternal(pageURL)
+		return
+	}
+	a.videoPlayerOpen = true
 	a.videoBusy = true
-	a.videoPending = pageURL
+	a.videoPageURL = pageURL
+	a.videoPending = ""
+	a.videoTitle = ""
+	a.videoPaused, a.videoEnded = false, false
+	a.videoPos, a.videoDur = 0, 0
 	a.notice = "正在取这一页的直链…"
-	go a.playExternal(pageURL)
+	go a.playEmbedded(pageURL)
 }
 
-// playExternal resolves the stream and starts the player off the main thread,
-// then posts the outcome back. Direct URLs expire within minutes, so nothing
-// here is worth caching: the next click resolves again.
+// playEmbedded resolves the stream, then hands it to the main thread, where
+// the native child window is created. Direct URLs expire within minutes, so
+// nothing here is worth caching: the next click resolves again.
+func (a *App) playEmbedded(pageURL string) {
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+
+	sessdata, _ := a.biliCookie()
+	stream, err := videoproxy.Resolve(ctx, pageURL, sessdata)
+	if err != nil {
+		a.post(func() {
+			if a.videoPlayerOpen && a.videoPageURL == pageURL {
+				a.videoGaveUp(err)
+			}
+		})
+		return
+	}
+	found := videoproxy.FindPlayer(a.dataDir())
+	if found.Kind != videoproxy.PlayerMPV {
+		a.post(func() {
+			if a.videoPlayerOpen && a.videoPageURL == pageURL {
+				a.videoGaveUp(videoproxy.ErrNoPlayer)
+			}
+		})
+		return
+	}
+	a.post(func() { a.startEmbeddedPlayer(pageURL, stream, found) })
+}
+
+// startEmbeddedPlayer creates the native child and starts mpv. It runs on the
+// main thread because a child window created anywhere else belongs to a
+// thread with no message loop. The overlay lays out before a resolve finishes,
+// so the rectangle is normally ready; if it is not, the stream waits for the
+// next frame.
+func (a *App) startEmbeddedPlayer(pageURL string, stream *videoproxy.Stream, found videoproxy.Found) {
+	if !a.videoPlayerOpen || a.videoEmbed == nil {
+		return
+	}
+	rect := a.videoPlaceholder
+	if rect.W <= 0 || rect.H <= 0 {
+		a.videoPendingEmbed, a.videoPendingFound = stream, found
+		return
+	}
+	if err := a.videoEmbed.Open(a.win.NativeHandle(), found, stream, rect); err != nil {
+		a.videoGaveUp(err)
+		return
+	}
+	a.videoPendingEmbed = nil
+	a.videoBusy = false
+	a.videoTitle = stream.Title
+	a.videoPageURL = pageURL
+}
+
+// playExternal is the non-Windows path: resolve, then start mpv/VLC in its
+// own window. The embedded player does not use it.
 func (a *App) playExternal(pageURL string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	sessdata, _ := a.biliCookie()
@@ -77,8 +146,8 @@ func (a *App) playExternal(pageURL string) {
 	a.post(func() { a.videoGaveUp(err) })
 }
 
-// videoStarted records the player process, and waits on it so that closing it
-// clears the app's idea of what is playing.
+// videoStarted records the external player process, and waits on it so that
+// closing it clears the app's idea of what is playing.
 func (a *App) videoStarted(pageURL, title string, kind videoproxy.Player, cmd *exec.Cmd) {
 	a.videoBusy, a.videoPending = false, ""
 	a.videoCmd, a.videoCmdURL = cmd, pageURL
@@ -97,8 +166,16 @@ func (a *App) videoStarted(pageURL, title string, kind videoproxy.Player, cmd *e
 // page instead, so the button the user pressed still does something.
 func (a *App) videoGaveUp(cause error) {
 	a.videoBusy = false
-	// videoPending stays set: the overlay opens the page with a frame's
-	// context on the next frame, so a failure still plays the video.
+	a.videoPendingEmbed = nil
+	if a.videoPlayerOpen {
+		a.videoPlayerOpen = false
+		if a.videoEmbed != nil {
+			a.videoEmbed.Close()
+		}
+	}
+	if a.videoPageURL != "" {
+		a.videoPending = a.videoPageURL
+	}
 	if errors.Is(cause, videoproxy.ErrNoPlayer) {
 		a.notice = "视频预览需要本机 mpv（设置 › 视频播放）；已改用应用内网页播放"
 		return
@@ -106,8 +183,95 @@ func (a *App) videoGaveUp(cause error) {
 	a.notice = "取直链没成，改用应用内网页播放：" + cause.Error()
 }
 
-// stopVideo ends the player process, if this app started one.
+// closePlayer tears down the embedded player, restoring the window mode.
+func (a *App) closePlayer() {
+	if a.videoEmbed != nil {
+		a.videoEmbed.Close()
+	}
+	a.videoPlayerOpen = false
+	a.videoBusy = false
+	a.videoPendingEmbed = nil
+	a.videoPageURL = ""
+	a.videoTitle = ""
+	a.videoPaused, a.videoEnded = false, false
+	a.videoPos, a.videoDur = 0, 0
+	a.videoPlaceholder = ui.Rect{}
+	a.restoreFullscreen()
+}
+
+// togglePlayerPause flips mpv's pause state; a finished stream restarts.
+func (a *App) togglePlayerPause() {
+	if a.videoEmbed == nil || a.videoTitle == "" {
+		return
+	}
+	if a.videoEnded {
+		a.videoEnded = false
+		a.videoPaused = false
+		a.videoEmbed.Seek(-a.videoPos.Seconds())
+		a.videoPos = 0
+		a.videoEmbed.SetPaused(false)
+		return
+	}
+	a.videoPaused = !a.videoPaused
+	a.videoEmbed.SetPaused(a.videoPaused)
+}
+
+// seekPlayer moves mpv by seconds, relative to where it is.
+func (a *App) seekPlayer(seconds float64) {
+	if a.videoEmbed == nil || a.videoTitle == "" {
+		return
+	}
+	next := a.videoPos + time.Duration(seconds*float64(time.Second))
+	if next < 0 {
+		next = 0
+	}
+	if a.videoDur > 0 && next > a.videoDur {
+		next = a.videoDur
+	}
+	a.videoPos = next
+	a.videoEmbed.Seek(seconds)
+}
+
+// togglePlayerFullscreen takes the whole window and restores it on close.
+func (a *App) togglePlayerFullscreen() {
+	if a.win == nil {
+		return
+	}
+	if !a.videoFullscreenSaved {
+		a.videoPrevFullscreen = a.win.IsFullScreen()
+		a.videoFullscreenSaved = true
+	}
+	a.win.SetFullScreen(!a.win.IsFullScreen())
+}
+
+// enterFullscreen saves the window mode once, then fills the screen for the
+// web fallback.
+func (a *App) enterFullscreen() {
+	if a.win == nil {
+		return
+	}
+	if !a.videoFullscreenSaved {
+		a.videoPrevFullscreen = a.win.IsFullScreen()
+		a.videoFullscreenSaved = true
+	}
+	a.win.SetFullScreen(true)
+}
+
+// restoreFullscreen puts the window back the way it was before a video.
+func (a *App) restoreFullscreen() {
+	if !a.videoFullscreenSaved {
+		return
+	}
+	a.videoFullscreenSaved = false
+	if a.win != nil {
+		a.win.SetFullScreen(a.videoPrevFullscreen)
+	}
+}
+
+// stopVideo ends every player this app started.
 func (a *App) stopVideo() {
+	a.closePlayer()
+	a.closeVideo()
 	if a.videoCmd == nil {
 		return
 	}
@@ -131,7 +295,8 @@ func (a *App) dataDir() string {
 	return dir
 }
 
-// openWebView shows url in the in-app video sheet.
+// openWebView shows url in the in-app web fallback, full screen: a page that
+// cannot be resolved is at least given the whole window.
 func (a *App) openWebView(c *ui.Context, url string) {
 	if a.win == nil {
 		a.notice = "视频页只在桌面窗口里打开"
@@ -139,11 +304,14 @@ func (a *App) openWebView(c *ui.Context, url string) {
 	}
 	if a.videoView != nil && a.videoURL == url && !a.videoView.IsDestroyed() {
 		a.videoOpen = true
+		a.enterFullscreen()
 		return
 	}
 	a.closeVideo()
+	a.enterFullscreen()
 	view, err := a.win.NewWebView(mygo.WebViewOptions{URL: url})
 	if err != nil {
+		a.restoreFullscreen()
 		a.notice = "打不开视频页：" + err.Error()
 		c.OpenURL(url)
 		return
@@ -162,6 +330,7 @@ func (a *App) closeVideo() {
 		a.videoView = nil
 	}
 	a.videoURL = ""
+	a.restoreFullscreen()
 }
 
 // videoOverlay is the sheet: a glass frame with the page in it. DialogBase
@@ -180,7 +349,14 @@ func (a *App) videoOverlay(c *ui.Context, p design.Palette) {
 	ui.DialogBase(c, &a.videoOpen, func(backdrop, panel ui.Element) {
 		backdrop.Background(ui.RGBA(0, 0, 0, 0.45))
 		panel.Children(func() {
-			sheet := ui.Column(c).Width(900).Height(600).Padding(12).Gap(8).
+			w, h := a.winW-24, a.winH-24
+			if w < 600 {
+				w = 600
+			}
+			if h < 420 {
+				h = 420
+			}
+			sheet := ui.Column(c).Width(w).Height(h).Padding(12).Gap(8).
 				Radius(design.RadiusPane).Material(design.PaneMaterial(p)).
 				Border(0.5, p.Border).Shadow(0, 24, 60, -20, p.Shadow)
 			sheet.Children(func() {

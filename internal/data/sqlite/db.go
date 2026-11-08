@@ -30,19 +30,6 @@ func Open(ctx context.Context, path string) (*Store, error) {
 	return s, nil
 }
 
-// OpenReadOnly opens an existing database without allowing writes. It is how
-// the app reads a Flutter/Drift database for the one-time legacy import.
-func OpenReadOnly(ctx context.Context, path string) (*Store, error) {
-	db, err := msqlite.Open(ctx, path, msqlite.OpenOptions{
-		ReadOnly:    true,
-		BusyTimeout: 5 * time.Second,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &Store{db: db}, nil
-}
-
 // Close closes the connection.
 func (s *Store) Close() error { return s.db.Close() }
 

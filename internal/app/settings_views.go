@@ -128,12 +128,6 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 						}
 					})
 				})
-			settingsRule(c)
-			if row := design.SettingsLinkRow(c, p, "settings-legacy", "导入旧版数据库…",
-				"从 Flutter 版食匣的 .sqlite 一次性迁移",
-				func() { settingsChevron(c, p) }); row.Clicked() {
-				a.router.Push("/settings/legacy")
-			}
 		})
 
 		design.SettingsGroup(c, p, "帮助", func() {
@@ -177,10 +171,10 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 					}
 				}
 			}
-			design.SettingsRow(c, p, "外部播放器", status, nil)
+			design.SettingsRow(c, p, "内置播放器", status, nil)
 			ui.Column(c).FillWidth().Gap(6).Padding(12, 14).Children(func() {
-				ui.Text(c, "哔哩哔哩的页面会先解析出直链再交给播放器，点开就是高画质播放窗，"+
-					"不用登录、不用全屏、不会被降清晰度。直链几分钟后失效，所以每次点都重新取。").
+				ui.Text(c, "哔哩哔哩的页面会先解析出直链，再用应用内嵌的 mpv 播放："+
+					"没有独立的播放器窗口，标题与播放控制都由食匣绘制。直链几分钟后失效，所以每次点都重新取。").
 					FontSize(design.FontSmall).TextColor(p.Muted).LineHeight(1.5)
 				ui.Text(c, "小红书没有可解析的接口，仍然只能在应用内网页里看。"+
 					"分轨的 DASH 只有 mpv 能同时播画面与声音；只装了 VLC 时，分轨会退回应用内网页。").

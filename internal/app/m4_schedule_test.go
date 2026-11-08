@@ -278,8 +278,8 @@ func TestSettleSheetPreview(t *testing.T) {
 	if !tt.HasText("土豆 还有一些 → 快没了") {
 		t.Errorf("coarse deduction missing from the sheet: %q", tt.Texts())
 	}
-	if !tt.HasText("+30 XP") {
-		t.Errorf("xp line missing: %q", tt.Texts())
+	if !tt.HasText("3 道菜") || tt.HasText("XP") {
+		t.Errorf("dish count missing or XP still shown: %q", tt.Texts())
 	}
 	if err := tt.Click("确认结算"); err != nil {
 		t.Fatal(err)
@@ -693,19 +693,45 @@ func TestRunBoardLayout(t *testing.T) {
 		t.Errorf("board centre = %v, want near %v", center, wantCenter)
 	}
 
+	prev, ok := tt.Find("上一步")
+	if !ok {
+		t.Fatal("the previous control is missing")
+	}
+	pause, ok := tt.Find("暂停")
+	if !ok {
+		t.Fatal("the pause control is missing")
+	}
 	next, ok := tt.Find("下一步")
 	if !ok {
 		t.Fatal("the next control is missing")
 	}
-	if next.Y < a.winH*0.65 || next.X > design.PagePadding+design.RunBoardWidth {
-		t.Errorf("next control at %v,%v, want bottom-left", next.X, next.Y)
+	for name, r := range map[string]ui.Rect{"上一步": prev, "暂停": pause, "下一步": next} {
+		if r.W < design.RunControlSize-1 || r.W > design.RunControlSize+1 ||
+			r.H < design.RunControlSize-1 || r.H > design.RunControlSize+1 {
+			t.Errorf("%s is %vx%v, want %v square", name, r.W, r.H, design.RunControlSize)
+		}
+	}
+	// The pause sits between the two arrows, and the whole transport is
+	// centred under the board above it.
+	prevMid, nextMid := prev.X+prev.W/2, next.X+next.W/2
+	pauseMid := pause.X + pause.W/2
+	if d := pauseMid - (prevMid+nextMid)/2; d < -2 || d > 2 {
+		t.Errorf("pause centre %v, want the midpoint %v", pauseMid, (prevMid+nextMid)/2)
+	}
+	boardMid := board.X + board.W/2
+	if d := pauseMid - boardMid; d < -4 || d > 4 {
+		t.Errorf("transport centre %v, want the board centre %v", pauseMid, boardMid)
+	}
+	if next.Y < board.Y+board.H*0.9 {
+		t.Errorf("next control at y=%v, want below the board", next.Y)
 	}
 	exit, ok := tt.Find("退出这桌")
 	if !ok {
 		t.Fatal("the exit control is missing")
 	}
-	if exit.Y > 90 || exit.X > 120 {
-		t.Errorf("exit control at %v,%v, want top-left", exit.X, exit.Y)
+	// Down and left of the old top-left corner, but still near it.
+	if exit.X < 20 || exit.X > 40 || exit.Y < 3 || exit.Y > 16 || exit.Y > 90 {
+		t.Errorf("exit control at %v,%v, want slightly down-left", exit.X, exit.Y)
 	}
 }
 

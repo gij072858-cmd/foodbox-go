@@ -209,10 +209,17 @@ func (a *App) settle() {
 			return
 		}
 		_ = store.ClearRunSession(ctx)
+		// profiles.xp is not part of the other reloads; without this the
+		// level on 我的 would stay at its pre-settlement value until restart.
+		p, perr := store.GetProfile(ctx)
 		a.post(func() {
 			a.notice = done
 			a.reloadSchedule()
 			a.reloadRecords()
+			if perr == nil {
+				a.prefs.profile.profile.XP = p.XP
+				a.prefs.profile.profile.TotalMeals = p.TotalMeals
+			}
 			// The settlement deducted stock: reload the pantry snapshot.
 			a.refreshItems()
 			if strings.HasPrefix(a.router.Path(), "/schedule/run") {

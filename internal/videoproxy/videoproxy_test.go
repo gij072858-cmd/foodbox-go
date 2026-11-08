@@ -2,15 +2,60 @@ package videoproxy
 
 import (
 	"context"
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"testing"
+	"time"
 )
+
+// The keys the canned nav answer publishes, and the secret they mix into.
+const (
+	testImgKey = "7cd084941338484aae1ad9425b84077c"
+	testSubKey = "4932caff0ff746eab6f01bf08b70ac45"
+	testMixin  = "ea1db124af3c7062474693fa704f4ff8"
+)
+
+func wbiNav() map[string]any {
+	return map[string]any{"code": -101, "data": map[string]any{
+		"wbi_img": map[string]any{
+			"img_url": "https://i0.hdslb.com/bfs/wbi/" + testImgKey + ".png",
+			"sub_url": "https://i0.hdslb.com/bfs/wbi/" + testSubKey + ".png",
+		},
+	}}
+}
+
+func wbiSPI() map[string]any {
+	return map[string]any{"code": 0, "data": map[string]any{
+		"b_3": "test-buvid3", "b_4": "test-buvid4",
+	}}
+}
+
+// checkWBI recomputes w_rid from the raw query the server received.
+func checkWBI(t *testing.T, r *http.Request) {
+	t.Helper()
+	q := r.URL.RawQuery
+	i := strings.LastIndex(q, "&w_rid=")
+	if i < 0 {
+		t.Errorf("playurl was not WBI signed: %q", q)
+		return
+	}
+	signed, got := q[:i], q[i+len("&w_rid="):]
+	sum := md5.Sum([]byte(signed + testMixin))
+	if want := hex.EncodeToString(sum[:]); got != want {
+		t.Errorf("w_rid = %q, want %q (query %q)", got, want, signed)
+	}
+	if !strings.Contains(signed, "wts=") {
+		t.Errorf("signed query has no wts: %q", signed)
+	}
+}
 
 // serve answers the two Bilibili APIs from a canned pair of replies, and
 // records the headers it was asked with — the Referer is the whole point of
@@ -20,9 +65,15 @@ func serve(t *testing.T, view, play map[string]any, got *map[string]string) *htt
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var body map[string]any
 		switch {
+		case strings.HasPrefix(r.URL.Path, "/x/web-interface/nav"):
+			body = wbiNav()
+		case strings.HasPrefix(r.URL.Path, "/x/frontend/finger/spi"):
+			body = wbiSPI()
 		case strings.HasPrefix(r.URL.Path, "/x/web-interface/view"):
 			body = view
-		case strings.HasPrefix(r.URL.Path, "/x/player/playurl"):
+		case strings.HasPrefix(r.URL.Path, "/x/player/wbi/playurl"),
+			strings.HasPrefix(r.URL.Path, "/x/player/playurl"):
+			checkWBI(t, r)
 			if r.URL.Query().Get("fnval") != "16" {
 				t.Errorf("playurl asked without fnval=16: %q", r.URL.RawQuery)
 			}
@@ -44,9 +95,19 @@ func serve(t *testing.T, view, play map[string]any, got *map[string]string) *htt
 func biliURLs(t *testing.T, s *httptest.Server) {
 	t.Helper()
 	oldView, oldPlay := biliView, biliPlayURL
+	oldNav, oldSPI := biliNav, biliSPI
+	oldDelay := biliRetryDelay
 	biliView = s.URL + "/x/web-interface/view"
-	biliPlayURL = s.URL + "/x/player/playurl"
-	t.Cleanup(func() { biliView, biliPlayURL = oldView, oldPlay })
+	biliPlayURL = s.URL + "/x/player/wbi/playurl"
+	biliNav = s.URL + "/x/web-interface/nav"
+	biliSPI = s.URL + "/x/frontend/finger/spi"
+	biliRetryDelay = 0
+	resetWBICache()
+	t.Cleanup(func() {
+		biliView, biliPlayURL, biliNav, biliSPI = oldView, oldPlay, oldNav, oldSPI
+		biliRetryDelay = oldDelay
+		resetWBICache()
+	})
 }
 
 const testPage = "https://www.bilibili.com/video/BV1GJ411x7h7/"
@@ -63,11 +124,13 @@ func TestResolveDASHSplitsPictureAndSound(t *testing.T) {
 				map[string]any{"id": 64, "codecid": 7, "bandwidth": 900000, "width": 1280,
 					"baseUrl": []string{"https://cdn.example/v-weak.m4s"}},
 				map[string]any{"id": 80, "codecid": 12, "bandwidth": 3000000, "width": 1920,
-					"baseUrl": "https://cdn.example/v-best.m4s"},
+					"baseUrl":   "https://cdn.example/v-best.m4s",
+					"backupUrl": []string{"https://cdn.example/v-backup.m4s"}},
 			},
 			"audio": []any{
 				map[string]any{"id": 30280, "bandwidth": 192000,
-					"baseUrl": []string{"https://cdn.example/a-best.m4s"}},
+					"baseUrl":   []string{"https://cdn.example/a-best.m4s"},
+					"backupUrl": []string{"https://cdn.example/a-backup.m4s"}},
 			},
 		},
 	}}
@@ -86,18 +149,24 @@ func TestResolveDASHSplitsPictureAndSound(t *testing.T) {
 	if stream.AudioURL != "https://cdn.example/a-best.m4s" {
 		t.Errorf("audio = %q, want the DASH audio track", stream.AudioURL)
 	}
+	if len(stream.VideoURLs) != 2 || stream.VideoURLs[1] != "https://cdn.example/v-backup.m4s" {
+		t.Errorf("video candidates = %v, want the primary then the backup", stream.VideoURLs)
+	}
 	if stream.Title != "青椒肉丝怎么做" || stream.Duration.Seconds() != 125 {
 		t.Errorf("title/duration = %q / %v", stream.Title, stream.Duration)
 	}
 	// Every request must have carried the Referer, and the login cookie when
 	// the caller has one.
 	for path, seen := range headers {
-		if !strings.HasPrefix(seen, "https://www.bilibili.com|") {
+		if !strings.HasPrefix(seen, "https://www.bilibili.com") {
 			t.Errorf("%s got Referer %q", path, seen)
 		}
-		if !strings.HasSuffix(seen, "|SESSDATA=sess-abc") {
+		if !strings.Contains(seen, "SESSDATA=sess-abc") {
 			t.Errorf("%s got Cookie %q", path, seen)
 		}
+	}
+	if got := headers["/x/player/wbi/playurl"]; !strings.Contains(got, "buvid3=test-buvid3") {
+		t.Errorf("playurl got Cookie %q, want the anonymous buvid3", got)
 	}
 
 	// mpv gets both tracks and the header on the wire; VLC would play the
@@ -177,10 +246,17 @@ func TestResolveFollowsShortLink(t *testing.T) {
 	mux.HandleFunc("/s/abc123", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/video/BV1GJ411x7h7/", http.StatusFound)
 	})
+	mux.HandleFunc("/x/web-interface/nav", func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode(wbiNav())
+	})
+	mux.HandleFunc("/x/frontend/finger/spi", func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode(wbiSPI())
+	})
 	mux.HandleFunc("/x/web-interface/view", func(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(view)
 	})
-	mux.HandleFunc("/x/player/playurl", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/x/player/wbi/playurl", func(w http.ResponseWriter, r *http.Request) {
+		checkWBI(t, r)
 		_ = json.NewEncoder(w).Encode(play)
 	})
 	srv := httptest.NewServer(mux)
@@ -256,5 +332,65 @@ func TestFindPlayerPrefersMPV(t *testing.T) {
 	}
 	if len(LaunchArgs(PlayerNone, "", Stream{})) != 0 {
 		t.Error("PlayerNone should give no command line at all")
+	}
+}
+
+// The WBI algorithm is checked against the reference example published with
+// the endpoint documentation: the two keys, the mixed secret, and one hash.
+func TestWBISignature(t *testing.T) {
+	if got := mixinKey(testImgKey, testSubKey); got != testMixin {
+		t.Fatalf("mixinKey = %q, want %q", got, testMixin)
+	}
+	params := url.Values{}
+	params.Set("foo", "114")
+	params.Set("bar", "514")
+	params.Set("zab", "1919810")
+	got := signParams(params, testMixin, time.Unix(1702204169, 0))
+	want := "bar=514&foo=114&wts=1702204169&zab=1919810&w_rid=8f6f2b5b3d485fe1886cec6a0be8c5d4"
+	if got != want {
+		t.Errorf("signParams = %q, want %q", got, want)
+	}
+}
+
+func TestBiliPage(t *testing.T) {
+	for _, c := range []struct {
+		url  string
+		want int
+	}{
+		{testPage, 0},
+		{testPage + "?p=2", 2},
+		{testPage + "?p=0", 0},
+		{testPage + "?p=notanumber", 0},
+	} {
+		if got := biliPage(c.url); got != c.want {
+			t.Errorf("biliPage(%q) = %d, want %d", c.url, got, c.want)
+		}
+	}
+}
+
+// The embedded-player command line must never create a window of its own:
+// --wid and the IPC pipe are what replace the native frame and controls.
+func TestEmbeddedMPVArgs(t *testing.T) {
+	s := Stream{
+		VideoURL: "https://cdn.example/v.m4s",
+		AudioURL: "https://cdn.example/a.m4s",
+		Headers:  map[string]string{"Referer": biliReferer, "User-Agent": biliUserAgent},
+	}
+	args := EmbeddedMPVArgs("mpv.exe", 0x1234, `\\.\pipe\foodbox-mpv-test`, s)
+	joined := strings.Join(args, " ")
+	for _, want := range []string{
+		"--wid=4660",
+		`--input-ipc-server=\\.\pipe\foodbox-mpv-test`,
+		"--no-border",
+		"--force-window=no",
+		"--osc=no",
+		"--audio-file=https://cdn.example/a.m4s",
+	} {
+		if !strings.Contains(joined, want) {
+			t.Errorf("embedded argv missing %q: %q", want, joined)
+		}
+	}
+	if !strings.HasSuffix(joined, "https://cdn.example/v.m4s") {
+		t.Errorf("embedded argv does not end on the video: %q", joined)
 	}
 }

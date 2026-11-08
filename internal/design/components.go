@@ -306,12 +306,19 @@ func segmentedControl(c *ui.Context, selected *int, disabled []bool, labels ...s
 // than through a pair of floating arrows (the framework's ui.Stepper) or a
 // wide number field. It reports a change after clamping to lo..hi.
 func Stepper(c *ui.Context, p Palette, key string, value *int, lo, hi int, unit string, width float32) (ui.Element, bool) {
+	return StepperNamed(c, p, key, unit, value, lo, hi, unit, width)
+}
+
+// StepperNamed is Stepper with a label for its two buttons, so several
+// steppers on one page can be told apart by assistive technology and the
+// UI tests ("增加成人人数" beside "增加小孩人数").
+func StepperNamed(c *ui.Context, p Palette, key, label string, value *int, lo, hi int, unit string, width float32) (ui.Element, bool) {
 	changed := false
 	row := ui.Row(c).Width(width).Height(32).Shrink(0).Padding(2).Radius(RadiusPill).
 		Background(p.SurfaceAlt).Border(1, p.Border).AlignItems(ui.Center)
 	row.Children(func() {
 		minus := ui.ButtonBase(c.Key(key+"-minus")).Size(28, 28).Radius(RadiusPill).
-			Label("减少" + unit)
+			Label("减少" + label)
 		Wash(minus, p.SurfaceAlt.Alpha(0), p.Hover)
 		minus.Children(func() {
 			ui.Text(c, "−").FontSize(16).FontWeight(600).TextColor(p.Ink)
@@ -323,7 +330,7 @@ func Stepper(c *ui.Context, p Palette, key string, value *int, lo, hi int, unit 
 		ui.Text(c, fmt.Sprintf("%d %s", *value, unit)).FontSize(FontSmall).
 			FontWeight(600).TextColor(p.Text).Grow(1).TextAlign(ui.Center).SingleLine()
 		plus := ui.ButtonBase(c.Key(key+"-plus")).Size(28, 28).Radius(RadiusPill).
-			Label("增加" + unit)
+			Label("增加" + label)
 		Wash(plus, p.SurfaceAlt.Alpha(0), p.Hover)
 		plus.Children(func() {
 			ui.Text(c, "+").FontSize(16).FontWeight(600).TextColor(p.Ink)

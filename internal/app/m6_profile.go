@@ -507,7 +507,7 @@ func (a *App) clearCooked() {
 				a.reloadRecords()
 				return
 			}
-			a.notice = "做过的菜已清空，收藏与 XP 保留"
+			a.notice = "做过的菜已清空，收藏与等级保留"
 		})
 	}()
 }
@@ -647,7 +647,7 @@ func (a *App) profileCookedPage(c *ui.Context, p design.Palette) {
 		})
 
 		if ui.AlertDialog(c, &co.confirm, "清空做过的菜？",
-			"记录与统计会归零，收藏和 XP 保留。这个操作不能撤销。", "取消", "清空") == 1 {
+			"记录与统计会归零，收藏和等级保留。这个操作不能撤销。", "取消", "清空") == 1 {
 			a.clearCooked()
 		}
 	})

@@ -405,9 +405,13 @@ func (s *Store) SettleRunFull(_ context.Context, recipeIDs []int64, completedAt 
 		settled[id] = true
 		s.records = append(s.records, domain.Record{
 			ID: int64(len(s.records) + 1), RecipeID: id, CompletedAt: completedAt,
-			SessionSeconds: sessionSeconds, Note: note,
+			SessionSeconds: sessionSeconds, Note: note, XPGained: 10,
 		})
 	}
+	// Mirror the SQLite transaction: ten XP per dish and one meal, so tests
+	// that settle through this store see the same level change.
+	s.profile.XP += 10 * len(recipeIDs)
+	s.profile.TotalMeals++
 	kept := s.schedule[:0]
 	for _, it := range s.schedule {
 		if !settled[it.RecipeID] {

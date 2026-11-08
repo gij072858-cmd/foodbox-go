@@ -38,6 +38,47 @@ func TestOnboardingActionsReachableAtMinSize(t *testing.T) {
 	}
 }
 
+// The household steppers are the app's click-driven design.Stepper, not the
+// framework's press-only arrows: each click moves the number and the total.
+func TestOnboardingHouseholdSteppers(t *testing.T) {
+	a := onboardingTestApp()
+	tt := ui.NewTester(a.View, 1024, 700)
+	if err := tt.Click("下一步"); err != nil {
+		t.Fatalf("household stop unreachable: %v", err)
+	}
+	settle(tt)
+	if !tt.HasText("家里几口人") {
+		t.Fatalf("household stop not shown: %q", tt.Texts())
+	}
+	for _, label := range []string{"增加成人人数", "增加小孩人数", "增加老人人数"} {
+		if _, ok := tt.Find(label); !ok {
+			t.Errorf("stepper button %q is missing", label)
+		}
+	}
+	if err := tt.Click("增加成人人数"); err != nil {
+		t.Fatalf("adult plus unreachable: %v", err)
+	}
+	settle(tt)
+	if a.prefs.onboarding.adults != 3 {
+		t.Errorf("adults after one plus = %d, want 3", a.prefs.onboarding.adults)
+	}
+	if err := tt.Click("增加成人人数"); err != nil {
+		t.Fatal(err)
+	}
+	settle(tt)
+	if a.prefs.onboarding.adults != 4 || !tt.HasText("一共 4 位") {
+		t.Errorf("adults after two plus = %d, total shown = %v",
+			a.prefs.onboarding.adults, tt.HasText("一共 4 位"))
+	}
+	if err := tt.Click("减少成人人数"); err != nil {
+		t.Fatal(err)
+	}
+	settle(tt)
+	if a.prefs.onboarding.adults != 3 {
+		t.Errorf("adults after minus = %d, want 3", a.prefs.onboarding.adults)
+	}
+}
+
 func TestOnboardingFinishSavesAnswers(t *testing.T) {
 	a := onboardingTestApp()
 	tt := ui.NewTester(a.View, 1024, 700)

@@ -1,9 +1,9 @@
 //go:build ignore
 
-// icongen renders the app icon: the two characters 食匣 stacked vertically
-// in a bold sans (黑体) on white, at 1024×1024. The executable and installer
-// icon is a static asset, so it cannot follow the runtime theme; white is the
-// agreed fallback.
+// icongen renders the app icon: the two characters 食匣 side by side
+// horizontally in a bold sans (黑体) on white, at 1024×1024. The executable
+// and installer icon is a static asset, so it cannot follow the runtime
+// theme; white is the agreed fallback.
 //
 //	go run ./tools/icongen -out resources/icon.png
 //
@@ -17,6 +17,7 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"math"
 	"os"
 
 	"golang.org/x/image/draw"
@@ -59,10 +60,7 @@ func main() {
 
 	big := image.NewRGBA(image.Rect(0, 0, *size*2, *size*2))
 	draw.Draw(big, big.Bounds(), image.NewUniform(color.White), image.Point{}, draw.Src)
-	if err := drawStacked(big, face, "食", "匣"); err != nil {
-		fmt.Fprintln(os.Stderr, "icongen:", err)
-		os.Exit(1)
-	}
+	drawHorizontal(big, face, "食匣")
 	final := image.NewRGBA(image.Rect(0, 0, *size, *size))
 	draw.CatmullRom.Scale(final, final.Bounds(), big, big.Bounds(), draw.Src, nil)
 
@@ -109,33 +107,21 @@ func loadFace(path string, size float64) (font.Face, error) {
 	})
 }
 
-// drawStacked centres the two glyphs as one vertical block.
-func drawStacked(dst *image.RGBA, face font.Face, top, bottom string) error {
+// drawHorizontal centres 食匣 side by side, using the glyphs' ink box so the
+// pair reads as one mark on the square rather than by advance width alone.
+func drawHorizontal(dst *image.RGBA, face font.Face, text string) {
 	ink := color.RGBA{R: 0x1C, G: 0x19, B: 0x17, A: 0xFF}
-	b1, _ := font.BoundString(face, top)
-	b2, _ := font.BoundString(face, bottom)
-	h1 := float64(b1.Max.Y-b1.Min.Y) / 64
-	h2 := float64(b2.Max.Y-b2.Min.Y) / 64
-	gap := float64(dst.Bounds().Dy()) * 0.035
-	block := h1 + gap + h2
-	topY := (float64(dst.Bounds().Dy()) - block) / 2
-	base1 := topY - float64(b1.Min.Y)/64
-	base2 := topY + h1 + gap - float64(b2.Min.Y)/64
-	if err := drawCentred(dst, face, ink, top, base1); err != nil {
-		return err
-	}
-	return drawCentred(dst, face, ink, bottom, base2)
-}
-
-func drawCentred(dst *image.RGBA, face font.Face, ink color.Color, text string, baseline float64) error {
-	adv := font.MeasureString(face, text).Ceil()
-	x := (dst.Bounds().Dx() - adv) / 2
+	b, _ := font.BoundString(face, text)
+	w := float64(b.Max.X-b.Min.X) / 64
+	h := float64(b.Max.Y-b.Min.Y) / 64
+	x := (float64(dst.Bounds().Dx())-w)/2 - float64(b.Min.X)/64
+	top := (float64(dst.Bounds().Dy()) - h) / 2
+	baseline := top - float64(b.Min.Y)/64
 	d := font.Drawer{
 		Dst:  dst,
 		Src:  image.NewUniform(ink),
 		Face: face,
-		Dot:  fixed.P(x, int(baseline)),
+		Dot:  fixed.P(int(math.Round(x)), int(math.Round(baseline))),
 	}
 	d.DrawString(text)
-	return nil
 }

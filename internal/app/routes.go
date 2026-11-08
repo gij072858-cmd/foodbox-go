@@ -109,9 +109,6 @@ func (a *App) route(c *ui.Context, r *ui.Route, p design.Palette) {
 		a.profileShelfPage(c, p)
 
 	// Settings, help and onboarding (M6).
-	case r.Match("/settings/legacy"):
-		r.Title("导入旧版数据库")
-		a.legacyImportPage(c, p)
 	case r.Match("/settings/ai"):
 		r.Title("AI 与配额")
 		a.aiSettingsPage(c, p)

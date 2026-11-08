@@ -49,7 +49,12 @@ func (a *App) feedEmptyState(c *ui.Context, p design.Palette) {
 // says how many days and dishes there are and how long the streak is.
 func (a *App) feedMonthPane(c *ui.Context, p design.Palette) {
 	ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(0, design.PagePadding, 0, 0).Children(func() {
-		if ui.Calendar(c, &a.feed.date).Changed() {
+		// The column stretches its children across the full split pane, but
+		// the day grid is a fixed seven cells wide. Keep the calendar at its
+		// own width and centre that width in the pane, so the month title
+		// centres over the days instead of over a stretched header row.
+		cal := ui.Calendar(c, &a.feed.date).AlignSelf(ui.Center).Label("开饭月历")
+		if cal.Changed() {
 			// The framework's calendar moved the chosen day; the month's
 			// summary follows it off the frame.
 			a.feed.year, a.feed.month = a.feed.date.Year(), int(a.feed.date.Month())
@@ -63,8 +68,8 @@ func (a *App) feedMonthPane(c *ui.Context, p design.Palette) {
 		ui.Divider(c)
 		ui.Row(c).Gap(design.Sp(c, 1.5)).Children(func() {
 			if ui.Button(c, "写这一天的日记").Clicked() {
-			date := a.feed.date.Format("2006-01-02")
-			a.openFeedDay(date)
+				date := a.feed.date.Format("2006-01-02")
+				a.openFeedDay(date)
 				a.router.Push("/feed/" + date)
 			}
 			if ui.Button(c, "年度回顾").Clicked() {
@@ -160,10 +165,8 @@ func (a *App) feedRecordRow(c *ui.Context, p design.Palette, r domain.Record) {
 		if d := recordDuration(r); d != "" {
 			ui.Text(c, d).FontSize(design.FontMeta).TextColor(p.Muted)
 		}
-		ui.Text(c, fmt.Sprintf("+%d XP", r.XPGained)).FontSize(design.FontMeta).TextColor(p.Accent)
 	})
 }
-
 
 // feedDayBody draws one day's journal editor.
 func (a *App) feedDayBody(c *ui.Context, p design.Palette) {
@@ -198,7 +201,6 @@ func (a *App) feedDayBody(c *ui.Context, p design.Palette) {
 						if d := recordDuration(r); d != "" {
 							ui.Text(c, d).FontSize(11).TextColor(p.Muted)
 						}
-						ui.Text(c, fmt.Sprintf("+%d XP", r.XPGained)).FontSize(11).TextColor(p.Accent)
 					})
 				}
 			})

@@ -106,8 +106,8 @@ func TestFeedCalendarAndDayJournal(t *testing.T) {
 	if !tt.HasText("最近开饭") {
 		t.Fatalf("recent meals missing: %q", tt.Texts())
 	}
-	if !tt.HasText("青椒肉丝") || !tt.HasText("+10 XP") {
-		t.Errorf("latest meals missing: %q", tt.Texts())
+	if !tt.HasText("青椒肉丝") || tt.HasText("XP") {
+		t.Errorf("latest meals missing or XP still shown: %q", tt.Texts())
 	}
 	if !hasTextContaining(tt, "连续 2 天") {
 		t.Errorf("streak line missing: %q", tt.Texts())
@@ -115,6 +115,13 @@ func TestFeedCalendarAndDayJournal(t *testing.T) {
 	now := time.Now().In(time.Local)
 	if !hasTextContaining(tt, fmt.Sprintf("%d 年 %d 月", now.Year(), int(now.Month()))) {
 		t.Errorf("month heading missing: %q", tt.Texts())
+	}
+	// The calendar keeps its intrinsic day-grid width instead of stretching
+	// across the split pane, which is what centres the month title over it.
+	if cal, ok := tt.Find("开饭月历"); !ok {
+		t.Errorf("calendar has no label")
+	} else if cal.W > 320 {
+		t.Errorf("calendar width = %v, want its intrinsic seven-cell width", cal.W)
 	}
 
 	// Choosing a day in the calendar moves the right column to it; its
@@ -186,8 +193,8 @@ func TestProfileOverview(t *testing.T) {
 	if !tt.HasText("小满") {
 		t.Errorf("nickname missing: %q", tt.Texts())
 	}
-	if !tt.HasText("Lv.3") || !tt.HasText("250 XP") {
-		t.Errorf("level missing: %q", tt.Texts())
+	if !tt.HasText("Lv.3") || tt.HasText("XP") {
+		t.Errorf("level missing or XP still shown: %q", tt.Texts())
 	}
 	if !tt.HasText("我的菜谱") || !tt.HasText("厨房") {
 		t.Errorf("groups missing: %q", tt.Texts())

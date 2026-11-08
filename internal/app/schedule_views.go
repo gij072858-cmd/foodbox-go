@@ -424,8 +424,7 @@ func (a *App) runSplit(c *ui.Context, p design.Palette) {
 		Gap(design.Sp(c, 4)).Children(func() {
 		ui.Column(c).Width(design.RunBoardWidth).Shrink(0).MinWidth(0).Children(func() {
 			// The board and its hanging tray are one centred group; the
-			// controls below are pinned to the bottom-left and do not take
-			// part in the centring.
+			// transport below is centred under the same rail.
 			ui.Column(c).Grow(1).Justify(ui.Center).Gap(design.Sp(c, 2)).Children(func() {
 				a.hangTraySlot(c, p)
 				a.runBoard(c, p)
@@ -442,11 +441,11 @@ func (a *App) runSplit(c *ui.Context, p design.Palette) {
 // top-left ends the table, as the user asked. The rest drags the window.
 func (a *App) runTopBar(c *ui.Context, p design.Palette) {
 	bar := c.TitleBar()
-	left := max(design.PagePadding, bar.Left+8)
+	left := max(24, bar.Left+4)
 	ui.Row(c).FillWidth().Height(design.TitleBand).
-		Padding(0, max(16, bar.Right+12), 0, left).AlignItems(ui.Center).Children(func() {
-		exit := ui.ButtonBase(c.Key("run-exit")).Size(32, 30).Radius(design.RadiusSmall).
-			Center().Label("退出这桌")
+		Padding(0, max(16, bar.Right+12), 0, left).AlignItems(ui.Start).Children(func() {
+		exit := ui.ButtonBase(c.Key("run-exit")).Size(28, 28).Radius(design.RadiusSmall).
+			Margin(5, 0, 0, 0).Center().Label("退出这桌")
 		design.Wash(exit, p.Surface.Alpha(0), p.Hover)
 		exit.Children(func() {
 			ui.Icon(c, &icons.Back).Size(17, 17).TextColor(p.Ink)
@@ -570,6 +569,7 @@ func (a *App) runBoard(c *ui.Context, p design.Palette) {
 		Gap(design.Sp(c, 2)).Radius(design.RadiusCard).Background(p.Surface).
 		Border(1, p.Border).AlignItems(ui.Start).Justify(ui.SpaceBetween).
 		Label("掌序看板")
+	design.TintSurface(card, p, design.RadiusCard)
 	design.RestShadow(card, p)
 	minutes := a.sched.runTimeline.TotalMinutes
 	if minutes == 0 {
@@ -700,12 +700,13 @@ func macroLegendItem(c *ui.Context, p design.Palette, label string, grams float3
 	})
 }
 
-// runControls is Cloudy's transport: three icon-only buttons at the
-// bottom-left. Labels stay for assistive technology and the tests; the exit
-// lives at the top-left as a back arrow.
+// runControls is Cloudy's transport: three identical icon-only buttons,
+// centred under the board. Labels stay for assistive technology and the
+// tests; the exit lives at the top-left as a back arrow.
 func (a *App) runControls(c *ui.Context, p design.Palette) {
 	last := len(a.sched.runLines) - 1
-	ui.Row(c).FillWidth().Gap(design.Sp(c, 2)).AlignItems(ui.Center).Children(func() {
+	ui.Row(c).FillWidth().Gap(design.Sp(c, 2)).AlignItems(ui.Center).
+		Justify(ui.Center).Children(func() {
 		prev := ui.ButtonBase(c.Key("run-prev")).Size(design.RunControlSize, design.RunControlSize).
 			Radius(design.RadiusPill).Center().Label("上一步")
 		design.Wash(prev, p.Surface.Alpha(0), p.Hover)
@@ -722,13 +723,11 @@ func (a *App) runControls(c *ui.Context, p design.Palette) {
 		if a.sched.runPaused {
 			pauseLabel, pauseIcon = "继续", &icons.Play
 		}
-		pause := ui.ButtonBase(c.Key("run-pause")).Size(design.RunControlSize+8, design.RunControlSize+8).
-			Radius(design.RadiusPill).Center().Label(pauseLabel).Background(p.Accent)
-		if pause.Hovered() {
-			pause.Background(p.Accent.Alpha(0.88))
-		}
+		pause := ui.ButtonBase(c.Key("run-pause")).Size(design.RunControlSize, design.RunControlSize).
+			Radius(design.RadiusPill).Center().Label(pauseLabel)
+		design.Wash(pause, p.Surface.Alpha(0), p.Hover)
 		pause.Children(func() {
-			ui.Icon(c, pauseIcon).Size(18, 18).TextColor(p.OnAccent)
+			ui.Icon(c, pauseIcon).Size(17, 17).TextColor(p.Ink)
 		})
 		if pause.Clicked() {
 			a.toggleRunPause()
@@ -924,8 +923,8 @@ func (a *App) hangTray(c *ui.Context, p design.Palette) {
 	})
 }
 
-// settleSheet is the settlement confirmation: the dish count, the XP and the
-// pantry rows the transaction will write.
+// settleSheet is the settlement confirmation: the dish count and the pantry
+// rows the transaction will write.
 func (a *App) settleSheet(c *ui.Context, p design.Palette) {
 	if !a.sched.confirmOpen {
 		return
@@ -937,8 +936,8 @@ func (a *App) settleSheet(c *ui.Context, p design.Palette) {
 	}
 	design.ModalDialog(c, p, &a.sched.confirmOpen, 520, a.level, func() {
 		ui.Text(c, title).FontSize(18).FontWeight(700).TextColor(p.Text)
-		ui.Text(c, fmt.Sprintf("%d 道菜 · +%d XP · 这餐记录进食历，其余餐次保留",
-			preview.Dishes, preview.XP)).FontSize(12).TextColor(p.Muted)
+		ui.Text(c, fmt.Sprintf("%d 道菜 · 这餐记录进食历，其余餐次保留",
+			preview.Dishes)).FontSize(12).TextColor(p.Muted)
 		if a.pantryOff {
 			ui.Text(c, "仓库页已关闭，本餐不改动库存。").FontSize(12).TextColor(p.Muted)
 		} else if preview.Deducted() > 0 {

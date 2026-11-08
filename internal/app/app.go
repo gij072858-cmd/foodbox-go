@@ -19,6 +19,7 @@ import (
 	"github.com/gij072858-cmd/foodbox-go/internal/domain"
 	"github.com/gij072858-cmd/foodbox-go/internal/repository"
 	cookmatch "github.com/gij072858-cmd/foodbox-go/internal/services/matcher"
+	"github.com/gij072858-cmd/foodbox-go/internal/videoproxy"
 )
 
 // Phase is where startup is.
@@ -72,19 +73,38 @@ type App struct {
 	// search is the sidebar field, so Cmd/Ctrl+F can put the caret in it.
 	search ui.Handle
 
-	// videoOpen shows a recipe's source page in an in-app web view; the
+	// videoOpen shows a recipe's source page in the in-app web fallback; the
 	// source links are web pages, not media files.
 	videoOpen bool
 	videoURL  string
 	videoView *mygo.WebView
+	// videoPlayerOpen shows the embedded mpv panel; videoPageURL is the page
+	// it was opened from, so a failure can still fall back to that page.
+	videoPlayerOpen bool
+	videoPageURL    string
+	videoTitle      string
+	videoEmbed      videoEmbedder
+	videoPaused     bool
+	videoEnded      bool
+	videoPos        time.Duration
+	videoDur        time.Duration
+	// videoPlaceholder is the video rectangle from the previous frame, in
+	// window DIPs; the native child is positioned from it.
+	videoPlaceholder  ui.Rect
+	videoPendingEmbed *videoproxy.Stream
+	videoPendingFound videoproxy.Found
 	// videoBusy is a resolve in flight; videoPending is the page to show in
 	// the web view if the resolve could not be played.
 	videoBusy    bool
 	videoPending string
-	// videoCmd is an external player this app started, so it can be stopped
-	// and noticed when it exits.
+	// videoCmd is the external player a non-Windows build started, so it can
+	// be stopped and noticed when it exits.
 	videoCmd    *exec.Cmd
 	videoCmdURL string
+	// videoFullscreenSaved remembers whether the window was fullscreen before
+	// a player or the web fallback took it over; closing restores it.
+	videoFullscreenSaved bool
+	videoPrevFullscreen  bool
 	// videoCookie is the settings field's buffer; only its saved form, in
 	// the credential store, is ever read back.
 	videoCookie string
@@ -222,7 +242,6 @@ type App struct {
 	nutrition  nutritionState
 	feed       feedState
 	prefs      prefsState
-	legacy     legacyImportState
 
 	// images is the single LRU for category and pantry images. Pages ask it
 	// for decoded bitmaps; decoding runs off the main thread.
@@ -301,6 +320,7 @@ func Run() error {
 		}
 	})
 	mygo.App.OnQuit(func() {
+		a.stopVideo()
 		if a.store != nil {
 			a.store.Close()
 		}
@@ -407,6 +427,7 @@ func (a *App) View(c *ui.Context) {
 		// to cover a share of the screen, not of the page.
 		a.hangDropZone(c, p)
 		a.sheet(c, p)
+		a.videoPlayerOverlay(c, p)
 		a.videoOverlay(c, p)
 		return
 	}
@@ -421,6 +442,7 @@ func (a *App) View(c *ui.Context) {
 		})
 	})
 	a.sheet(c, p)
+	a.videoPlayerOverlay(c, p)
 	a.videoOverlay(c, p)
 }
 
