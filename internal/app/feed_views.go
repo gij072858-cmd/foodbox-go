@@ -60,21 +60,30 @@ func (a *App) feedMonthPane(c *ui.Context, p design.Palette) {
 			a.feed.year, a.feed.month = a.feed.date.Year(), int(a.feed.date.Month())
 			a.feed.buildMonth()
 		}
-		ui.Text(c, fmt.Sprintf("%d 天 · %d 道 · 连续 %d 天",
-			a.mealDays, a.recordCount, a.feed.streak)).
-			FontSize(design.FontMeta).TextColor(p.Muted)
-		ui.Text(c, fmt.Sprintf("本月开饭 %d 天", a.feedMonthDays())).
-			FontSize(design.FontMeta).TextColor(p.Faint)
-		ui.Divider(c)
-		ui.Row(c).Gap(design.Sp(c, 1.5)).Children(func() {
-			if ui.Button(c, "写这一天的日记").Clicked() {
-				date := a.feed.date.Format("2006-01-02")
-				a.openFeedDay(date)
-				a.router.Push("/feed/" + date)
-			}
-			if ui.Button(c, "年度回顾").Clicked() {
-				a.router.Push("/feed/review")
-			}
+		// The calendar centres its intrinsic width in the pane. Keep the
+		// summary at its own width and centre it the same way, so the two
+		// share a centre line instead of starting at the pane's left edge.
+		// The divider is a stretch child, so it takes the block's width.
+		summary := ui.Column(c).AlignSelf(ui.Center).AlignItems(ui.Center).
+			Gap(design.Sp(c, 1.5)).Label("食历摘要")
+		summary.Children(func() {
+			ui.Text(c, fmt.Sprintf("%d 天 · %d 道 · 连续 %d 天",
+				a.mealDays, a.recordCount, a.feed.streak)).
+				FontSize(design.FontMeta).TextColor(p.Muted)
+			ui.Text(c, fmt.Sprintf("本月开饭 %d 天", a.feedMonthDays())).
+				FontSize(design.FontMeta).TextColor(p.Faint)
+			ui.Divider(c)
+			ui.Row(c).AlignItems(ui.Center).Justify(ui.Center).
+				Gap(design.Sp(c, 1.5)).Children(func() {
+				if ui.Button(c, "写这一天的日记").Clicked() {
+					date := a.feed.date.Format("2006-01-02")
+					a.openFeedDay(date)
+					a.router.Push("/feed/" + date)
+				}
+				if ui.Button(c, "年度回顾").Clicked() {
+					a.router.Push("/feed/review")
+				}
+			})
 		})
 	})
 }

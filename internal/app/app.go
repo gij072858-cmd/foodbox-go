@@ -4,6 +4,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -93,10 +94,31 @@ type App struct {
 	videoPlaceholder  ui.Rect
 	videoPendingEmbed *videoproxy.Stream
 	videoPendingFound videoproxy.Found
+	// videoSlider is the progress slider's 0..1 bind. videoSliderHeld
+	// remembers whether the pointer held it in the last frame, so mpv's
+	// time-pos cannot pull the thumb out from under the drag; while a seek
+	// is pending, its stale samples are ignored until mpv catches up.
+	videoSlider         float64
+	videoSliderHeld     bool
+	videoSeekPending    bool
+	videoSeekTarget     time.Duration
+	videoSeekAt         time.Time
+	videoSeekSentAt     time.Time
+	videoSeekSentTarget time.Duration
+	// videoPlayerFullscreen is the player's own fullscreen: the dialog and
+	// the video fill the window, rather than only toggling the app window.
+	videoPlayerFullscreen bool
 	// videoBusy is a resolve in flight; videoPending is the page to show in
 	// the web view if the resolve could not be played.
 	videoBusy    bool
 	videoPending string
+	// videoSeq identifies the current resolve. Work for an older page that
+	// finishes late is dropped instead of starting a stale stream, and
+	// videoResolveCancel stops a resolve the user walked away from.
+	videoSeq           uint64
+	videoResolveCancel context.CancelFunc
+	videoPendingGen    uint64
+	videoPendingPage   string
 	// videoCmd is the external player a non-Windows build started, so it can
 	// be stopped and noticed when it exits.
 	videoCmd    *exec.Cmd

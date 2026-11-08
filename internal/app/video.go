@@ -30,6 +30,10 @@ import (
 // animated GIF only, and Bilibili's DASH answer is a split picture/sound pair
 // that a GIF path cannot play whatever it was given.
 
+// videoResolveTimeout bounds one resolve, so a phone hotspot that never
+// answers cannot leave the player panel waiting forever.
+const videoResolveTimeout = 60 * time.Second
+
 // openVideo plays the page, or falls back to showing it.
 func (a *App) openVideo(c *ui.Context, pageURL string) {
 	if a.videoBusy || a.videoPlayerOpen || a.videoOpen {
@@ -49,13 +53,26 @@ func (a *App) openVideo(c *ui.Context, pageURL string) {
 	if a.videoEmbed == nil {
 		a.videoEmbed = newVideoEmbedder(a)
 	}
+
+	// Every open gets a generation and its own cancellable context. Work that
+	// finishes after the user moved on is dropped by postVideo.
+	a.videoSeq++
+	gen := a.videoSeq
+	if a.videoResolveCancel != nil {
+		a.videoResolveCancel()
+		a.videoResolveCancel = nil
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), videoResolveTimeout)
+	a.videoResolveCancel = cancel
+
 	if !a.videoEmbed.Supported() {
 		// A platform without the native child window keeps the old external
 		// player path; if that fails the web fallback still runs.
 		a.videoBusy = true
 		a.videoPending = pageURL
+		a.videoPageURL = pageURL
 		a.notice = "正在取这一页的直链…"
-		go a.playExternal(pageURL)
+		go a.playExternal(ctx, cancel, gen, pageURL)
 		return
 	}
 	a.videoPlayerOpen = true
@@ -65,37 +82,44 @@ func (a *App) openVideo(c *ui.Context, pageURL string) {
 	a.videoTitle = ""
 	a.videoPaused, a.videoEnded = false, false
 	a.videoPos, a.videoDur = 0, 0
+	a.resetPlayerSeek()
+	a.videoPlayerFullscreen = false
 	a.notice = "正在取这一页的直链…"
-	go a.playEmbedded(pageURL)
+	go a.playEmbedded(ctx, cancel, gen, pageURL)
+}
+
+// postVideo runs fn on the main thread only if the resolve it belongs to is
+// still the current one. This is what keeps a late answer for an old page
+// from starting a stream the user already walked away from.
+func (a *App) postVideo(gen uint64, pageURL string, fn func()) {
+	a.post(func() {
+		if a.videoSeq != gen || a.videoPageURL != pageURL {
+			return
+		}
+		fn()
+	})
 }
 
 // playEmbedded resolves the stream, then hands it to the main thread, where
 // the native child window is created. Direct URLs expire within minutes, so
 // nothing here is worth caching: the next click resolves again.
-func (a *App) playEmbedded(pageURL string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+func (a *App) playEmbedded(ctx context.Context, cancel context.CancelFunc, gen uint64, pageURL string) {
 	defer cancel()
 
 	sessdata, _ := a.biliCookie()
 	stream, err := videoproxy.Resolve(ctx, pageURL, sessdata)
 	if err != nil {
-		a.post(func() {
-			if a.videoPlayerOpen && a.videoPageURL == pageURL {
-				a.videoGaveUp(err)
-			}
-		})
+		a.postVideo(gen, pageURL, func() { a.videoGaveUp(err) })
 		return
 	}
 	found := videoproxy.FindPlayer(a.dataDir())
 	if found.Kind != videoproxy.PlayerMPV {
-		a.post(func() {
-			if a.videoPlayerOpen && a.videoPageURL == pageURL {
-				a.videoGaveUp(videoproxy.ErrNoPlayer)
-			}
-		})
+		a.postVideo(gen, pageURL, func() { a.videoGaveUp(videoproxy.ErrNoPlayer) })
 		return
 	}
-	a.post(func() { a.startEmbeddedPlayer(pageURL, stream, found) })
+	a.postVideo(gen, pageURL, func() {
+		a.startEmbeddedPlayer(gen, pageURL, stream, found)
+	})
 }
 
 // startEmbeddedPlayer creates the native child and starts mpv. It runs on the
@@ -103,13 +127,15 @@ func (a *App) playEmbedded(pageURL string) {
 // thread with no message loop. The overlay lays out before a resolve finishes,
 // so the rectangle is normally ready; if it is not, the stream waits for the
 // next frame.
-func (a *App) startEmbeddedPlayer(pageURL string, stream *videoproxy.Stream, found videoproxy.Found) {
-	if !a.videoPlayerOpen || a.videoEmbed == nil {
+func (a *App) startEmbeddedPlayer(gen uint64, pageURL string, stream *videoproxy.Stream, found videoproxy.Found) {
+	if !a.videoPlayerOpen || a.videoEmbed == nil ||
+		a.videoSeq != gen || a.videoPageURL != pageURL {
 		return
 	}
 	rect := a.videoPlaceholder
 	if rect.W <= 0 || rect.H <= 0 {
 		a.videoPendingEmbed, a.videoPendingFound = stream, found
+		a.videoPendingGen, a.videoPendingPage = gen, pageURL
 		return
 	}
 	if err := a.videoEmbed.Open(a.win.NativeHandle(), found, stream, rect); err != nil {
@@ -117,15 +143,18 @@ func (a *App) startEmbeddedPlayer(pageURL string, stream *videoproxy.Stream, fou
 		return
 	}
 	a.videoPendingEmbed = nil
+	a.videoPendingFound = videoproxy.Found{}
+	a.videoPendingGen, a.videoPendingPage = 0, ""
 	a.videoBusy = false
 	a.videoTitle = stream.Title
 	a.videoPageURL = pageURL
+	a.videoPos, a.videoDur = 0, 0
+	a.resetPlayerSeek()
 }
 
 // playExternal is the non-Windows path: resolve, then start mpv/VLC in its
 // own window. The embedded player does not use it.
-func (a *App) playExternal(pageURL string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+func (a *App) playExternal(ctx context.Context, cancel context.CancelFunc, gen uint64, pageURL string) {
 	defer cancel()
 
 	sessdata, _ := a.biliCookie()
@@ -138,12 +167,14 @@ func (a *App) playExternal(pageURL string) {
 			var cmd *exec.Cmd
 			cmd, err = videoproxy.Launch(context.Background(), found, *stream)
 			if err == nil {
-				a.post(func() { a.videoStarted(pageURL, stream.Title, found.Kind, cmd) })
+				a.postVideo(gen, pageURL, func() {
+					a.videoStarted(pageURL, stream.Title, found.Kind, cmd)
+				})
 				return
 			}
 		}
 	}
-	a.post(func() { a.videoGaveUp(err) })
+	a.postVideo(gen, pageURL, func() { a.videoGaveUp(err) })
 }
 
 // videoStarted records the external player process, and waits on it so that
@@ -167,6 +198,10 @@ func (a *App) videoStarted(pageURL, title string, kind videoproxy.Player, cmd *e
 func (a *App) videoGaveUp(cause error) {
 	a.videoBusy = false
 	a.videoPendingEmbed = nil
+	a.videoPendingFound = videoproxy.Found{}
+	a.videoPendingGen, a.videoPendingPage = 0, ""
+	a.videoPlayerFullscreen = false
+	a.restoreFullscreen()
 	if a.videoPlayerOpen {
 		a.videoPlayerOpen = false
 		if a.videoEmbed != nil {
@@ -183,19 +218,31 @@ func (a *App) videoGaveUp(cause error) {
 	a.notice = "取直链没成，改用应用内网页播放：" + cause.Error()
 }
 
-// closePlayer tears down the embedded player, restoring the window mode.
+// closePlayer tears down the embedded player, restoring the window mode. It
+// also cancels a resolve still in flight, so walking away cannot start the
+// stream a moment later.
 func (a *App) closePlayer() {
+	a.videoSeq++
+	if a.videoResolveCancel != nil {
+		a.videoResolveCancel()
+		a.videoResolveCancel = nil
+	}
 	if a.videoEmbed != nil {
 		a.videoEmbed.Close()
 	}
 	a.videoPlayerOpen = false
 	a.videoBusy = false
 	a.videoPendingEmbed = nil
+	a.videoPendingFound = videoproxy.Found{}
+	a.videoPendingGen, a.videoPendingPage = 0, ""
+	a.videoPending = ""
 	a.videoPageURL = ""
 	a.videoTitle = ""
 	a.videoPaused, a.videoEnded = false, false
 	a.videoPos, a.videoDur = 0, 0
+	a.resetPlayerSeek()
 	a.videoPlaceholder = ui.Rect{}
+	a.videoPlayerFullscreen = false
 	a.restoreFullscreen()
 }
 
@@ -207,8 +254,7 @@ func (a *App) togglePlayerPause() {
 	if a.videoEnded {
 		a.videoEnded = false
 		a.videoPaused = false
-		a.videoEmbed.Seek(-a.videoPos.Seconds())
-		a.videoPos = 0
+		a.seekPlayerTo(0)
 		a.videoEmbed.SetPaused(false)
 		return
 	}
@@ -221,19 +267,86 @@ func (a *App) seekPlayer(seconds float64) {
 	if a.videoEmbed == nil || a.videoTitle == "" {
 		return
 	}
-	next := a.videoPos + time.Duration(seconds*float64(time.Second))
-	if next < 0 {
-		next = 0
-	}
-	if a.videoDur > 0 && next > a.videoDur {
-		next = a.videoDur
-	}
-	a.videoPos = next
-	a.videoEmbed.Seek(seconds)
+	a.seekPlayerTo(a.videoPos + time.Duration(seconds*float64(time.Second)))
 }
 
-// togglePlayerFullscreen takes the whole window and restores it on close.
-func (a *App) togglePlayerFullscreen() {
+// seekPlayerTo seeks to an absolute position, clamping to the stream.
+func (a *App) seekPlayerTo(target time.Duration) {
+	if a.videoEmbed == nil || a.videoTitle == "" {
+		return
+	}
+	a.beginSeek(target)
+	a.sendPlayerSeek()
+}
+
+// beginSeek records an optimistic position and arms the pending state, so
+// mpv's time-pos reports from before the seek cannot pull the thumb back.
+func (a *App) beginSeek(target time.Duration) {
+	if target < 0 {
+		target = 0
+	}
+	if a.videoDur > 0 && target > a.videoDur {
+		target = a.videoDur
+	}
+	a.videoPos = target
+	a.videoSeekTarget = target
+	a.videoSeekPending = true
+	a.videoSeekAt = time.Now()
+	if a.videoDur > 0 {
+		a.videoSlider = clampRatio(float64(target) / float64(a.videoDur))
+	}
+	if a.videoEnded {
+		a.videoEnded = false
+		a.videoPaused = false
+		if a.videoEmbed != nil {
+			a.videoEmbed.SetPaused(false)
+		}
+	}
+}
+
+// sendPlayerSeek sends the pending target and remembers what was sent.
+func (a *App) sendPlayerSeek() {
+	if a.videoEmbed == nil {
+		return
+	}
+	a.videoEmbed.SeekTo(a.videoSeekTarget.Seconds())
+	a.videoSeekSentAt = time.Now()
+	a.videoSeekSentTarget = a.videoSeekTarget
+}
+
+// onVideoPosition accepts mpv's time-pos. While a seek is pending, a sample
+// still near the old position is ignored; once mpv reaches the target, or
+// the seek has had time to land, the player follows mpv again.
+func (a *App) onVideoPosition(pos time.Duration) {
+	if a.videoSeekPending {
+		delta := pos - a.videoSeekTarget
+		if delta < 0 {
+			delta = -delta
+		}
+		if delta > 750*time.Millisecond && time.Since(a.videoSeekAt) < 1500*time.Millisecond {
+			return
+		}
+		a.videoSeekPending = false
+	}
+	a.videoPos = pos
+}
+
+// resetPlayerSeek clears the slider and its pending seek for a new stream.
+func (a *App) resetPlayerSeek() {
+	a.videoSlider = 0
+	a.videoSliderHeld = false
+	a.videoSeekPending = false
+	a.videoSeekTarget = 0
+	a.videoSeekAt = time.Time{}
+	a.videoSeekSentAt = time.Time{}
+	a.videoSeekSentTarget = 0
+}
+
+// enterPlayerFullscreen fills the window with the player; exitPlayerFullscreen
+// puts the window back the way it was. The app-window toggle is not enough:
+// the dialog has to grow with it, which videoPlayerOverlay does from this flag.
+func (a *App) enterPlayerFullscreen() {
+	a.videoPlayerFullscreen = true
 	if a.win == nil {
 		return
 	}
@@ -241,7 +354,30 @@ func (a *App) togglePlayerFullscreen() {
 		a.videoPrevFullscreen = a.win.IsFullScreen()
 		a.videoFullscreenSaved = true
 	}
-	a.win.SetFullScreen(!a.win.IsFullScreen())
+	a.win.SetFullScreen(true)
+}
+
+func (a *App) exitPlayerFullscreen() {
+	a.videoPlayerFullscreen = false
+	a.restoreFullscreen()
+}
+
+// togglePlayerFullscreen toggles the player's own fullscreen.
+func (a *App) togglePlayerFullscreen() {
+	if a.videoPlayerFullscreen {
+		a.exitPlayerFullscreen()
+		return
+	}
+	a.enterPlayerFullscreen()
+}
+
+// playerEscape leaves the player's fullscreen first, and closes it otherwise.
+func (a *App) playerEscape() {
+	if a.videoPlayerFullscreen {
+		a.exitPlayerFullscreen()
+		return
+	}
+	a.closePlayer()
 }
 
 // enterFullscreen saves the window mode once, then fills the screen for the

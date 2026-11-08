@@ -25,4 +25,5 @@ func (unsupportedEmbedder) Open(uintptr, videoproxy.Found, *videoproxy.Stream, u
 func (unsupportedEmbedder) Resize(ui.Rect) {}
 func (unsupportedEmbedder) SetPaused(bool) {}
 func (unsupportedEmbedder) Seek(float64)   {}
+func (unsupportedEmbedder) SeekTo(float64) {}
 func (unsupportedEmbedder) Close()         {}

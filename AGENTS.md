@@ -164,6 +164,13 @@ go tool mygo build
   surface 之后创建，保持在同级 z-order 顶部。`--wid` 的窗口属于本进程，mpv 收不到
   键鼠事件，所以点击/空格/方向键/Esc 由子类化 WndProc 接住并发 IPC；`--force-window`
   必须关闭，否则又会出现独立的系统窗口。
+- 进度条与全屏：`ui.Slider` 绑定 0..1，`Pressed`/`Changed` 驱动 `videoEmbedder.SeekTo`
+  （mpv `seek <pos> absolute`）；seek 未落地时 `onVideoPosition` 丢弃旧的 `time-pos`。
+  全屏是**播放器自己的全屏**——面板等于窗口、无标题栏、视频铺满，底部控制条常驻；
+  只调 `win.SetFullScreen` 而不改面板尺寸就是旧的「软件全屏」，不要再回去。
+- 卡死边界：IPC 写入只能入队，由单写协程持有管道；UI 线程不做管道 I/O。mpv
+  `Start` 在 goroutine（杀软会卡 CreateProcessW）；解析上下文可取消、每次打开带代次，
+  旧的 post 必须丢弃；`Resize` 缓存矩形/DPI，不要每帧 `SetWindowPos`。
 - `SESSDATA` 只进 `mygo.Secrets`，**不进 prefsData**（备份不含密钥）。
 - 「自动下载 mpv portable」未启用：mpv 官方不发 Windows 构建，只有第三方
   release 仓。别替用户选源；`portablePath(appDir)` 这个槽位已留好，

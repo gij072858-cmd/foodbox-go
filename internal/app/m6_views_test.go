@@ -143,6 +143,31 @@ func TestFeedCalendarAndDayJournal(t *testing.T) {
 	}
 }
 
+// The stats, divider and buttons share the calendar's centre line instead of
+// starting at the split pane's left edge.
+func TestFeedSummaryCenteredWithCalendar(t *testing.T) {
+	a := m6Fixture(t)
+	tt := ui.NewTester(a.View, 1280, 860)
+	tt.SetLocale("zh-Hans")
+	tt.Frame()
+	clickText(t, tt, "食历")
+
+	cal, ok := tt.Find("开饭月历")
+	if !ok {
+		t.Fatal("calendar label missing")
+	}
+	summary, ok := tt.Find("食历摘要")
+	if !ok {
+		t.Fatalf("summary block label missing: %q", tt.Texts())
+	}
+	calCentre := cal.X + cal.W/2
+	summaryCentre := summary.X + summary.W/2
+	if d := calCentre - summaryCentre; d > 1.5 || d < -1.5 {
+		t.Errorf("summary centre x=%v, calendar centre x=%v (widths %v/%v)",
+			summaryCentre, calCentre, summary.W, cal.W)
+	}
+}
+
 // The calendar's own arrows move the month without touching the data.
 func TestFeedMonthNavigation(t *testing.T) {
 	a := m6Fixture(t)
