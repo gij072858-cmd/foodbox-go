@@ -137,6 +137,17 @@ type recipeEditState struct {
 	versionPick  string
 	versions     map[string][]int64
 	versionOf    map[int64]string
+
+	// viewSig is the filters and sort the list was last drawn with, and
+	// viewAt the frame they changed: the first screenful of rows arrives
+	// again on that clock, so a new filter reads as a new list rather than
+	// the old one swapping its words. filtered/filteredAt do the same for
+	// the 重置筛选 action. The search is left out of viewSig on purpose: a
+	// list that re-staggered on every keystroke would flicker as you type.
+	viewSig    string
+	viewAt     time.Time
+	filtered   bool
+	filteredAt time.Time
 }
 
 func (s *recipeEditState) init() {
@@ -449,8 +460,8 @@ func (a *App) editorPreview(c *ui.Context, p design.Palette) {
 			card.Children(func() {
 				// The preview is the list row itself: the same mark, the same
 				// type, so what you write is what the 菜式 page will show.
-				row := ui.Row(c).FillWidth().Height(76).Padding(design.Sp(c, 2), design.Sp(c, 2.5), design.Sp(c, 2), design.Sp(c, 3)).Gap(design.Sp(c, 2.5)).
-					Radius(design.RadiusCard).Border(1, p.Border).Background(p.Surface).Clip()
+				row := design.Raised(ui.Row(c).FillWidth().Height(76).Padding(design.Sp(c, 2), design.Sp(c, 2.5), design.Sp(c, 2), design.Sp(c, 3)).Gap(design.Sp(c, 2.5)).
+					Radius(design.RadiusCard).Border(1, p.Border).Background(p.Surface).Clip(), p, design.RadiusCard)
 				row.Children(func() {
 					a.recipeMarkTile(c, p, rec, 34)
 					ui.Column(c).Grow(1).MinWidth(0).Justify(ui.Center).Gap(design.Sp(c, 0.75)).Children(func() {
@@ -686,8 +697,8 @@ func (a *App) editorSteps(c *ui.Context, p design.Palette) {
 		for i := range s.steps {
 			i := i
 			st := &s.steps[i]
-			ui.Column(c).FillWidth().Gap(8).Padding(12).Radius(12).
-				Background(p.SurfaceAlt).Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(8).Padding(12).Radius(12).
+				Background(p.SurfaceAlt).Border(1, p.Border), p, 12).Children(func() {
 				ui.Row(c).FillWidth().Gap(10).AlignItems(ui.End).Children(func() {
 					ui.Text(c, fmt.Sprintf("第 %d 步", i+1)).FontSize(12).FontWeight(700).
 						TextColor(p.Accent).Width(52).Shrink(0)

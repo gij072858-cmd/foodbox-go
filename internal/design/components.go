@@ -69,14 +69,81 @@ func Lift(e ui.Element, lift, press float32) {
 }
 
 // RestShadow and HoverShadow are the two elevations a card may sit at.
-func RestShadow(e ui.Element, p Palette)  { e.Shadow(0, 1, 4, -1, p.Shadow) }
-func HoverShadow(e ui.Element, p Palette) { e.Shadow(0, 12, 28, -8, p.Shadow) }
+// Rest is a tight contact shadow — a surface that sits on the window, not
+// one that floats over it. Hover rises onto Kero's float shadow, wide and
+// soft, so a raised card reads as nearer rather than as darker.
+func RestShadow(e ui.Element, p Palette)  { e.Shadow(0, 2, 6, -2, p.Shadow) }
+func HoverShadow(e ui.Element, p Palette) { e.Shadow(0, 14, 30, -10, p.Float) }
 
-// Card is FoodBox's standard surface: white, hairline border, soft shadow.
-// Callers add padding, gaps and children.
+// Elevate moves a pressable surface between its two elevations instead of
+// switching: under the pointer the shadow grows from the contact shadow to
+// the float one, and under a press it settles back down, as the surface
+// gives. It rides Snappy, the spring Lift uses, so the shadow and the
+// surface arrive together rather than the shadow landing a frame early.
+// It is paint-only and stops asking for frames once the spring settles.
+func Elevate(e ui.Element, p Palette) {
+	target := float32(0)
+	if e.Hovered() && !e.Pressed() {
+		target = 1
+	}
+	k := e.AnimateTo("elevate", target, Snappy)
+	if k < 0 {
+		k = 0
+	}
+	mix := min(k, 1)
+	e.Shadow(0, 2+12*k, 6+24*k, -2-8*k, p.Shadow.Mix(p.Float, mix))
+}
+
+// Sheen lays a little light across the top of a surface, the way a lit
+// card catches it on its upper edge. On a white card in the light it is
+// next to nothing; on a tinted or a dark card it is what separates the
+// surface from the window under it. It paints between the background and
+// the children, so text keeps its contrast.
+//
+// An element takes one Draw: a surface that already paints (TintSurface)
+// carries the sheen inside its own painter instead of calling this too.
+func Sheen(e ui.Element, p Palette, radius float32) {
+	e.Draw(func(pnt *ui.Painter, r ui.Rect) { paintSheen(pnt, p, r, radius) })
+}
+
+func paintSheen(pnt *ui.Painter, p Palette, r ui.Rect, radius float32) {
+	top := ui.RGBA(255, 255, 255, 0.55)
+	if p.Dark {
+		top = ui.RGBA(255, 255, 255, 0.045)
+	}
+	pnt.FillGradient(r, ui.LinearGradient{Angle: 180, Stops: []ui.GradientStop{
+		{Color: top, At: 0},
+		{Color: top.Alpha(0), At: 0.6},
+	}}, radius)
+}
+
+// Raised is the resting card treatment for a surface a page builds itself:
+// the contact shadow and the sheen, returned so it reads in a builder chain
+// (design.Raised(ui.Column(c)…Border(1, p.Border), p, r).Children(…)). The
+// element must not take another Draw.
+func Raised(e ui.Element, p Palette, radius float32) ui.Element {
+	RestShadow(e, p)
+	Sheen(e, p, radius)
+	return e
+}
+
+// Hoverable gives a row inside a card the hover wash, so a long list keeps
+// the eye on the line under the pointer. The row's corners round with the
+// wash; the card around it should keep a small inset for them.
+func Hoverable(e ui.Element, p Palette) ui.Element {
+	e.Radius(RadiusSmall)
+	Wash(e, p.Hover.Alpha(0), p.Hover)
+	return e
+}
+
+// Card is FoodBox's standard surface: white, hairline border, soft shadow
+// and a sheen along its top. Callers add padding, gaps and children.
 func Card(c *ui.Context, p Palette) ui.Element {
-	return ui.Column(c).FillWidth().Radius(RadiusCard).Background(p.Surface).
-		Border(1, p.Border).Shadow(0, 1, 4, -1, p.Shadow)
+	card := ui.Column(c).FillWidth().Radius(RadiusCard).Background(p.Surface).
+		Border(1, p.Border)
+	RestShadow(card, p)
+	Sheen(card, p, RadiusCard)
+	return card
 }
 
 // CardPad is Card with the standard inner padding and row gap.
@@ -129,6 +196,8 @@ func SettingsGroup(c *ui.Context, p Palette, title string, fn func()) ui.Element
 			LetterSpacing(0.6).Role(ui.RoleHeading).Margin(0, 0, 8, 0)
 		card := ui.Column(c).FillWidth().Gap(2).Padding(6).Radius(RadiusCard).
 			Background(p.Surface).Border(1, p.Border)
+		RestShadow(card, p)
+		Sheen(card, p, RadiusCard)
 		card.Children(fn)
 	})
 	return group
@@ -185,8 +254,11 @@ func Chip(c *ui.Context, p Palette, key any, label string, selected bool) ui.Ele
 	on := selected
 	chip := ui.Toggle(c.Key(key), &on, label).Padding(5, 12).Radius(RadiusPill)
 	if selected {
-		chip.Background(p.AccentPale).TextColor(p.Accent)
+		// The ring is what tells "on" apart from a hovered "off" at a
+		// glance: the pale fill alone is close to the hover wash.
+		chip.Background(p.AccentPale).TextColor(p.Accent).Border(1, p.Accent.Alpha(0.32))
 	}
+	Lift(chip, 0, 0.96)
 	return chip
 }
 
@@ -393,18 +465,51 @@ func TintSurface(e ui.Element, p Palette, radius float32) {
 				{Color: p.Accent.Alpha(0.10), At: 0},
 				{Color: p.AccentPale, At: 1},
 			}}, radius)
+		// The sheen rides the same painter: a surface takes one Draw.
+		paintSheen(pnt, p, r, radius)
 	})
 }
 
 // EmptyState is the shared "nothing here yet" panel. Callers add actions.
 // It wears a faint theme tint so an empty page still belongs to the theme
 // instead of reading as a blank white box.
-func EmptyState(c *ui.Context, p Palette, icon *ui.SVG, title, body string) ui.Element {
-	box := Card(c, p).Padding(36).Gap(8)
+//
+// level is optional so the many callers stay one line: given MotionFull the
+// icon pops in with a small overshoot; otherwise (lite, or not given) it
+// only fades, as the three-level motion rule asks.
+func EmptyState(c *ui.Context, p Palette, icon *ui.SVG, title, body string, level ...Level) ui.Element {
+	full := len(level) > 0 && level[0].Full()
+	// Built here rather than with Card: Card already paints its sheen,
+	// and the tint below paints the sheen in its own single Draw.
+	box := ui.Column(c).FillWidth().Radius(RadiusCard).Background(p.Surface).
+		Border(1, p.Border).Padding(36).Gap(8)
+	RestShadow(box, p)
 	TintSurface(box, p, RadiusCard)
 	box.Children(func() {
 		if icon != nil {
-			ui.Icon(c, icon).Size(34, 34).TextColor(p.Ink)
+			// The icon sits in a pale accent bubble that pops in once,
+			// with a little overshoot, so an empty page arrives rather
+			// than just being blank. One keyframe run, then no frames.
+			bubble := ui.Box(c).Size(56, 56).Radius(RadiusPill).
+				Background(p.AccentPale).Center().Margin(0, 0, 4, 0)
+			pop := float32(1)
+			if !c.Instant() && !c.Preferences().ReduceMotion {
+				pop = bubble.Keyframes("pop", []ui.Keyframe{
+					{Value: 0},
+					{At: 320 * time.Millisecond, Value: 1.06, Ease: ui.EaseOut},
+					{At: 520 * time.Millisecond, Value: 1, Ease: ui.EaseOut},
+				}, ui.KeyframeOptions{Run: 1})
+			}
+			if pop != 1 {
+				if full {
+					s := 0.7 + 0.3*pop
+					bubble.Scale(s, s)
+				}
+				bubble.Opacity(min(pop, 1))
+			}
+			bubble.Children(func() {
+				ui.Icon(c, icon).Size(28, 28).TextColor(p.Ink)
+			})
 		}
 		ui.Text(c, title).FontSize(20).FontWeight(700).TextColor(p.Text)
 		ui.Text(c, body).FontSize(13).TextColor(p.Muted).LineHeight(1.5)
@@ -432,6 +537,17 @@ func growIn(c *ui.Context, e ui.Element) float32 {
 		{Value: 0},
 		{At: 500 * time.Millisecond, Value: 1, Ease: ui.EaseOut},
 	}, ui.KeyframeOptions{Run: 1})
+}
+
+// GrowIn is growIn behind the app's motion gate: a meter, a ring or a bar
+// that fills from nothing the first time its element appears, on full
+// motion only. Lite and off show the value at once. It is one keyframe run,
+// so a settled page asks for no frames.
+func GrowIn(c *ui.Context, level Level, e ui.Element) float32 {
+	if !level.Full() {
+		return 1
+	}
+	return growIn(c, e)
 }
 
 // BarChart draws labelled bars with MyGo's headless chart: a band scale
@@ -462,11 +578,15 @@ func BarChart(c *ui.Context, p Palette, labels []string, values []float64, heigh
 // modalPane is the standard dialog surface. Full motion grows it from the
 // trigger; lite only fades.
 func modalPane(c *ui.Context, p Palette, width float32, level Level) ui.Element {
+	// The float shadow, not the card one: a dialog is the nearest thing
+	// on screen and should read as lifted clear of the page.
 	pane := ui.Column(c).Width(width).Padding(22).Gap(12).Radius(RadiusPane).
 		Material(PaneMaterial(p)).Border(0.5, p.Border).
-		Shadow(0, 24, 60, -20, p.Shadow)
+		Shadow(0, 28, 70, -22, p.Float)
 	if level.Moves() {
-		enter, exit := &ui.Motion{Y: 12, Scale: 0.9}, &ui.Motion{Scale: 0.97}
+		// 0.94 rather than 0.9: the pane grows the last few percent into
+		// place, which reads as settling; from 0.9 it read as zooming.
+		enter, exit := &ui.Motion{Y: 14, Scale: 0.94}, &ui.Motion{Y: 4, Scale: 0.97}
 		if !level.Full() {
 			enter, exit = &ui.Motion{}, &ui.Motion{}
 		}
@@ -524,14 +644,37 @@ func Button(c *ui.Context, p Palette, key any, label string, kind ButtonKind) ui
 	switch kind {
 	case ButtonPrimary:
 		b = ui.PrimaryButton(ctx, label)
+		// The one primary action on a view glows in its own colour, and
+		// the glow gathers under the pointer: the accent is the light.
+		k := b.AnimateTo("glow", boolUnit(b.Hovered() && !b.Pressed()), Snappy)
+		if k < 0 {
+			k = 0
+		}
+		alpha := float32(0.26)
+		if p.Dark {
+			alpha = 0.20
+		}
+		b.Shadow(0, 3+4*k, 10+10*k, -4, p.Accent.Alpha(alpha+0.16*min(k, 1)))
+		Lift(b, 1, 0.97)
 	case ButtonDanger:
 		b = ui.Button(ctx, label).TextColor(p.Danger)
+		Lift(b, 0, 0.97)
 	case ButtonGhost:
 		b = ui.Button(ctx, label).TextColor(p.Muted)
+		Lift(b, 0, 0.97)
 	default:
 		b = ui.Button(ctx, label)
+		Lift(b, 0, 0.97)
 	}
 	return b.Label(label)
+}
+
+// boolUnit is 1 for true and 0 for false, the target of a 0..1 animation.
+func boolUnit(v bool) float32 {
+	if v {
+		return 1
+	}
+	return 0
 }
 
 // Skeleton is a placeholder bone. Bones across a view share one clock, so
@@ -626,11 +769,14 @@ func Stagger(c *ui.Context, level Level, opened time.Time, i int) float32 {
 	return 1 - t*t*t
 }
 
-// StaggerRow applies a row's arrival: ten pixels up and a fade, both done
-// when shown reaches one.
+// StaggerRow applies a row's arrival: twelve pixels up and a fade, both
+// done when shown reaches one. The fade leads the rise a little (it is
+// squared toward one), so a row is already readable while it lands
+// instead of materialising at the very end of its travel.
 func StaggerRow(e ui.Element, shown float32) {
 	if shown >= 1 {
 		return
 	}
-	e.Translate(0, 10*(1-shown)).Opacity(shown)
+	fade := 1 - (1-shown)*(1-shown)
+	e.Translate(0, 12*(1-shown)).Opacity(fade)
 }

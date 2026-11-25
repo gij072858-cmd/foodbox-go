@@ -7,6 +7,7 @@ package app
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/egoist/mygo/plugins/loading"
 	"github.com/egoist/mygo/ui"
@@ -273,7 +274,10 @@ func (a *App) sichuDashboardCard(c *ui.Context, p design.Palette) {
 
 func (a *App) sichuStatBlock(c *ui.Context, p design.Palette, value, label string, color ui.Color) {
 	ui.Column(c).Grow(1).MinWidth(96).Gap(2).Children(func() {
-		ui.Text(c, value).FontSize(22).FontWeight(700).TextColor(color).SingleLine()
+		num := ui.Text(c, value).FontSize(22).FontWeight(700).TextColor(color).SingleLine()
+		if a.level.Full() {
+			num.ContentTransition(ui.ContentTransition{Numeric: true})
+		}
 		ui.Text(c, label).FontSize(design.FontSmall).TextColor(p.Muted).SingleLine()
 	})
 }
@@ -315,8 +319,11 @@ func (a *App) applySichuPreset(key string) {
 func (a *App) sichuGeneratingCard(c *ui.Context, p design.Palette) {
 	ui.Row(c).FillWidth().Gap(12).AlignItems(ui.Start).Children(func() {
 		for i := 0; i < 3; i++ {
+			// The placeholders wear the same surface the dishes will, so the
+			// result lands in place rather than replacing a different shape.
 			card := ui.Column(c).Grow(1).Padding(design.Sp(c, 3.5)).Gap(design.Sp(c, 2.5)).
-				Radius(design.RadiusSmall).Border(1, p.Border)
+				Radius(design.RadiusSmall).Background(p.Surface).Border(1, p.Border)
+			design.RestShadow(card, p)
 			card.Children(func() {
 				design.SkeletonFill(c, p, 86, design.RadiusSmall)
 				design.Skeleton(c, p, 120, 13, 6)
@@ -356,6 +363,7 @@ func (a *App) sichuResultCard(c *ui.Context, p design.Palette) {
 				TextColor(p.Muted).SingleLine()
 		}
 
+		order := 0 // the row's place across meals, for the stagger
 		for mi, meal := range a.sichu.plan.Meals {
 			mi, meal := mi, meal
 			ui.Column(c).FillWidth().Gap(6).Children(func() {
@@ -364,7 +372,9 @@ func (a *App) sichuResultCard(c *ui.Context, p design.Palette) {
 					Margin(0, 0, 2, 0)
 				for di, dish := range meal.Dishes {
 					di, dish := di, dish
-					a.sichuWorkbenchDishRow(c, p, mi, di, dish)
+					row := a.sichuWorkbenchDishRow(c, p, mi, di, dish)
+					a.sichuDishArrive(c, row, mi, di, dish.Name, order)
+					order++
 				}
 			})
 		}
@@ -377,10 +387,16 @@ func (a *App) sichuResultCard(c *ui.Context, p design.Palette) {
 
 // sichuWorkbenchDishRow is two lines on purpose: the right column is only
 // about 352 wide at the 1024 minimum window.
-func (a *App) sichuWorkbenchDishRow(c *ui.Context, p design.Palette, mealIndex, dishIndex int, dish sichu.Dish) {
-	ui.Column(c).FillWidth().Padding(design.Sp(c, 2.5)).Gap(4).
+func (a *App) sichuWorkbenchDishRow(c *ui.Context, p design.Palette, mealIndex, dishIndex int, dish sichu.Dish) ui.Element {
+	row := design.Raised(ui.Column(c).FillWidth().Padding(design.Sp(c, 2.5)).Gap(4).
 		Radius(design.RadiusSmall).Background(p.Surface).Border(1, p.Border).
-		Role(ui.RoleListItem).Children(func() {
+		Role(ui.RoleListItem), p, design.RadiusSmall)
+	// A locked dish keeps an accent edge, so what 换一批 will keep is seen
+	// before the button is pressed.
+	if a.sichuLocked(mealIndex, dishIndex) {
+		row.Border(1, p.Accent.Alpha(0.45))
+	}
+	row.Children(func() {
 		ui.Row(c).FillWidth().AlignItems(ui.Center).Gap(8).Children(func() {
 			design.Tag(c, p, dishSlotLabel(dish.Slot), p.Accent)
 			ui.Text(c, dish.Name).FontSize(design.FontBody).FontWeight(600).
@@ -423,6 +439,25 @@ func (a *App) sichuWorkbenchDishRow(c *ui.Context, p design.Palette, mealIndex, 
 				TextColor(p.Faint).Wrap()
 		}
 	})
+	return row
+}
+
+// sichuDishArrive brings a plan row in when the dish in its slot changes:
+// a whole new batch lands row by row (order is the row's place on the
+// page), a single 重抽 brings in only its own row. A plan already on screen
+// when the page is opened again does not replay.
+func (a *App) sichuDishArrive(c *ui.Context, row ui.Element, mealIndex, dishIndex int, name string, order int) {
+	if a.sichu.dishSeen == nil {
+		a.sichu.dishSeen = map[sichuDishKey]sichuSeen{}
+	}
+	key := sichuDishKey{Meal: mealIndex, Dish: dishIndex}
+	seen, ok := a.sichu.dishSeen[key]
+	if !ok || seen.Name != name {
+		seen = sichuSeen{Name: name, At: c.Now()}
+		a.sichu.dishSeen[key] = seen
+	}
+	// Capped, so a long multi-meal plan still lands within a breath.
+	design.Arrive(c, a.level, seen.At, time.Duration(min(order, 6))*design.StaggerStep*2, 10, row)
 }
 
 // sichuStockBadge reads the app-wide match cache; it never matches in the

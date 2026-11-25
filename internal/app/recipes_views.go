@@ -268,6 +268,14 @@ func (a *App) recipesPage(c *ui.Context, p design.Palette) {
 		a.recipeEdit.savedColumns = a.recipeTable.Columns
 		a.savePrefs()
 	}
+	if sig := a.recipeViewSignature(); sig != a.recipeEdit.viewSig {
+		a.recipeEdit.viewSig = sig
+		a.recipeEdit.viewAt = c.Now()
+	}
+	if on := a.recipeFiltersActive(); on != a.recipeEdit.filtered {
+		a.recipeEdit.filtered = on
+		a.recipeEdit.filteredAt = c.Now()
+	}
 	ui.Column(c).Grow(1).FillWidth().MinWidth(0).Children(func() {
 		a.pageFrame(c, func() {
 			// Grow+MinHeight(0) bound the table/grid to the page, so their
@@ -279,9 +287,25 @@ func (a *App) recipesPage(c *ui.Context, p design.Palette) {
 				Padding(0, 0, design.Sp(c, 2.5), 0).Children(func() {
 				// The page's one action sits in the content, not in the
 				// window's top strip: that strip is drag room only.
-				ui.Row(c).FillWidth().AlignItems(ui.Center).Children(func() {
-					ui.Text(c, fmt.Sprintf("%d 道菜", len(a.recipeView))).
+				ui.Row(c).FillWidth().AlignItems(ui.Center).Gap(design.Sp(c, 2)).Children(func() {
+					count := ui.Text(c, fmt.Sprintf("%d 道菜", len(a.recipeView))).
 						FontSize(design.FontMeta).TextColor(p.Muted)
+					// The count rolls to the new number as a filter narrows
+					// the list, the way the stat numbers do. Full motion
+					// only: a rolling digit is motion, not a fade.
+					if a.level.Full() {
+						count.ContentTransition(ui.ContentTransition{Numeric: true})
+					}
+					// With any limit on, the way back to the whole list
+					// sits beside the count, fading in as the first limit
+					// lands instead of waiting for an empty result.
+					if a.recipeEdit.filtered {
+						reset := design.Button(c, p, "recipe-reset", "重置筛选", design.ButtonGhost)
+						design.Arrive(c, a.level, a.recipeEdit.filteredAt, 0, 0, reset)
+						if reset.Clicked() {
+							a.clearRecipeFilters()
+						}
+					}
 					ui.Box(c).Grow(1)
 					if design.Button(c, p, "top-new-recipe", "新建菜式",
 						design.ButtonPrimary).Clicked() {
@@ -291,7 +315,7 @@ func (a *App) recipesPage(c *ui.Context, p design.Palette) {
 				a.recipeFilterBar(c, p)
 				if len(a.recipeView) == 0 {
 					empty := design.EmptyState(c, p, &icons.Recipe, "没有匹配的菜式",
-						"换个关键词、取消当季筛选，或点「全部」看看全部菜式。")
+						"换个关键词、取消当季筛选，或点「全部」看看全部菜式。", a.level)
 					empty.Margin(design.PagePadding, 0, 0, 0)
 					empty.Children(func() {
 						if design.Button(c, p, "recipe-clear", "清除筛选", design.ButtonSecondary).Clicked() {
@@ -304,6 +328,23 @@ func (a *App) recipesPage(c *ui.Context, p design.Palette) {
 			})
 		})
 	})
+}
+
+// recipeViewSignature names the filters and sort the list is drawn with,
+// without the search: see recipeEditState.viewSig.
+func (a *App) recipeViewSignature() string {
+	s := &a.recipeEdit
+	return fmt.Sprintf("%s|%s|%s|%s|%s|%d|%v|%v", a.recipeAvail, a.recipeFilter,
+		s.mainFilter, s.regionFilter, s.typeFilter, s.sortFilter, s.seasonOnly, a.recipeSort)
+}
+
+// recipeFiltersActive reports whether anything narrows or reorders the
+// list away from the whole book: what 重置筛选 would undo.
+func (a *App) recipeFiltersActive() bool {
+	s := &a.recipeEdit
+	return a.query != "" || a.recipeFilter != "" || a.recipeAvail != "" ||
+		s.seasonOnly || s.mainFilter != "" || s.regionFilter != "" ||
+		s.typeFilter != "" || s.sortFilter != 0 || a.recipeSort != (ui.SortOrder{})
 }
 
 // recipeFilterBar is one row: stock segments, the four limits as menus or
@@ -477,29 +518,56 @@ func (a *App) recipeTableView(c *ui.Context, p design.Palette) {
 		stockCol = len(cols)
 		cols = append(cols, ui.TableColumn{Title: "库存", ID: "stock", Width: 110})
 	}
-	tbl := ui.Table(c, &a.recipeTable, cols, len(a.recipeView), func(row, col int) {
-		rec := a.recipeView[row]
-		switch col {
-		case 0:
-			ui.Text(c, rec.Name).FontSize(design.FontSmall).FontWeight(600).
-				TextColor(p.Text).SingleLine()
-		case 1:
-			ui.Text(c, recipeMeta(rec)).FontSize(design.FontMeta).TextColor(p.Muted).SingleLine()
-		case 2:
-			ui.Text(c, rec.DurationText()).FontSize(design.FontMeta).
-				TextColor(p.Muted).TextAlign(ui.End)
-		case 3:
-			nut, ok := a.dishNut(rec)
-			label := "—"
-			if ok && nut.Nutrients.Kcal > 0 {
-				label = fmt.Sprintf("%.0f", nut.Nutrients.Kcal)
+	// The rows arrive on the later of two clocks: the page opening, or the
+	// filters changing under it (recipeEditState.viewAt). Going Back leaves
+	// both in the past, so a list already seen is simply there.
+	opened := a.pageAt
+	if a.recipeEdit.viewAt.After(opened) {
+		opened = a.recipeEdit.viewAt
+	}
+	// The table sits on a card, as every other block of the app does, so
+	// 944 rows read as one surface rather than as lines drawn on the wash.
+	// The inset keeps a selected row's square corners inside the card's
+	// rounded ones without a clip.
+	card := ui.Column(c).Grow(1).FillWidth().MinWidth(0).MinHeight(0).
+		Margin(design.Sp(c, 2), 0, design.PagePadding, 0).Padding(design.Sp(c, 1.5)).
+		Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border)
+	design.RestShadow(card, p)
+	design.Sheen(card, p, design.RadiusCard)
+	var tbl ui.Element
+	card.Children(func() {
+		tbl = ui.Table(c, &a.recipeTable, cols, len(a.recipeView), func(row, col int) {
+			rec := a.recipeView[row]
+			var cell ui.Element
+			switch col {
+			case 0:
+				cell = ui.Text(c, rec.Name).FontSize(design.FontSmall).FontWeight(600).
+					TextColor(p.Text).SingleLine()
+			case 1:
+				cell = ui.Text(c, recipeMeta(rec)).FontSize(design.FontMeta).TextColor(p.Muted).SingleLine()
+			case 2:
+				cell = ui.Text(c, rec.DurationText()).FontSize(design.FontMeta).
+					TextColor(p.Muted).TextAlign(ui.End)
+			case 3:
+				nut, ok := a.dishNut(rec)
+				label := "—"
+				if ok && nut.Nutrients.Kcal > 0 {
+					label = fmt.Sprintf("%.0f", nut.Nutrients.Kcal)
+				}
+				cell = ui.Text(c, label).FontSize(design.FontMeta).TextColor(p.Muted).
+					TextAlign(ui.End).FontFeatures("tnum")
+			default:
+				if col == stockCol {
+					cell = a.stockBadge(c, p, rec)
+				}
 			}
-			ui.Text(c, label).FontSize(design.FontMeta).TextColor(p.Muted).TextAlign(ui.End)
-		default:
-			if col == stockCol {
-				a.stockBadge(c, p, rec)
+			// Every cell of a row shares the row's arrival, so a row
+			// lands as one line. Only the first screenful moves.
+			if cell.Valid() {
+				design.StaggerRow(cell, design.Stagger(c, a.level, opened, row))
 			}
-		}
+		})
+		tbl.Grow(1).FillWidth().MinWidth(0).MinHeight(0)
 	})
 	// The table chooses a row on a click and on the arrow keys. Only a click
 	// while the pointer is over the table opens the dish; Enter and a double
@@ -511,20 +579,18 @@ func (a *App) recipeTableView(c *ui.Context, p design.Palette) {
 			a.router.Push(fmt.Sprintf("/recipes/%d", rec.ID))
 		}
 	}
-	tbl.Grow(1).FillWidth().MinWidth(0).
-		Padding(design.PagePadding, 0, design.PagePadding, 0)
 }
 
 // stockBadge is the list's one-word answer to "can I cook this now".
-func (a *App) stockBadge(c *ui.Context, p design.Palette, rec domain.Recipe) {
+func (a *App) stockBadge(c *ui.Context, p design.Palette, rec domain.Recipe) ui.Element {
 	res := a.recipeMatches[rec.ID]
 	switch res.Status {
 	case cookmatch.CanCook:
-		design.Tag(c, p, "能做", p.Success)
+		return design.Tag(c, p, "能做", p.Success)
 	case cookmatch.Almost:
-		design.Tag(c, p, "差 "+fmt.Sprint(len(res.Missing))+" 样", p.Warning)
+		return design.Tag(c, p, "差 "+fmt.Sprint(len(res.Missing))+" 样", p.Warning)
 	default:
-		design.Tag(c, p, "差太多", p.Faint)
+		return design.Tag(c, p, "差太多", p.Faint)
 	}
 }
 
@@ -548,6 +614,18 @@ func (a *App) ingredientTable(c *ui.Context, p design.Palette, rec domain.Recipe
 	kindCol := len(cols)
 	cols = append(cols, ui.TableColumn{Title: "类型", ID: "kind", Width: 80})
 	height := float32(30*len(rec.Ingredients) + 34)
+	// The list sits on a card like the recipe table does, so the dish
+	// page's blocks — hero, ingredients, steps — are one family.
+	card := ui.Column(c).FillWidth().Padding(design.Sp(c, 1.5)).
+		Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border)
+	design.RestShadow(card, p)
+	design.Sheen(card, p, design.RadiusCard)
+	card.Children(func() { a.ingredientRows(c, p, rec, cols, stockCol, kindCol, missing, height) })
+}
+
+// ingredientRows is the ingredient table itself, inside its card.
+func (a *App) ingredientRows(c *ui.Context, p design.Palette, rec domain.Recipe, cols []ui.TableColumn,
+	stockCol, kindCol int, missing map[string]bool, height float32) {
 	ui.Table(c, &a.ingredientList, cols, len(rec.Ingredients), func(row, col int) {
 		in := rec.Ingredients[row]
 		switch {
@@ -689,7 +767,17 @@ func (a *App) recipeDetail(c *ui.Context, r *ui.Route, p design.Palette) {
 						a.primaryButton(c, "加入掌序", func() {
 							a.addToSchedule(rec)
 						})
-						if ui.Button(c, "收藏").Clicked() {
+						// A kept dish says so in the accent, so the button
+						// answers the click instead of looking unchanged.
+						favLabel := "收藏"
+						if a.favorites[rec.ID] {
+							favLabel = "已收藏"
+						}
+						fav := design.Button(c, p, "recipe-favorite", favLabel, design.ButtonSecondary)
+						if a.favorites[rec.ID] {
+							fav.TextColor(p.Accent)
+						}
+						if fav.Clicked() {
 							a.toggleFavorite(rec)
 						}
 						if ui.Button(c, "打开掌序演示").Clicked() {
@@ -745,10 +833,19 @@ func (a *App) recipeDetail(c *ui.Context, r *ui.Route, p design.Palette) {
 				}
 				for i, s := range steps {
 					i, s := i, s
-					ui.Row(c).FillWidth().Gap(12).Padding(12, 14).Radius(12).
-						Background(p.Surface).Border(1, p.Border).Children(func() {
+					// Each step is its own small card, rising in a beat
+					// behind the one before as the page opens; a step under
+					// the pointer washes, so the eye keeps its place while
+					// cooking from the page.
+					step := ui.Row(c.Key(fmt.Sprintf("detail-step-%d", i))).FillWidth().Gap(12).
+						Padding(12, 14).Radius(design.RadiusCard).Border(1, p.Border)
+					design.Wash(step, p.Surface, p.Hover)
+					design.RestShadow(step, p)
+					design.StaggerRow(step, design.Stagger(c, a.level, a.pageAt, i))
+					step.Children(func() {
 						ui.Text(c, fmt.Sprint(i+1)).FontSize(12).FontWeight(700).TextColor(p.Accent).
-							Width(24).Height(24).TextAlign(ui.Center).Radius(999).Background(p.AccentPale)
+							Width(24).Height(24).TextAlign(ui.Center).Radius(design.RadiusPill).
+							Background(p.AccentPale).Shrink(0)
 						ui.Column(c).Grow(1).Gap(3).Children(func() {
 							ui.Text(c, s.Instruction).FontSize(13).TextColor(p.Text).LineHeight(1.5)
 							ui.Row(c).Gap(10).Children(func() {

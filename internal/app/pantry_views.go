@@ -63,7 +63,7 @@ func (a *App) pantryPage(c *ui.Context, p design.Palette) {
 
 			if len(a.pantryView) == 0 {
 				empty := design.EmptyState(c, p, &icons.Pantry, "没有匹配的条目",
-					"换个关键词，或点「全部」看整个仓库。")
+					"换个关键词，或点「全部」看整个仓库。", a.level)
 				empty.Margin(design.PagePadding, 0, 0, 0)
 				empty.Children(func() {
 					if design.Button(c, p, "pantry-clear", "清除筛选", design.ButtonSecondary).Clicked() {
@@ -213,7 +213,7 @@ func pantryFilterIndex(filter string) int {
 
 func (a *App) emptyPantry(c *ui.Context, p design.Palette) {
 	card := design.EmptyState(c, p, &icons.Pantry, "仓库还是空的",
-		"从 1,000 条系统目录里挑几样，或导入一份地域新手包。")
+		"从 1,000 条系统目录里挑几样，或导入一份地域新手包。", a.level)
 	card.Children(func() {
 		ui.Row(c).Gap(10).Margin(8, 0, 0, 0).Children(func() {
 			if design.Button(c, p, "empty-catalog", "从目录添加", design.ButtonPrimary).Clicked() {
@@ -253,6 +253,9 @@ func (a *App) pantryCard(c *ui.Context, p design.Palette, it domain.Item, now in
 			Height(height).Radius(design.RadiusSmall).AlignItems(ui.Start).
 			Border(1, p.Border).Label(it.Name)
 		design.Wash(card, p.Surface, p.Hover)
+		// The card rises onto the float shadow as it lifts and leans, so
+		// the tilt reads as a card held up off the shelf.
+		design.Elevate(card, p)
 		design.Lift(card, 2, 0.98)
 		key := a.itemImageKey(it)
 		if key != "" {
@@ -452,6 +455,7 @@ func (a *App) itemDetailModal(c *ui.Context, p design.Palette) {
 			close := ui.ButtonBase(c.Key("item-close")).Size(28, 28).
 				Radius(design.RadiusPill).Center().Label("关闭")
 			design.Wash(close, p.Surface.Alpha(0), p.Hover)
+			design.Lift(close, 0, 0.92)
 			close.Children(func() {
 				ui.Icon(c, &icons.Close).Size(14, 14).TextColor(p.Ink)
 			})
@@ -688,6 +692,7 @@ func (a *App) catalogRow(c *ui.Context, p design.Palette, fi domain.FoodItem) ui
 	row := ui.Row(c).Grow(1).MinWidth(0).Height(88).Padding(design.Sp(c, 2.5)).Gap(design.Sp(c, 2.5)).
 		Radius(design.RadiusSmall).Border(1, p.Border)
 	design.Wash(row, p.Surface, p.Hover)
+	design.Elevate(row, p)
 	design.Lift(row, 2, 0.98)
 	row.Children(func() {
 		key := ""
@@ -751,6 +756,7 @@ func (a *App) starterPackPage(c *ui.Context, p design.Palette) {
 					rest = p.AccentPale
 				}
 				design.Wash(row, rest, p.Hover)
+				design.Lift(row, 0, 0.98)
 				row.Children(func() {
 					color := p.Text
 					if pack.ID == a.packID {
@@ -847,19 +853,21 @@ func (a *App) shoppingPage(c *ui.Context, p design.Palette) {
 		ui.Text(c, "已用完的条目，加上已加入掌序、但仓库里没有的必需食材。换算成购物数量后可直接加回仓库。").FontSize(12).TextColor(p.Muted)
 
 		if len(a.shopping) == 0 {
-			ui.Column(c).FillWidth().Padding(30).Gap(6).Radius(16).
-				Background(p.Surface).Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Padding(30).Gap(6).Radius(16).
+				Background(p.Surface).Border(1, p.Border), p, 16).Children(func() {
 				ui.Text(c, "清单是空的").FontSize(18).FontWeight(700).TextColor(p.Text)
 				ui.Text(c, "把菜加入掌序后，缺的食材会自动出现在这里。").FontSize(12).TextColor(p.Muted)
 			})
 			return
 		}
 		ui.Column(c).FillWidth().Gap(8).Children(func() {
-			for _, line := range a.shopping {
+			for i, line := range a.shopping {
 				line := line
-				ui.Row(c).FillWidth().Height(56).Padding(12, 8).Gap(10).AlignItems(ui.Center).
+				row := design.Raised(ui.Row(c).FillWidth().Height(56).Padding(12, 8).Gap(10).AlignItems(ui.Center).
 					Radius(12).Background(p.Surface).Border(1, p.Border).
-					Role(ui.RoleListItem).Children(func() {
+					Role(ui.RoleListItem), p, 12)
+				design.StaggerRow(row, design.Stagger(c, a.level, a.pageAt, i))
+				row.Children(func() {
 					ui.Column(c).Grow(1).MinWidth(0).Gap(1).Children(func() {
 						ui.Text(c, line.Name).FontSize(13).FontWeight(600).TextColor(p.Text)
 						detail := ""
@@ -910,6 +918,12 @@ func (a *App) reconcilePage(c *ui.Context, p design.Palette) {
 					Role(ui.RoleListItem)
 				design.Wash(row, p.Surface, p.Hover)
 				design.RestShadow(row, p)
+				design.StaggerRow(row, design.Stagger(c, a.level, a.pageAt, i))
+				// A row checked off as 用完 recedes, so what is still on the
+				// shelf stands forward while the cook walks the list.
+				if it.IsDepleted {
+					row.Opacity(0.62)
+				}
 				row.Children(func() {
 					ui.Column(c).Grow(1).Gap(1).Children(func() {
 						ui.Text(c, it.Name).FontSize(13).FontWeight(600).TextColor(p.Text)

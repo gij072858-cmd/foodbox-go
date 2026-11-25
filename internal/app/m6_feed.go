@@ -60,6 +60,12 @@ type feedState struct {
 
 	// Day editor.
 	day feedDayState
+
+	// dayShown is the day the right pane last drew and dayAt the frame
+	// the calendar moved to it, so that day's meals arrive rather than
+	// swap (design.Stagger on the view's own clock).
+	dayShown string
+	dayAt    time.Time
 }
 
 // feedDayState is one open day of the cook journal.

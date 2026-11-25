@@ -70,6 +70,13 @@ type sichuDashboard struct {
 	NutritionHint    string
 }
 
+// sichuSeen is one plan slot as last drawn: the dish there and the frame
+// it changed.
+type sichuSeen struct {
+	Name string
+	At   time.Time
+}
+
 // sichuState is the private kitchen's view state.
 type sichuState struct {
 	// loaded is true once the profile, members and AI status were read.
@@ -123,6 +130,10 @@ type sichuState struct {
 	// pushed is true once this plan's meals are in 掌序, so pressing the
 	// button again cannot enqueue a meal that was already settled.
 	pushed bool
+	// dishSeen is what each slot of the plan showed last and when that
+	// changed, so a new batch arrives row by row and a single reroll
+	// brings in only its own row (design.Arrive). Filled from the view.
+	dishSeen map[sichuDishKey]sichuSeen
 
 	// Body page draft, edited in place and saved in one transaction.
 	body       bodyDraft
@@ -145,6 +156,7 @@ func (s *sichuState) init() {
 	s.engine = sichuEngineLocal
 	s.stockPolicy = sichuStockAllow
 	s.locked = map[sichuDishKey]sichu.Dish{}
+	s.dishSeen = map[sichuDishKey]sichuSeen{}
 	s.body = bodyDraftFrom(domain.SichuProfile{ExploreRatio: 0.3})
 }
 
@@ -1504,8 +1516,8 @@ func (a *App) sichuBodyPage(c *ui.Context, p design.Palette) {
 			FontSize(12).TextColor(p.Muted).LineHeight(1.5).Margin(0, 0, design.Sp(c, 4), 0)
 
 		a.section(c, p, "基础数据", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 3)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 3)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Row(c).Gap(16).Children(func() {
 					a.sichuNumberField(c, p, "身高 cm", &d.height, 80, 250, 1)
 					a.sichuNumberField(c, p, "体重 kg", &d.weight, 20, 250, 1)
@@ -1538,8 +1550,8 @@ func (a *App) sichuBodyPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "忌口与过敏", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Row(c).Gap(8).Children(func() {
 					a.sichuToggleChip(c, p, "chk-halal", "清真", &d.halal)
 					a.sichuToggleChip(c, p, "chk-veg", "吃斋", &d.vegetarian)
@@ -1567,8 +1579,8 @@ func (a *App) sichuBodyPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "健康状况（多选）", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Row(c).Gap(6).Wrap().Children(func() {
 					for i := range sichu.HealthTagOptions {
 						o := sichu.HealthTagOptions[i]
@@ -1583,8 +1595,8 @@ func (a *App) sichuBodyPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "营养目标", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Row(c).Gap(6).Wrap().Children(func() {
 					for i := range sichu.GoalOptions {
 						o := sichu.GoalOptions[i]
@@ -1596,8 +1608,8 @@ func (a *App) sichuBodyPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "探索比例", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Text(c, fmt.Sprintf("探索 %d%% · 稳妥 %d%%",
 					int(d.explore*100+0.5), 100-int(d.explore*100+0.5))).
 					FontSize(13).FontWeight(600).TextColor(p.Text)
@@ -1709,8 +1721,8 @@ func (a *App) sichuMembersPage(c *ui.Context, p design.Palette) {
 
 // sichuMemberRow draws one member card with its summary and actions.
 func (a *App) sichuMemberRow(c *ui.Context, p design.Palette, m domain.MemberProfile) {
-	row := ui.Row(c).FillWidth().Padding(design.Sp(c, 3.5), design.Sp(c, 3)).Gap(design.Sp(c, 3)).Radius(design.RadiusSmall).Background(p.Surface).
-		Border(1, p.Border).AlignItems(ui.Center).Role(ui.RoleListItem)
+	row := design.Raised(ui.Row(c).FillWidth().Padding(design.Sp(c, 3.5), design.Sp(c, 3)).Gap(design.Sp(c, 3)).Radius(design.RadiusSmall).Background(p.Surface).
+		Border(1, p.Border).AlignItems(ui.Center).Role(ui.RoleListItem), p, design.RadiusSmall)
 	row.Children(func() {
 		ui.Avatar(c, m.Name, nil).Size(34, 34).Background(p.AccentPale).TextColor(p.Accent)
 		ui.Column(c).Grow(1).MinWidth(0).Gap(2).Children(func() {
@@ -1841,8 +1853,8 @@ func (a *App) aiSettingsPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "状态", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
 					if a.ai.configured {
 						design.Tag(c, p, "已配置", p.Success)
@@ -1860,8 +1872,8 @@ func (a *App) aiSettingsPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "密钥", func() {
-			ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(design.Sp(c, 4)).Radius(design.RadiusCard).Background(p.Surface).
+				Border(1, p.Border), p, design.RadiusCard).Children(func() {
 				design.FieldLabel(c, p, "DeepSeek API Key")
 				in := ui.TextInput(c, &a.ai.keyInput).Placeholder("sk-…").Password().Label("DeepSeek API Key")
 				if in.Submitted() {
@@ -1893,8 +1905,8 @@ func (a *App) aiSettingsPage(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "说明", func() {
-			ui.Column(c).FillWidth().Gap(6).Padding(16).Radius(14).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(6).Padding(16).Radius(14).Background(p.Surface).
+				Border(1, p.Border), p, 14).Children(func() {
 				ui.Text(c, "AI 会拿到身体档案、忌口与可引用的库内菜式清单，返回的方案仍要过本地结构校验。").
 					FontSize(12).TextColor(p.Muted).LineHeight(1.5)
 				ui.Text(c, "校验不过会重试一次；仍不合规就整份回退本地策略，不静默删菜修补。").

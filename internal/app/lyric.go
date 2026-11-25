@@ -36,9 +36,14 @@ const lyricRowHeight float32 = 92
 type lyricOptions struct {
 	Anchor float32
 	Lit    bool
-	Head   func(i int)
-	Tail   func(i int)
-	Pick   func(i int)
+	// Glow lights the current row from its left edge: an accent rail and
+	// a soft wash that fade along the line, so the step being cooked reads
+	// as lit rather than only as bigger type. The run screen uses it; the
+	// probe keeps the plain band.
+	Glow bool
+	Head func(i int)
+	Tail func(i int)
+	Pick func(i int)
 }
 
 // lyricFlow is the schedule page's lyric-style step flow: the step nearest
@@ -68,20 +73,42 @@ func (a *App) lyricFlow(c *ui.Context, p design.Palette, height float32, lines [
 				pos := float32(i)*lyricRowHeight + lyricRowHeight/2
 				d := absF(pos-center) / lyricRowHeight
 				current := d < 0.5
-				opacity, size, scale := float32(0.35), float32(18), float32(0.98)
+				size, scale := float32(18), float32(0.98)
 				if current {
-					opacity, size, scale = 1, design.FontHero, 1.02
+					size, scale = design.FontHero, 1.02
 				}
-				op := scroll.AnimateTo(fmt.Sprintf("lyric-op-%d", i), opacity, ui.Snappy)
 				sc := scroll.AnimateTo(fmt.Sprintf("lyric-scale-%d", i), scale, ui.Snappy)
+				// The type grows into the lit step instead of jumping a size.
+				// Rows are a fixed height, so the growth never moves the
+				// flow; it is full motion only, lite lands the size at once.
+				if a.level.Full() {
+					size = scroll.AnimateTo(fmt.Sprintf("lyric-size-%d", i), size, design.Pane)
+				}
+				lit := boolFloat(current)
+				if opt.Glow {
+					lit = scroll.AnimateTo(fmt.Sprintf("lyric-lit-%d", i), lit, design.Pane)
+				}
 				row := ui.Row(c.Key(fmt.Sprintf("lyric-row-%d", i))).FillWidth().Height(lyricRowHeight).
 					AlignItems(ui.Center).Radius(12).Role(ui.RoleListItem)
 				if current && opt.Lit {
 					row.Background(p.AccentPale.Alpha(0.55))
 				}
+				if opt.Glow {
+					lyricGlow(row, p, lit, a.level.Full())
+				}
 				row.Children(func() {
 					body := ui.ButtonBase(c.Key(fmt.Sprintf("lyric-body-%d", i))).
 						Column().Grow(1).MinWidth(0).AlignItems(ui.Start).Gap(2).Label(line)
+					// A line that is not lit brightens under the pointer, so
+					// it reads as a way into its step before it is clicked.
+					opacity := float32(0.35)
+					switch {
+					case current:
+						opacity = 1
+					case opt.Pick != nil && body.Hovered():
+						opacity = 0.62
+					}
+					op := scroll.AnimateTo(fmt.Sprintf("lyric-op-%d", i), opacity, ui.Snappy)
 					body.Children(func() {
 						if current && opt.Head != nil {
 							opt.Head(i)
@@ -123,6 +150,9 @@ func (a *App) lyricFlowStill(c *ui.Context, p design.Palette, height float32, li
 				if current && opt.Lit {
 					row.Background(p.AccentPale.Alpha(0.55))
 				}
+				if opt.Glow && current {
+					lyricGlow(row, p, 1, false)
+				}
 				row.Children(func() {
 					body := ui.ButtonBase(c.Key(fmt.Sprintf("lyric-body-%d", i))).
 						Column().Grow(1).MinWidth(0).AlignItems(ui.Start).Gap(2).Label(line)
@@ -156,6 +186,7 @@ func (a *App) hangHandle(c *ui.Context, p design.Palette, line int) {
 		Height(28).Shrink(0).Padding(2, 9).Gap(5).Radius(design.RadiusPill).
 		AlignItems(ui.Center).Label(fmt.Sprintf("把第 %d 步挂起来计时", line+1))
 	design.Wash(handle, p.SurfaceAlt, p.Hover)
+	design.Lift(handle, 0, 0.95)
 	handle.Children(func() {
 		ui.Icon(c, &icons.Clock).Size(13, 13).TextColor(p.Ink)
 		ui.Text(c, "挂起").FontSize(design.FontCaption).FontWeight(600).TextColor(p.Text)
@@ -171,6 +202,37 @@ func (a *App) hangHandle(c *ui.Context, p design.Palette, line int) {
 }
 
 func absF(v float32) float32 { return float32(math.Abs(float64(v))) }
+
+// lyricGlow paints the lit row's light under its text: a short accent rail
+// in the flow's left margin and a wash of the accent that fades out along
+// the line. lit is 0..1; with grow the rail rises from the row's middle as
+// the row lights, otherwise it is drawn at full length and only fades.
+// Both are paint-only, between the row's background and its children.
+func lyricGlow(row ui.Element, p design.Palette, lit float32, grow bool) {
+	if lit <= 0.01 {
+		return
+	}
+	if lit > 1 {
+		lit = 1
+	}
+	wash := float32(0.10)
+	if p.Dark {
+		wash = 0.16
+	}
+	row.Draw(func(pnt *ui.Painter, r ui.Rect) {
+		pnt.FillGradient(ui.Rect{X: r.X - 16, Y: r.Y + 6, W: r.W * 0.8, H: r.H - 12},
+			ui.LinearGradient{Angle: 90, Oklab: true, Stops: []ui.GradientStop{
+				{Color: p.Accent.Alpha(wash * lit), At: 0},
+				{Color: p.Accent.Alpha(0), At: 1},
+			}}, 12)
+		h := float32(40)
+		if grow {
+			h *= lit
+		}
+		pnt.Fill(ui.Rect{X: r.X - 16, Y: r.Y + r.H/2 - h/2, W: 3, H: h},
+			p.Accent.Alpha(lit), 1.5)
+	})
+}
 
 // focusLyric puts step i in the middle of the flow. The offset is set in
 // one frame; the rows' springs do the visual catching up, so no ScrollTo
@@ -251,7 +313,7 @@ func (a *App) schedulePage(c *ui.Context, p design.Palette) {
 			// The shared empty panel, so a big "nothing here" card wears the
 			// same faint theme tint as the pantry's.
 			empty := design.EmptyState(c, p, &icons.Schedule, "掌序里还没有菜",
-				"在菜式页挑一道，点「加入掌序」。这里会把多道菜的步骤排成一条时间线。")
+				"在菜式页挑一道，点「加入掌序」。这里会把多道菜的步骤排成一条时间线。", a.level)
 			empty.Children(func() {
 				if ui.PrimaryButton(c, "去挑一道菜").Clicked() {
 					a.router.Push("/recipes")
@@ -274,6 +336,7 @@ func (a *App) schedulePage(c *ui.Context, p design.Palette) {
 		}
 
 		groups := a.scheduleMealGroups()
+		queued := 0 // a dish's place in the whole queue, for the stagger
 		a.section(c, p, "待做", func() {
 			ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Children(func() {
 				for _, group := range groups {
@@ -310,7 +373,10 @@ func (a *App) schedulePage(c *ui.Context, p design.Palette) {
 					ui.Column(c).FillWidth().Gap(8).Children(func() {
 						for _, item := range group.Items {
 							item := item
-							a.queueRow(c, p, item)
+							if row := a.queueRow(c, p, item); row.Valid() {
+								design.StaggerRow(row, design.Stagger(c, a.level, a.pageAt, queued))
+							}
+							queued++
 						}
 					})
 				}
@@ -362,14 +428,16 @@ func (a *App) runResumeCard(c *ui.Context, p design.Palette) {
 }
 
 // queueRow is one dish in the待做 queue.
-func (a *App) queueRow(c *ui.Context, p design.Palette, item domain.ScheduleItem) {
+func (a *App) queueRow(c *ui.Context, p design.Palette, item domain.ScheduleItem) ui.Element {
 	rec, ok := a.recipeByID[item.RecipeID]
 	if !ok {
-		return
+		var none ui.Element // the zero Element: Valid reports false
+		return none
 	}
 	steps := len(a.steps[rec.ID])
-	ui.Row(c).FillWidth().Padding(14, 12).Gap(14).AlignItems(ui.Center).Radius(12).
-		Background(p.Surface).Border(1, p.Border).Children(func() {
+	row := design.Raised(ui.Row(c).FillWidth().Padding(14, 12).Gap(14).AlignItems(ui.Center).Radius(12).
+		Background(p.Surface).Border(1, p.Border), p, 12)
+	row.Children(func() {
 		ui.Column(c).Grow(1).MinWidth(0).Gap(3).Children(func() {
 			ui.Text(c, rec.Name).FontSize(14).FontWeight(600).TextColor(p.Text).SingleLine()
 			meta := fmt.Sprintf("%d 人份 · %d 步", max(item.Servings, 1), steps)
@@ -392,6 +460,7 @@ func (a *App) queueRow(c *ui.Context, p design.Palette, item domain.ScheduleItem
 			a.removeSchedule(rec.ID)
 		}
 	})
+	return row
 }
 
 // clockText is "mm:ss" for a duration in seconds.

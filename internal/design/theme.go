@@ -49,8 +49,19 @@ func ApplyTheme(c *ui.Context, mode, themeName string) *ui.Theme {
 	t.Text = p.Text
 	t.TextMuted = p.Muted
 	t.Accent = p.Accent
-	t.AccentHover = p.Accent
-	t.AccentPressed = p.Accent
+	// A primary button that keeps one colour under the pointer reads as
+	// a picture of a button. The hover deepens a step and the press a
+	// second one; in the dark the hover lifts toward the light instead,
+	// because a deeper accent on a dark window reads as dimmer, not
+	// pressed. The accent itself stays p.Accent, so the sidebar pill and
+	// every Accent comparison are untouched.
+	black, white := ui.Hex("#000000"), ui.Hex("#ffffff")
+	t.AccentHover = p.Accent.Mix(black, 0.08)
+	t.AccentPressed = p.Accent.Mix(black, 0.16)
+	if dark {
+		t.AccentHover = p.Accent.Mix(white, 0.10)
+		t.AccentPressed = p.Accent.Mix(black, 0.10)
+	}
 	t.AccentText = p.OnAccent
 	t.Danger = p.Danger
 	t.Warning = p.Warning

@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"runtime"
+	"time"
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
@@ -32,12 +33,18 @@ func settingsRule(c *ui.Context) {
 	ui.Divider(c).Margin(0, 14, 0, 14)
 }
 
+// settingsGroupIn brings one settings group in, a beat behind the group
+// above it, as the page opens. It returns nothing: the group is built.
+func (a *App) settingsGroupIn(c *ui.Context, order int, group ui.Element) {
+	design.Arrive(c, a.level, a.pageAt, time.Duration(order)*50*time.Millisecond, 10, group)
+}
+
 // settingsPage is 设置: appearance, the kitchen entries, AI, backup and about.
 // Every group is open and always shown; the hierarchy is carried by a small
 // group label over full-weight row titles, not by a disclosure arrow.
 func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 	a.pageBody(c, func() {
-		design.SettingsGroup(c, p, "外观与动效", func() {
+		a.settingsGroupIn(c, 0, design.SettingsGroup(c, p, "外观与动效", func() {
 			design.SettingsRow(c, p, "外观", "跟随系统，或固定浅色 / 深色", func() {
 				if design.Segmented(c, &a.themeIndex, themeLabels...).
 					Label("外观").Changed() {
@@ -71,9 +78,9 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 						a.savePrefs()
 					}
 				})
-		})
+		}))
 
-		design.SettingsGroup(c, p, "厨房档案", func() {
+		a.settingsGroupIn(c, 1, design.SettingsGroup(c, p, "厨房档案", func() {
 			if row := design.SettingsLinkRow(c, p, "settings-body", "身体档案",
 				"身高体重、活动量、营养目标",
 				func() { settingsChevron(c, p) }); row.Clicked() {
@@ -102,9 +109,9 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 						}
 					})
 				})
-		})
+		}))
 
-		design.SettingsGroup(c, p, "AI 与配额", func() {
+		a.settingsGroupIn(c, 2, design.SettingsGroup(c, p, "AI 与配额", func() {
 			status := "未配置 · 密钥仅存本机凭据管理器，不进备份"
 			if a.ai.configured {
 				status = fmt.Sprintf("已配置 · 今日剩余 %d 次", a.ai.remaining)
@@ -113,9 +120,9 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 				status, func() { settingsChevron(c, p) }); row.Clicked() {
 				a.router.Push("/settings/ai")
 			}
-		})
+		}))
 
-		design.SettingsGroup(c, p, "数据与备份", func() {
+		a.settingsGroupIn(c, 3, design.SettingsGroup(c, p, "数据与备份", func() {
 			design.SettingsRow(c, p, "备份与恢复",
 				"备份包含十张表：食材、菜式、步骤、掌序、记录、档案、日记；不含 AI 密钥与照片。"+
 					"导入前会自动备份当前数据并保留 5 份。", func() {
@@ -128,17 +135,17 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 						}
 					})
 				})
-		})
+		}))
 
-		design.SettingsGroup(c, p, "帮助", func() {
+		a.settingsGroupIn(c, 4, design.SettingsGroup(c, p, "帮助", func() {
 			if row := design.SettingsLinkRow(c, p, "settings-help", "帮助",
 				"仓库、菜式、掌序、私厨、备份与快捷键",
 				func() { settingsChevron(c, p) }); row.Clicked() {
 				a.router.Push("/help")
 			}
-		})
+		}))
 
-		design.SettingsGroup(c, p, "关于", func() {
+		a.settingsGroupIn(c, 5, design.SettingsGroup(c, p, "关于", func() {
 			ui.Column(c).FillWidth().Gap(4).Padding(12, 14).Children(func() {
 				ui.Text(c, "食匣 · FoodBox-Go").FontSize(14).FontWeight(600).TextColor(p.Text)
 				ui.Text(c, fmt.Sprintf("版本 %s · MyGo v%s · %s",
@@ -155,9 +162,9 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 				ui.Text(c, local).FontSize(12).TextColor(p.Muted)
 				ui.Text(c, "离线单机，没有账号与云端同步。").FontSize(11).TextColor(p.Faint)
 			})
-		})
+		}))
 
-		design.SettingsGroup(c, p, "视频播放", func() {
+		a.settingsGroupIn(c, 6, design.SettingsGroup(c, p, "视频播放", func() {
 			// Read the bootstrap probe; finding a player scans the PATH and
 			// the disk, which must never run under a frame.
 			probe := a.videoProbe
@@ -212,6 +219,6 @@ func (a *App) settingsPage(c *ui.Context, p design.Palette) {
 				ui.Text(c, "Cookie 只进本机凭据管理器，不进数据库、不进备份。").
 					FontSize(design.FontMeta).TextColor(p.Faint)
 			})
-		})
+		}))
 	})
 }

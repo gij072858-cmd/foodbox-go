@@ -233,6 +233,7 @@ func (a *App) videoPlayerHeader(c *ui.Context, p design.Palette) {
 		close := ui.ButtonBase(c.Key("video-player-close")).Size(28, 28).
 			Radius(design.RadiusPill).Center().Label("关闭视频")
 		design.Wash(close, p.Surface.Alpha(0), p.Hover)
+		design.Lift(close, 0, 0.92)
 		close.Children(func() {
 			ui.Icon(c, &icons.Close).Size(14, 14).TextColor(p.Ink)
 		})
@@ -248,6 +249,7 @@ func (a *App) videoPlayerControls(c *ui.Context, p design.Palette, full bool) {
 		b := ui.ButtonBase(c.Key(key)).Size(design.RunControlSize, design.RunControlSize).
 			Radius(design.RadiusPill).Center().Label(label)
 		design.Wash(b, p.Surface.Alpha(0), p.Hover)
+		design.Lift(b, 0, 0.9)
 		b.Children(func() {
 			ui.Icon(c, icon).Size(17, 17).TextColor(p.Ink)
 		})

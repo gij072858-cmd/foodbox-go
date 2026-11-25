@@ -93,6 +93,16 @@ type scheduleState struct {
 	// while something is in the air — the original shows it the same way
 	// (app/lib/features/schedule/schedule_run_page.dart:1228-1235).
 	dragging bool
+	// stepShown is the step the run screen last drew and stepAt the frame
+	// it changed, so the lit step's label and controls arrive on the view's
+	// own clock (design.Arrive) rather than snapping in.
+	stepShown int
+	stepAt    time.Time
+	// planSig is the timeline the chart last drew and planAt the frame it
+	// changed (a dish added, the stove count moved), so the chart sweeps
+	// the new plan in instead of jumping its blocks.
+	planSig string
+	planAt  time.Time
 
 	// confirmOpen shows the settlement sheet; preview is what it lists.
 	confirmOpen bool

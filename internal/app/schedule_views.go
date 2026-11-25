@@ -71,7 +71,7 @@ func (a *App) schedulePrepPage(c *ui.Context, p design.Palette) {
 
 		if len(a.sched.prep) == 0 {
 			empty := design.EmptyState(c, p, nil, "这桌还没有要备的料",
-				"先往掌序里加几道菜，再回来汇总备料单。")
+				"先往掌序里加几道菜，再回来汇总备料单。", a.level)
 			empty.Children(func() {
 				if ui.PrimaryButton(c, "去挑一道菜").Clicked() {
 					a.router.Push("/recipes")
@@ -96,17 +96,20 @@ func (a *App) schedulePrepPage(c *ui.Context, p design.Palette) {
 			})
 		}
 
+		order := 0 // the line's place across the groups, for the stagger
 		for _, group := range a.sched.prepGroups {
 			group := group
 			a.section(c, p, fmt.Sprintf("%s · %d 样", group.Title, len(group.Lines)), func() {
-				ui.Column(c).FillWidth().Radius(14).Background(p.Surface).
-					Border(1, p.Border).Clip().Children(func() {
+				design.Raised(ui.Column(c).FillWidth().Radius(14).Background(p.Surface).
+					Border(1, p.Border).Clip(), p, 14).Children(func() {
 					for i, line := range group.Lines {
 						line := line
 						if i > 0 {
 							ui.Box(c).FillWidth().Height(1).Background(p.Border)
 						}
-						a.prepRow(c, p, line)
+						row := a.prepRow(c, p, line)
+						design.StaggerRow(row, design.Stagger(c, a.level, a.pageAt, order))
+						order++
 					}
 				})
 			})
@@ -131,8 +134,9 @@ func (a *App) schedulePrepPage(c *ui.Context, p design.Palette) {
 }
 
 // prepRow is one aggregated ingredient line.
-func (a *App) prepRow(c *ui.Context, p design.Palette, line domain.PrepLine) {
-	ui.Row(c).FillWidth().Padding(14, 11).Gap(12).AlignItems(ui.Center).Children(func() {
+func (a *App) prepRow(c *ui.Context, p design.Palette, line domain.PrepLine) ui.Element {
+	row := design.Hoverable(ui.Row(c).FillWidth().Padding(14, 11).Gap(12).AlignItems(ui.Center), p)
+	row.Children(func() {
 		ui.Column(c).Grow(1).MinWidth(0).Gap(2).Children(func() {
 			ui.Row(c).Gap(6).AlignItems(ui.Center).Children(func() {
 				ui.Text(c, line.Name).FontSize(13).FontWeight(600).TextColor(p.Text).SingleLine()
@@ -153,6 +157,7 @@ func (a *App) prepRow(c *ui.Context, p design.Palette, line domain.PrepLine) {
 				TextAlign(ui.End).SingleLine()
 		}
 	})
+	return row
 }
 
 // prepAmountText is the aggregated needed amount, or 适量 when no amount was
@@ -233,7 +238,7 @@ func (a *App) scheduleTimelinePage(c *ui.Context, p design.Palette) {
 
 		if tl.Empty() {
 			empty := design.EmptyState(c, p, nil, "还没有排得上的步骤",
-				"掌序里的菜需要先有步骤，时间线才算得出来。")
+				"掌序里的菜需要先有步骤，时间线才算得出来。", a.level)
 			empty.Children(func() {
 				if ui.PrimaryButton(c, "去挑一道菜").Clicked() {
 					a.router.Push("/recipes")
@@ -272,8 +277,22 @@ func (a *App) scheduleTimelinePage(c *ui.Context, p design.Palette) {
 // blocks. Percent widths keep it responsive without measuring the window.
 func (a *App) timelineChart(c *ui.Context, p design.Palette) {
 	tl := a.sched.timeline
-	ui.Column(c).FillWidth().Gap(8).Padding(16).Radius(16).Background(p.Surface).
-		Border(1, p.Border).Margin(0, 0, 12, 0).Children(func() {
+	if sig := fmt.Sprintf("%d|%d|%d", tl.TotalMinutes, len(tl.Lanes), a.sched.stoveCount); sig != a.sched.planSig {
+		if a.sched.planSig != "" {
+			a.sched.planAt = c.Now()
+		}
+		a.sched.planSig = sig
+	}
+	// The blocks sweep in from minute zero as the page opens and again when
+	// the plan changes under them, so a new stove count is seen re-packing
+	// the lanes rather than blinking to a new layout.
+	at := a.pageAt
+	if a.sched.planAt.After(at) {
+		at = a.sched.planAt
+	}
+	sweep := design.Sweep(c, a.level, at)
+	design.Raised(ui.Column(c).FillWidth().Gap(8).Padding(16).Radius(16).Background(p.Surface).
+		Border(1, p.Border).Margin(0, 0, 12, 0), p, 16).Children(func() {
 		ui.Row(c).FillWidth().Children(func() {
 			ui.Box(c).Width(88).Shrink(0)
 			ui.Row(c).Grow(1).Justify(ui.SpaceBetween).Children(func() {
@@ -295,13 +314,16 @@ func (a *App) timelineChart(c *ui.Context, p design.Palette) {
 						for _, step := range lane.Steps {
 							step := step
 							if gap := step.Start - prev; gap > 0 {
-								ui.Box(c).WidthPercent(percentOf(gap, tl.TotalMinutes)).Height(34)
+								ui.Box(c).WidthPercent(percentOf(gap, tl.TotalMinutes) * sweep).Height(34)
 							}
-							block := ui.Box(c).WidthPercent(percentOf(step.Minutes(), tl.TotalMinutes)).
+							block := ui.Box(c).WidthPercent(percentOf(step.Minutes(), tl.TotalMinutes) * sweep).
 								Height(34).Radius(6).Clip().Center().
-								Background(resourceColor(p, step.Resource)).
 								Tooltip(fmt.Sprintf("%s · 第 %d 步 · %d 分钟",
 									step.RecipeName, step.StepIndex, step.Minutes()))
+							// A block under the pointer brightens a step, so
+							// the one its tooltip names is the one that lit.
+							color := resourceColor(p, step.Resource)
+							design.Wash(block, color, color.Mix(ui.Hex("#ffffff"), 0.16))
 							block.Children(func() {
 								ui.Text(c, timelineBlockText(step)).FontSize(10).FontWeight(600).
 									TextColor(p.OnAccent).SingleLine()
@@ -447,6 +469,7 @@ func (a *App) runTopBar(c *ui.Context, p design.Palette) {
 		exit := ui.ButtonBase(c.Key("run-exit")).Size(28, 28).Radius(design.RadiusSmall).
 			Margin(5, 0, 0, 0).Center().Label("退出这桌")
 		design.Wash(exit, p.Surface.Alpha(0), p.Hover)
+		design.Lift(exit, 0, 0.92)
 		exit.Children(func() {
 			ui.Icon(c, &icons.Back).Size(17, 17).TextColor(p.Ink)
 		})
@@ -513,8 +536,8 @@ func (a *App) hangDropZone(c *ui.Context, p design.Palette) {
 // runStartCard is the run page before it starts.
 func (a *App) runStartCard(c *ui.Context, p design.Palette) {
 	if len(a.schedule) == 0 {
-		ui.Column(c).FillWidth().Padding(32).Gap(10).Radius(18).Background(p.Surface).
-			Border(1, p.Border).Children(func() {
+		design.Raised(ui.Column(c).FillWidth().Padding(32).Gap(10).Radius(18).Background(p.Surface).
+			Border(1, p.Border), p, 18).Children(func() {
 			ui.Text(c, "掌序是空的").FontSize(22).FontWeight(700).TextColor(p.Text)
 			ui.Text(c, "先在菜式页挑一道，点「加入掌序」，再回来开火。").
 				FontSize(13).TextColor(p.Muted).LineHeight(1.5)
@@ -530,8 +553,8 @@ func (a *App) runStartCard(c *ui.Context, p design.Palette) {
 		return
 	}
 	steps := a.sched.stepCount
-	ui.Column(c).FillWidth().Padding(32).Gap(10).Radius(18).Background(p.Surface).
-		Border(1, p.Border).Children(func() {
+	design.Raised(ui.Column(c).FillWidth().Padding(32).Gap(10).Radius(18).Background(p.Surface).
+		Border(1, p.Border), p, 18).Children(func() {
 		ui.Text(c, "这桌还没开火").FontSize(22).FontWeight(700).TextColor(p.Text)
 		if steps == 0 {
 			ui.Text(c, "掌序里还没有带步骤的菜。先在菜式页加一道，再回来开火。").
@@ -569,8 +592,13 @@ func (a *App) runBoard(c *ui.Context, p design.Palette) {
 		Gap(design.Sp(c, 2)).Radius(design.RadiusCard).Background(p.Surface).
 		Border(1, p.Border).AlignItems(ui.Start).Justify(ui.SpaceBetween).
 		Label("掌序看板")
-	design.TintSurface(card, p, design.RadiusCard)
+	design.TintSurface(card, p, design.RadiusCard) // carries the sheen too
 	design.RestShadow(card, p)
+	// The bar fills toward the new step instead of jumping a notch.
+	shown := float32(frac)
+	if a.level.Moves() {
+		shown = card.AnimateTo("run-frac", shown, design.Pane)
+	}
 	minutes := a.sched.runTimeline.TotalMinutes
 	if minutes == 0 {
 		minutes = a.sched.timeline.TotalMinutes
@@ -583,12 +611,18 @@ func (a *App) runBoard(c *ui.Context, p design.Palette) {
 		ui.Text(c, title).FontSize(design.FontMeta).FontWeight(700).
 			TextColor(p.Muted).SingleLine()
 		ui.Row(c).Gap(6).AlignItems(ui.Baseline).Children(func() {
-			ui.Text(c, a.runTimerLabel()).FontSize(design.FontHero).FontWeight(700).
+			clock := ui.Text(c, a.runTimerLabel()).FontSize(design.FontHero).FontWeight(700).
 				TextColor(p.Text).FontFeatures("tnum").SingleLine()
+			// The seconds roll as they tick, the way the stat numbers do.
+			// Full motion only: lite keeps fades, and a rolling digit
+			// every second is motion, not a fade.
+			if a.level.Full() {
+				clock.ContentTransition(ui.ContentTransition{Numeric: true})
+			}
 			ui.Text(c, fmt.Sprintf("/ 约 %d 分钟", minutes)).
 				FontSize(design.FontSmall).TextColor(p.Muted).SingleLine()
 		})
-		ui.Progress(c, frac).FillWidth().Height(4).Label("掌序进度")
+		ui.Progress(c, float64(shown)).FillWidth().Height(4).Label("掌序进度")
 		ui.Divider(c)
 		a.runDishProgress(c, p)
 		ui.Divider(c)
@@ -599,7 +633,13 @@ func (a *App) runBoard(c *ui.Context, p design.Palette) {
 // runDishProgress lists every dish on the table beside its own step count,
 // so a multi-dish run never loses which pan is where.
 func (a *App) runDishProgress(c *ui.Context, p design.Palette) {
-	ui.Column(c).FillWidth().Gap(design.Sp(c, 1.25)).Children(func() {
+	// The dish whose step is lit wears the pale accent, so the pan in
+	// hand is found at a glance among the others on the table.
+	var curDish int64
+	if s := a.sched.runStep; s >= 0 && s < len(a.sched.runLines) {
+		curDish = a.sched.runLines[s].RecipeID
+	}
+	ui.Column(c).FillWidth().Gap(design.Sp(c, 0.5)).Children(func() {
 		shown := 0
 		for _, item := range a.schedule {
 			rec, ok := a.recipeByID[item.RecipeID]
@@ -629,7 +669,17 @@ func (a *App) runDishProgress(c *ui.Context, p design.Palette) {
 				mark, color = "●", p.Accent
 				status = fmt.Sprintf("第 %d/%d 步", done, steps)
 			}
-			ui.Row(c).FillWidth().Gap(7).AlignItems(ui.Center).Children(func() {
+			row := ui.Row(c.Key(fmt.Sprintf("run-dish-%d", item.RecipeID))).FillWidth().
+				Gap(7).Padding(4, 6).Radius(design.RadiusSmall).AlignItems(ui.Center)
+			tint := p.AccentPale.Alpha(0)
+			if item.RecipeID == curDish && done < steps {
+				tint = p.AccentPale
+			}
+			if a.level.Moves() {
+				tint = row.AnimateColor("cur", tint, design.Hover)
+			}
+			row.Background(tint)
+			row.Children(func() {
 				ui.Text(c, mark).FontSize(design.FontCaption).TextColor(color)
 				ui.Text(c, rec.Name).FontSize(design.FontSmall).FontWeight(600).
 					TextColor(p.Text).Grow(1).SingleLine()
@@ -710,6 +760,7 @@ func (a *App) runControls(c *ui.Context, p design.Palette) {
 		prev := ui.ButtonBase(c.Key("run-prev")).Size(design.RunControlSize, design.RunControlSize).
 			Radius(design.RadiusPill).Center().Label("上一步")
 		design.Wash(prev, p.Surface.Alpha(0), p.Hover)
+		design.Lift(prev, 0, 0.9)
 		prev.Children(func() {
 			ui.Icon(c, &icons.Prev).Size(17, 17).TextColor(p.Ink)
 		})
@@ -723,11 +774,20 @@ func (a *App) runControls(c *ui.Context, p design.Palette) {
 		if a.sched.runPaused {
 			pauseLabel, pauseIcon = "继续", &icons.Play
 		}
+		// Pause is the transport's centre of gravity, as a player's play
+		// button is: a filled accent disc that glows in its own colour,
+		// between two quiet arrows. It is the same 38 DIP as they are.
 		pause := ui.ButtonBase(c.Key("run-pause")).Size(design.RunControlSize, design.RunControlSize).
 			Radius(design.RadiusPill).Center().Label(pauseLabel)
-		design.Wash(pause, p.Surface.Alpha(0), p.Hover)
+		hover := p.Accent.Mix(ui.Hex("#000000"), 0.08)
+		if p.Dark {
+			hover = p.Accent.Mix(ui.Hex("#ffffff"), 0.10)
+		}
+		design.Wash(pause, p.Accent, hover)
+		pause.Shadow(0, 4, 14, -4, p.Accent.Alpha(0.36))
+		design.Lift(pause, 1, 0.9)
 		pause.Children(func() {
-			ui.Icon(c, pauseIcon).Size(17, 17).TextColor(p.Ink)
+			ui.Icon(c, pauseIcon).Size(17, 17).TextColor(p.OnAccent)
 		})
 		if pause.Clicked() {
 			a.toggleRunPause()
@@ -740,6 +800,7 @@ func (a *App) runControls(c *ui.Context, p design.Palette) {
 		next := ui.ButtonBase(c.Key("run-next")).Size(design.RunControlSize, design.RunControlSize).
 			Radius(design.RadiusPill).Center().Label(nextLabel)
 		design.Wash(next, p.Surface.Alpha(0), p.Hover)
+		design.Lift(next, 0, 0.9)
 		next.Children(func() {
 			ui.Icon(c, &icons.Next).Size(17, 17).TextColor(p.Ink)
 		})
@@ -763,9 +824,17 @@ func (a *App) runStage(c *ui.Context, p design.Palette, height float32) {
 	// Whether a step is in the air is read as the rows are built, so the
 	// band starts each frame knowing nothing.
 	a.sched.dragging = false
+	// The frame the step changes is the clock its label and controls
+	// arrive on. It is read off the view (c.Now), so the tester's clock and
+	// the window's agree.
+	if a.sched.stepAt.IsZero() || a.sched.stepShown != a.sched.runStep {
+		a.sched.stepShown = a.sched.runStep
+		a.sched.stepAt = c.Now()
+	}
 	ui.Box(c).FillWidth().Height(height).Children(func() {
 		a.lyricFlow(c, p, height, lines, lyricOptions{
 			Anchor: 0.42,
+			Glow:   true,
 			Head: func(i int) {
 				a.runStepHead(c, p, i)
 			},
@@ -786,8 +855,9 @@ func (a *App) runStepHead(c *ui.Context, p design.Palette, i int) {
 		return
 	}
 	line := a.sched.runLines[i]
-	ui.Text(c, fmt.Sprintf("%s · 第 %d 步", line.RecipeName, line.StepIndex)).
+	head := ui.Text(c, fmt.Sprintf("%s · 第 %d 步", line.RecipeName, line.StepIndex)).
 		FontSize(13).FontWeight(600).TextColor(p.Accent).SingleLine()
+	design.Arrive(c, a.level, a.sched.stepAt, 0, 6, head)
 }
 
 // runStepControls rides the lit row: a wait can be hung from here, and the
@@ -798,7 +868,10 @@ func (a *App) runStepControls(c *ui.Context, p design.Palette, i int) {
 	}
 	line := a.sched.runLines[i]
 	last := i >= len(a.sched.runLines)-1
-	ui.Row(c).Gap(design.Sp(c, 1)).AlignItems(ui.Center).Shrink(0).Children(func() {
+	controls := ui.Row(c).Gap(design.Sp(c, 1)).AlignItems(ui.Center).Shrink(0)
+	// A beat behind the label: the step is named first, then offered.
+	design.Arrive(c, a.level, a.sched.stepAt, 60*time.Millisecond, 8, controls)
+	controls.Children(func() {
 		if line.Waiting && !last {
 			ui.Text(c, fmt.Sprintf("等 %d 分钟", max(line.Minutes, 1))).
 				FontSize(design.FontMeta).TextColor(p.Muted).SingleLine()
@@ -866,8 +939,10 @@ func (a *App) hangTraySlot(c *ui.Context, p design.Palette) {
 func (a *App) hangTray(c *ui.Context, p design.Palette) {
 	now := time.Now().Unix()
 	tray := ui.Column(c).FillWidth().Gap(hangTrayGap).Padding(hangTrayPad).
-		Radius(14).Background(p.SurfaceAlt).Border(1, p.Border).
+		Radius(design.RadiusCard).Background(p.SurfaceAlt).Border(1, p.Border).
 		Margin(0, 0, hangTrayBottom, 0)
+	design.Sheen(tray, p, design.RadiusCard)
+	design.RestShadow(tray, p)
 	if a.sched.dragging {
 		tray.Border(2, p.Accent)
 	}
@@ -879,6 +954,7 @@ func (a *App) hangTray(c *ui.Context, p design.Palette) {
 			clear := ui.ButtonBase(c.Key("hang-clear")).Height(18).Padding(1, 6).
 				Radius(design.RadiusPill).Label("全部取下")
 			design.Wash(clear, p.SurfaceAlt.Alpha(0), p.Hover)
+			design.Lift(clear, 0, 0.95)
 			clear.Children(func() {
 				ui.Text(c, "全部取下").FontSize(design.FontCaption).TextColor(p.Muted)
 			})
@@ -888,17 +964,31 @@ func (a *App) hangTray(c *ui.Context, p design.Palette) {
 		})
 		for i, hang := range a.sched.hang {
 			i, hang := i, hang
-			ui.Row(c).FillWidth().Height(hangTrayRow).AlignItems(ui.Center).Gap(6).Children(func() {
+			left := hang.remaining(now)
+			// A countdown that has run out turns its whole row green, so it
+			// is seen from the stove, not only read.
+			row := ui.Row(c.Key(fmt.Sprintf("hang-row-%d", hang.Line))).FillWidth().
+				Height(hangTrayRow).Padding(0, 6).Radius(design.RadiusSmall).
+				AlignItems(ui.Center).Gap(6)
+			done := p.Success.Alpha(0)
+			if left == 0 {
+				done = p.Success.Alpha(0.12)
+			}
+			if a.level.Moves() {
+				done = row.AnimateColor("done", done, design.Hover)
+			}
+			row.Background(done)
+			row.Children(func() {
 				ui.Text(c, hang.Title).FontSize(12).TextColor(p.Text).Grow(1).
 					MinWidth(0).SingleLine()
-				left := hang.remaining(now)
 				color := p.Text
 				text := clockText(left)
 				if left == 0 {
 					color = p.Success
 					text = "时间到"
 				}
-				ui.Text(c, text).FontSize(12).FontWeight(700).TextColor(color).Shrink(0)
+				ui.Text(c, text).FontSize(12).FontWeight(700).TextColor(color).
+					FontFeatures("tnum").Shrink(0)
 				pauseLabel, pauseIcon := "暂停", &icons.Pause
 				if hang.Paused {
 					pauseLabel, pauseIcon = "继续", &icons.Play
@@ -907,6 +997,7 @@ func (a *App) hangTray(c *ui.Context, p design.Palette) {
 					b := ui.ButtonBase(c.Key(key)).Size(24, 24).Radius(design.RadiusPill).
 						Center().Label(label)
 					design.Wash(b, p.SurfaceAlt.Alpha(0), p.Hover)
+					design.Lift(b, 0, 0.9)
 					b.Children(func() {
 						ui.Icon(c, icon).Size(12, 12).TextColor(p.Ink)
 					})

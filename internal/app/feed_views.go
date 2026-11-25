@@ -35,7 +35,7 @@ func (a *App) feedPage(c *ui.Context, p design.Palette) {
 func (a *App) feedEmptyState(c *ui.Context, p design.Palette) {
 	a.pageBody(c, func() {
 		box := design.EmptyState(c, p, &icons.Feed, "还没有开饭记录",
-			"去掌序做一道菜，结算之后回来这里就有第一天。")
+			"去掌序做一道菜，结算之后回来这里就有第一天。", a.level)
 		box.Width(420).AlignSelf(ui.Center).Margin(0, 0, 24, 0)
 		box.Children(func() {
 			if ui.PrimaryButton(c, "去掌序做一道菜").Clicked() {
@@ -50,40 +50,48 @@ func (a *App) feedEmptyState(c *ui.Context, p design.Palette) {
 func (a *App) feedMonthPane(c *ui.Context, p design.Palette) {
 	ui.Column(c).FillWidth().Gap(design.Sp(c, 2.5)).Padding(0, design.PagePadding, 0, 0).Children(func() {
 		// The column stretches its children across the full split pane, but
-		// the day grid is a fixed seven cells wide. Keep the calendar at its
-		// own width and centre that width in the pane, so the month title
-		// centres over the days instead of over a stretched header row.
-		cal := ui.Calendar(c, &a.feed.date).AlignSelf(ui.Center).Label("开饭月历")
-		if cal.Changed() {
-			// The framework's calendar moved the chosen day; the month's
-			// summary follows it off the frame.
-			a.feed.year, a.feed.month = a.feed.date.Year(), int(a.feed.date.Month())
-			a.feed.buildMonth()
-		}
-		// The calendar centres its intrinsic width in the pane. Keep the
-		// summary at its own width and centre it the same way, so the two
-		// share a centre line instead of starting at the pane's left edge.
-		// The divider is a stretch child, so it takes the block's width.
-		summary := ui.Column(c).AlignSelf(ui.Center).AlignItems(ui.Center).
-			Gap(design.Sp(c, 1.5)).Label("食历摘要")
-		summary.Children(func() {
-			ui.Text(c, fmt.Sprintf("%d 天 · %d 道 · 连续 %d 天",
-				a.mealDays, a.recordCount, a.feed.streak)).
-				FontSize(design.FontMeta).TextColor(p.Muted)
-			ui.Text(c, fmt.Sprintf("本月开饭 %d 天", a.feedMonthDays())).
-				FontSize(design.FontMeta).TextColor(p.Faint)
-			ui.Divider(c)
-			ui.Row(c).AlignItems(ui.Center).Justify(ui.Center).
-				Gap(design.Sp(c, 1.5)).Children(func() {
-				if ui.Button(c, "写这一天的日记").Clicked() {
-					date := a.feed.date.Format("2006-01-02")
-					a.openFeedDay(date)
-					a.router.Push("/feed/" + date)
-				}
-				if ui.Button(c, "年度回顾").Clicked() {
-					a.router.Push("/feed/review")
-				}
-			})
+		// the day grid is a fixed seven cells wide. The month and its
+		// summary sit on one card at their own width, centred in the pane;
+		// both stay centred inside it, so they still share a centre line.
+		card := design.Raised(ui.Column(c).AlignSelf(ui.Center).AlignItems(ui.Center).
+			Padding(design.Sp(c, 3)).Gap(design.Sp(c, 2.5)).Radius(design.RadiusCard).
+			Background(p.Surface).Border(1, p.Border), p, design.RadiusCard)
+		card.Children(func() { a.feedMonthCard(c, p) })
+	})
+}
+
+// feedMonthCard is the calendar and the summary under it.
+func (a *App) feedMonthCard(c *ui.Context, p design.Palette) {
+	cal := ui.Calendar(c, &a.feed.date).AlignSelf(ui.Center).Label("开饭月历")
+	if cal.Changed() {
+		// The framework's calendar moved the chosen day; the month's
+		// summary follows it off the frame.
+		a.feed.year, a.feed.month = a.feed.date.Year(), int(a.feed.date.Month())
+		a.feed.buildMonth()
+	}
+	// The calendar centres its intrinsic width in the pane. Keep the
+	// summary at its own width and centre it the same way, so the two
+	// share a centre line instead of starting at the pane's left edge.
+	// The divider is a stretch child, so it takes the block's width.
+	summary := ui.Column(c).AlignSelf(ui.Center).AlignItems(ui.Center).
+		Gap(design.Sp(c, 1.5)).Label("食历摘要")
+	summary.Children(func() {
+		ui.Text(c, fmt.Sprintf("%d 天 · %d 道 · 连续 %d 天",
+			a.mealDays, a.recordCount, a.feed.streak)).
+			FontSize(design.FontMeta).TextColor(p.Muted)
+		ui.Text(c, fmt.Sprintf("本月开饭 %d 天", a.feedMonthDays())).
+			FontSize(design.FontMeta).TextColor(p.Faint)
+		ui.Divider(c)
+		ui.Row(c).AlignItems(ui.Center).Justify(ui.Center).
+			Gap(design.Sp(c, 1.5)).Children(func() {
+			if ui.Button(c, "写这一天的日记").Clicked() {
+				date := a.feed.date.Format("2006-01-02")
+				a.openFeedDay(date)
+				a.router.Push("/feed/" + date)
+			}
+			if ui.Button(c, "年度回顾").Clicked() {
+				a.router.Push("/feed/review")
+			}
 		})
 	})
 }
@@ -107,9 +115,20 @@ func (a *App) feedMonthDays() int {
 func (a *App) feedDayPane(c *ui.Context, p design.Palette) {
 	date := a.feed.date.Format("2006-01-02")
 	title, weekday := feedDayTitle(date)
+	// A day picked on the calendar arrives: its heading rises in and its
+	// meals follow row by row. The first draw after opening the page is
+	// left to the page's own entrance.
+	if date != a.feed.dayShown {
+		if a.feed.dayShown != "" {
+			a.feed.dayAt = c.Now()
+		}
+		a.feed.dayShown = date
+	}
 	ui.Scroll(c).Fill().MinWidth(0).Children(func() {
 		ui.Column(c).FillWidth().Padding(0, 0, 0, design.PagePadding).Gap(design.Sp(c, 2.5)).Children(func() {
-			ui.Row(c).FillWidth().AlignItems(ui.Baseline).Gap(design.Sp(c, 1.5)).Children(func() {
+			head := ui.Row(c).FillWidth().AlignItems(ui.Baseline).Gap(design.Sp(c, 1.5))
+			design.Arrive(c, a.level, a.feed.dayAt, 0, 6, head)
+			head.Children(func() {
 				ui.Text(c, title).FontSize(design.FontSubhead).FontWeight(700).TextColor(p.Text).Role(ui.RoleHeading)
 				ui.Text(c, weekday).FontSize(design.FontMeta).TextColor(p.Muted)
 			})
@@ -117,11 +136,14 @@ func (a *App) feedDayPane(c *ui.Context, p design.Palette) {
 				ui.Text(c, "这一天没有结算记录。").FontSize(design.FontSmall).TextColor(p.Muted)
 			} else {
 				ui.Column(c).FillWidth().Gap(1).Children(func() {
+					n := 0
 					for _, r := range a.feed.records {
 						if r.CompletedAt.In(time.Local).Format("2006-01-02") != date {
 							continue
 						}
-						a.feedRecordRow(c, p, r)
+						row := a.feedRecordRow(c, p, r)
+						design.StaggerRow(row, design.Stagger(c, a.level, a.feed.dayAt, n+1))
+						n++
 					}
 				})
 			}
@@ -164,9 +186,13 @@ func (a *App) feedDayRecords(date string) int {
 	return n
 }
 
-func (a *App) feedRecordRow(c *ui.Context, p design.Palette, r domain.Record) {
-	ui.Row(c).FillWidth().Gap(design.Sp(c, 1.5)).Padding(design.Sp(c, 1.5), design.Sp(c, 1)).
-		Radius(design.RadiusSmall).AlignItems(ui.Center).Role(ui.RoleListItem).Children(func() {
+// feedRecordRow is one meal in the day pane. It washes under the pointer,
+// so a long list keeps the eye on its line.
+func (a *App) feedRecordRow(c *ui.Context, p design.Palette, r domain.Record) ui.Element {
+	row := ui.Row(c).FillWidth().Gap(design.Sp(c, 1.5)).Padding(design.Sp(c, 1.5), design.Sp(c, 1)).
+		Radius(design.RadiusSmall).AlignItems(ui.Center).Role(ui.RoleListItem)
+	design.Wash(row, p.Hover.Alpha(0), p.Hover)
+	row.Children(func() {
 		ui.Text(c, r.CompletedAt.In(time.Local).Format("15:04")).FontSize(design.FontMeta).
 			TextColor(p.Faint).Width(48)
 		ui.Text(c, a.recipeName(r.RecipeID)).FontSize(design.FontSmall).
@@ -175,6 +201,7 @@ func (a *App) feedRecordRow(c *ui.Context, p design.Palette, r domain.Record) {
 			ui.Text(c, d).FontSize(design.FontMeta).TextColor(p.Muted)
 		}
 	})
+	return row
 }
 
 // feedDayBody draws one day's journal editor.
@@ -186,18 +213,18 @@ func (a *App) feedDayBody(c *ui.Context, p design.Palette) {
 
 		a.section(c, p, "当天记录", func() {
 			if len(d.records) == 0 {
-				ui.Column(c).FillWidth().Padding(18).Gap(4).Radius(14).
-					Background(p.Surface).Border(1, p.Border).Children(func() {
+				design.Raised(ui.Column(c).FillWidth().Padding(18).Gap(4).Radius(14).
+					Background(p.Surface).Border(1, p.Border), p, 14).Children(func() {
 					ui.Text(c, "这一天没有结算记录").FontSize(13).FontWeight(600).TextColor(p.Text)
 					ui.Text(c, "备注和照片仍然可以写，做完菜结算后记录会自动出现在这里。").FontSize(12).TextColor(p.Muted)
 				})
 				return
 			}
-			ui.Column(c).FillWidth().Gap(1).Radius(14).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(1).Padding(4).Radius(14).Background(p.Surface).
+				Border(1, p.Border), p, 14).Children(func() {
 				for _, r := range d.records {
 					r := r
-					ui.Row(c).FillWidth().Padding(12, 10).Gap(12).AlignItems(ui.Center).Children(func() {
+					design.Hoverable(ui.Row(c).FillWidth().Padding(12, 10).Gap(12).AlignItems(ui.Center), p).Children(func() {
 						ui.Text(c, r.CompletedAt.In(time.Local).Format("15:04")).FontSize(11).
 							TextColor(p.Faint).Width(48)
 						ui.Column(c).Grow(1).MinWidth(0).Gap(1).Children(func() {
@@ -285,7 +312,7 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 
 		if len(f.records) == 0 {
 			box := design.EmptyState(c, p, &icons.Chart, "还没有可以回顾的记录",
-				"先去做一道菜，结算之后这里会有月度分布、最常做的菜和菜系比例。")
+				"先去做一道菜，结算之后这里会有月度分布、最常做的菜和菜系比例。", a.level)
 			box.Children(func() {
 				if ui.PrimaryButton(c, "去掌序做一道菜").Clicked() {
 					a.router.Push("/schedule")
@@ -306,7 +333,7 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 		})
 
 		a.section(c, p, "月度开饭", func() {
-			box := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+			box := a.reviewBox(c, p)
 			box.Children(func() {
 				labels := make([]string, 12)
 				values := make([]float64, 12)
@@ -324,7 +351,8 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 				ui.Text(c, "这一年还没有记录。").FontSize(12).TextColor(p.Muted)
 				return
 			}
-			box := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+			box := a.reviewBox(c, p)
+			grow := design.GrowIn(c, a.level, box)
 			box.Children(func() {
 				top := stats.Top[0].Count
 				for i, dish := range stats.Top {
@@ -339,7 +367,7 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 					if top > 0 {
 						fraction = float32(dish.Count) / float32(top)
 					}
-					ui.Meter(c, float64(fraction), 0, 1, nil).Label(dish.Name + " 的次数占比")
+					ui.Meter(c, float64(fraction*grow), 0, 1, nil).Label(dish.Name + " 的次数占比")
 				}
 			})
 		})
@@ -349,7 +377,8 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 				ui.Text(c, "还没有菜系数据。").FontSize(12).TextColor(p.Muted)
 				return
 			}
-			box := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+			box := a.reviewBox(c, p)
+			grow := design.GrowIn(c, a.level, box)
 			box.Children(func() {
 				top := stats.Cuisines[0].Count
 				for _, slice := range stats.Cuisines {
@@ -362,11 +391,18 @@ func (a *App) feedReviewBody(c *ui.Context, p design.Palette) {
 					if top > 0 {
 						fraction = float32(slice.Count) / float32(top)
 					}
-					ui.Meter(c, float64(fraction), 0, 1, nil).Label(slice.Label + " 的菜式占比")
+					ui.Meter(c, float64(fraction*grow), 0, 1, nil).Label(slice.Label + " 的菜式占比")
 				}
 			})
 		})
 	})
+}
+
+// reviewBox is one block of the annual review: a raised card, so the
+// chart and the two ranked lists read as three blocks, not one column.
+func (a *App) reviewBox(c *ui.Context, p design.Palette) ui.Element {
+	return design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Padding(design.Sp(c, 4)).
+		Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border), p, design.RadiusCard)
 }
 
 // recipeName reads a dish name from the loaded recipe snapshot, keeping the

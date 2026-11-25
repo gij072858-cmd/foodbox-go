@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -35,6 +36,13 @@ type onboardingState struct {
 	adults       int
 	kids         int
 	elders       int
+
+	// shownStep is the stop last drawn, stepAt the frame it changed and
+	// stepDir the way it went, so the next stop slides in from the side it
+	// lies on (design.PageEnter, the page's own curve) instead of swapping.
+	shownStep int
+	stepAt    time.Time
+	stepDir   int
 }
 
 func (s *onboardingState) init() {
@@ -270,7 +278,17 @@ func (a *App) onboardingView(c *ui.Context, p design.Palette) {
 		a.onboardingHeader(c, p)
 		ui.Scroll(c).Grow(1).FillWidth().Children(func() {
 			ui.Column(c).FillWidth().AlignItems(ui.Center).Padding(24, 8, 24, 24).Children(func() {
-				ui.Column(c).Width(940).Gap(16).Children(func() {
+				if o.step != o.shownStep {
+					o.stepDir = 1
+					if o.step < o.shownStep {
+						o.stepDir = -1
+					}
+					o.shownStep = o.step
+					o.stepAt = c.Now()
+				}
+				stop := ui.Column(c).Width(940).Gap(16)
+				design.PageEnter(c, a.level, o.stepAt, o.stepDir, stop)
+				stop.Children(func() {
 					switch o.step {
 					case 0:
 						a.onboardingKitchen(c, p)
@@ -307,7 +325,20 @@ func (a *App) onboardingHeader(c *ui.Context, p design.Palette) {
 							color = p.Success
 						}
 						ui.Row(c).Gap(5).AlignItems(ui.Center).Children(func() {
-							ui.Box(c).Size(7, 7).Radius(design.RadiusPill).Background(color)
+							// The current stop's dot stretches into a short
+							// capsule, and the stretch springs to the next stop
+							// as the cook moves on.
+							dot := ui.Box(c.Key(fmt.Sprintf("onboard-dot-%d", i))).Height(7).
+								Radius(design.RadiusPill)
+							w := float32(7)
+							if i == o.step {
+								w = 18
+							}
+							if a.level.Moves() {
+								w = dot.AnimateTo("w", w, design.Snappy)
+								color = dot.AnimateColor("c", color, design.Hover)
+							}
+							dot.Width(w).Background(color)
 							ui.Text(c, label).FontSize(design.FontMeta).FontWeight(600).
 								TextColor(color)
 						})

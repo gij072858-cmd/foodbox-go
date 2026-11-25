@@ -221,6 +221,15 @@ func (a *App) navItem(c *ui.Context, p design.Palette, it navItem) {
 	if !selected {
 		design.Wash(b, p.Sidebar.Alpha(0), p.Hover)
 	}
+	// A destination under the pointer leans two DIP toward it, the way a
+	// macOS source list answers a hover. It is a paint-only translate of
+	// the label row, so the pill and the layout never move, and it rides
+	// the pointer clock (Fast), which motion off settles at once.
+	nudge := float32(0)
+	if b.Hovered() && !selected {
+		nudge = 2
+	}
+	nudge = b.AnimateTo("nudge", nudge, design.Fast)
 	b.Children(func() {
 		// The pill is in the flow, so it paints before the content; the
 		// content is absolute over it. An absolute pill would paint last
@@ -230,6 +239,9 @@ func (a *App) navItem(c *ui.Context, p design.Palette, it navItem) {
 		}
 		row := ui.Row(c).Absolute().Top(0).Left(0).Right(0).Bottom(0).
 			Padding(6, 10).Gap(10).AlignItems(ui.Center).PassThrough()
+		if nudge > 0.01 {
+			row.Translate(nudge, 0)
+		}
 		row.Children(func() {
 			color := p.Ink
 			if selected {
@@ -241,9 +253,15 @@ func (a *App) navItem(c *ui.Context, p design.Palette, it navItem) {
 			if it.badge > 0 {
 				// The count is a badge, not part of the label: a screen
 				// reader still hears the destination's name alone.
+				// On the pill the pale accent badge vanished into the
+				// accent; there it turns to the pill's own ink.
+				bg, fg := p.AccentPale, p.Accent
+				if selected {
+					bg, fg = p.OnAccent.Alpha(0.22), p.OnAccent
+				}
 				ui.Badge(c, fmt.Sprint(it.badge)).FontSize(design.FontCaption).
 					FontWeight(700).Padding(1, 6).Radius(design.RadiusPill).
-					Background(p.AccentPale).TextColor(p.Accent)
+					Background(bg).TextColor(fg)
 			}
 		})
 	})
@@ -356,6 +374,15 @@ func (a *App) navGo(id string) {
 func (a *App) navPill(c *ui.Context, p design.Palette) {
 	pill := ui.Box(c.Key("nav-pill")).Fill().Radius(design.RadiusSmall).
 		PassThrough().Background(p.Accent)
+	// The pill glows in its own colour, so it reads as a lit capsule set
+	// in the sidebar rather than a flat block cut out of it. The glow is
+	// part of the matched element, so it travels with the slide. The
+	// fill itself stays the plain accent.
+	glow := float32(0.38)
+	if p.Dark {
+		glow = 0.30
+	}
+	pill.Shadow(0, 4, 12, -5, p.Accent.Alpha(glow))
 	if a.level.Full() {
 		pill.Transition(ui.ElementTransition{Animation: &design.Pane, Match: navPillMatch{}})
 	}
@@ -513,11 +540,7 @@ func (a *App) card(c *ui.Context, p design.Palette, key any, title, sub string, 
 	card := ui.ButtonBase(c.Key(key)).Column().Gap(6).Padding(16).Radius(design.RadiusCard).
 		Border(1, p.Border).Label(title)
 	design.Wash(card, p.Surface, p.Hover)
-	if card.Hovered() {
-		design.HoverShadow(card, p)
-	} else {
-		design.RestShadow(card, p)
-	}
+	design.Elevate(card, p)
 	design.Lift(card, 3, 0.97)
 	card.Children(func() {
 		if accent {

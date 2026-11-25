@@ -617,7 +617,7 @@ func (a *App) profileCookedPage(c *ui.Context, p design.Palette) {
 
 		if len(co.rows) == 0 {
 			box := design.EmptyState(c, p, &icons.Bowl, "这个筛选下没有做过的菜",
-				"换一个时间范围，或者去掌序做一道菜。")
+				"换一个时间范围，或者去掌序做一道菜。", a.level)
 			box.Children(func() {
 				if ui.Button(c, "去掌序").Clicked() {
 					a.router.Push("/schedule")
@@ -625,11 +625,11 @@ func (a *App) profileCookedPage(c *ui.Context, p design.Palette) {
 			})
 			return
 		}
-		ui.Column(c).FillWidth().Gap(1).Radius(14).Background(p.Surface).
-			Border(1, p.Border).Children(func() {
+		design.Raised(ui.Column(c).FillWidth().Gap(1).Padding(4).Radius(14).Background(p.Surface).
+			Border(1, p.Border), p, 14).Children(func() {
 			for _, row := range co.rows {
 				row := row
-				ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center).Children(func() {
+				design.Hoverable(ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center), p).Children(func() {
 					ui.Column(c).Grow(1).MinWidth(0).Gap(1).Children(func() {
 						ui.Text(c, row.Name).FontSize(13).FontWeight(600).TextColor(p.Text).SingleLine()
 						sub := joinSub(row.Main, row.Region)
@@ -663,7 +663,7 @@ func (a *App) cookedStatsBody(c *ui.Context, p design.Palette) {
 		design.Stat(c, p, fmt.Sprint(s.Minutes), "总分钟")
 	})
 	a.section(c, p, "月份分布", func() {
-		box := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+		box := a.reviewBox(c, p)
 		box.Children(func() {
 			labels := make([]string, 12)
 			values := make([]float64, 12)
@@ -680,7 +680,8 @@ func (a *App) cookedStatsBody(c *ui.Context, p design.Palette) {
 			ui.Text(c, "这个筛选下没有记录。").FontSize(12).TextColor(p.Muted)
 			return
 		}
-		box := ui.Column(c).FillWidth().Gap(design.Sp(c, 1))
+		box := a.reviewBox(c, p)
+		grow := float64(design.GrowIn(c, a.level, box))
 		box.Children(func() {
 			top := s.Top[0].Count
 			for _, row := range s.Top {
@@ -689,7 +690,7 @@ func (a *App) cookedStatsBody(c *ui.Context, p design.Palette) {
 					ui.Text(c, row.Name).FontSize(12).TextColor(p.Text).Grow(1).SingleLine()
 					ui.Text(c, fmt.Sprintf("%d 次", row.Count)).FontSize(11).TextColor(p.Muted)
 				})
-				ui.Meter(c, float64(row.Count)/float64(top), 0, 1, nil).Label(row.Name + " 的次数占比")
+				ui.Meter(c, float64(row.Count)/float64(top)*grow, 0, 1, nil).Label(row.Name + " 的次数占比")
 			}
 		})
 	})
@@ -721,11 +722,11 @@ func (a *App) profileShelfPage(c *ui.Context, p design.Palette) {
 			if len(pf.shelf.found) == 0 {
 				ui.Text(c, "没有找到这道菜。").FontSize(12).TextColor(p.Muted)
 			}
-			ui.Column(c).FillWidth().Gap(1).Radius(14).Background(p.Surface).
-				Border(1, p.Border).Children(func() {
+			design.Raised(ui.Column(c).FillWidth().Gap(1).Padding(4).Radius(14).Background(p.Surface).
+				Border(1, p.Border), p, 14).Children(func() {
 				for _, row := range pf.shelf.found {
 					row := row
-					ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center).Children(func() {
+					design.Hoverable(ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center), p).Children(func() {
 						ui.Column(c).Grow(1).MinWidth(0).Gap(1).Children(func() {
 							ui.Text(c, row.Name).FontSize(13).TextColor(p.Text).SingleLine()
 							if row.Sub != "" {
@@ -749,7 +750,7 @@ func (a *App) profileShelfPage(c *ui.Context, p design.Palette) {
 			if pf.shelf.tab == 1 {
 				title, body = "还没有想要的菜", "搜索一道菜加入，下次配餐和掌序会优先想到它。"
 			}
-			box := design.EmptyState(c, p, &icons.Star, title, body)
+			box := design.EmptyState(c, p, &icons.Star, title, body, a.level)
 			box.Children(func() {
 				if ui.PrimaryButton(c, "去菜式页挑一道").Clicked() {
 					a.router.Push("/recipes")
@@ -758,11 +759,11 @@ func (a *App) profileShelfPage(c *ui.Context, p design.Palette) {
 			return
 		}
 
-		ui.Column(c).FillWidth().Gap(1).Radius(14).Background(p.Surface).
-			Border(1, p.Border).Children(func() {
+		design.Raised(ui.Column(c).FillWidth().Gap(1).Padding(4).Radius(14).Background(p.Surface).
+			Border(1, p.Border), p, 14).Children(func() {
 			for _, row := range pf.shelf.view {
 				row := row
-				ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center).Children(func() {
+				design.Hoverable(ui.Row(c).FillWidth().Padding(12, 10).Gap(10).AlignItems(ui.Center), p).Children(func() {
 					ui.Column(c).Grow(1).MinWidth(0).Gap(1).Children(func() {
 						ui.Text(c, row.Name).FontSize(13).FontWeight(600).TextColor(p.Text).SingleLine()
 						if row.Sub != "" {

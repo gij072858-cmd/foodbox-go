@@ -98,6 +98,7 @@ type Palette struct {
 	Success    ui.Color
 	Danger     ui.Color
 	Shadow     ui.Color
+	Float      ui.Color // the deeper shadow a raised surface rises onto (Kero floatShadow)
 	CoverStart ui.Color
 	CoverEnd   ui.Color
 	Ink        ui.Color          // every icon: near-black in the light, near-white in the dark
@@ -147,6 +148,7 @@ func PaletteFor(theme string, dark bool) Palette {
 		Success:    th.Palette[2],
 		Danger:     kp.danger,
 		Shadow:     shadow,
+		Float:      kp.floatShadow,
 		CoverStart: kp.accent.Mix(kp.card, cs),
 		CoverEnd:   kp.accent.Mix(kp.card, ce),
 		Ink:        kp.text,

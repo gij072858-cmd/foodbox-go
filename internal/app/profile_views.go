@@ -62,7 +62,7 @@ func (a *App) profilePage(c *ui.Context, p design.Palette) {
 
 		if len(pf.profile.FavoriteRecipes) == 0 && a.recordCount == 0 {
 			box := design.EmptyState(c, p, &icons.Profile, "还没有留下痕迹",
-				"做完第一道菜、收藏一道菜之后，这里会记下你的口味与习惯。")
+				"做完第一道菜、收藏一道菜之后，这里会记下你的口味与习惯。", a.level)
 			box.Children(func() {
 				ui.Row(c).Gap(10).Children(func() {
 					if ui.PrimaryButton(c, "去掌序做一道菜").Clicked() {
@@ -86,17 +86,24 @@ func (a *App) profileHeader(c *ui.Context, p design.Palette) {
 	}
 	level := XPLevel(pf.profile.XP)
 
-	ui.Row(c).FillWidth().Gap(16).Padding(20).Radius(18).Background(p.Surface).
-		Border(1, p.Border).Margin(0, 0, 20, 0).AlignItems(ui.Center).Children(func() {
+	design.Raised(ui.Row(c).FillWidth().Gap(16).Padding(20).Radius(18).Background(p.Surface).
+		Border(1, p.Border).Margin(0, 0, 20, 0).AlignItems(ui.Center), p, 18).Children(func() {
 		// The default face is blank on purpose: a generated initial is a
 		// placeholder wearing the user's name. A recorded avatar path is not
 		// copied or rendered, so the circle stays a quiet, empty well.
+		// The well keeps a thin accent ring, so the blank face still reads
+		// as the user's place on the card rather than a missing image.
 		ui.Box(c).Size(64, 64).Radius(32).Background(p.SurfaceAlt).
-			Border(1, p.Border).Role(ui.RoleImage).Label("头像")
-		ui.Column(c).Grow(1).MinWidth(0).Gap(4).Justify(ui.Center).Children(func() {
-			ui.Text(c, nickname).FontSize(20).FontWeight(700).TextColor(p.Text).SingleLine()
-			ui.Text(c, fmt.Sprintf("Lv.%d", level)).FontSize(12).TextColor(p.Muted)
-			ui.Progress(c, float64(XPProgress(pf.profile.XP))).Label("等级进度")
+			Border(2, p.Accent.Alpha(0.28)).Role(ui.RoleImage).Label("头像")
+		info := ui.Column(c).Grow(1).MinWidth(0).Gap(4).Justify(ui.Center)
+		// The level bar fills to its place once as the page opens.
+		grow := design.GrowIn(c, a.level, info)
+		info.Children(func() {
+			ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
+				ui.Text(c, nickname).FontSize(20).FontWeight(700).TextColor(p.Text).SingleLine()
+				design.Tag(c, p, fmt.Sprintf("Lv.%d", level), p.Accent)
+			})
+			ui.Progress(c, float64(XPProgress(pf.profile.XP)*grow)).Label("等级进度")
 		})
 		if ui.Button(c, "编辑资料").Clicked() {
 			a.router.Push("/profile/edit")
@@ -153,14 +160,17 @@ func (a *App) profileRecent(c *ui.Context, p design.Palette) {
 			return
 		}
 		shown := 0
-		box := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+		box := design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 1)).Padding(6).
+			Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border), p, design.RadiusCard)
 		box.Children(func() {
 			for _, r := range a.records {
 				if shown >= 3 {
 					break
 				}
+				row := design.Hoverable(ui.Row(c).FillWidth().Gap(10).Padding(8, 10).AlignItems(ui.Center), p)
+				design.StaggerRow(row, design.Stagger(c, a.level, a.pageAt, shown+4))
 				shown++
-				ui.Row(c).FillWidth().Gap(10).AlignItems(ui.Center).Children(func() {
+				row.Children(func() {
 					ui.Text(c, r.CompletedAt.In(time.Local).Format("01-02 15:04")).
 						FontSize(11).TextColor(p.Faint).Width(84)
 					ui.Text(c, a.recipeName(r.RecipeID)).FontSize(13).TextColor(p.Text).Grow(1).SingleLine()

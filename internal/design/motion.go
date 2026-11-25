@@ -101,3 +101,43 @@ func PageEnter(c *ui.Context, level Level, at time.Time, dir int, page ui.Elemen
 	}
 	page.Opacity(shown)
 }
+
+// Arrive brings a piece of a view in after the thing it belongs to has
+// changed — the run's step label and controls when the step moves on. It is
+// time-driven, as PageEnter is, from at (the frame the change was seen):
+// full motion rises rise DIP and fades in, lite only fades, off does
+// nothing. delay holds it back behind an earlier piece, so a group lands
+// in order rather than all at once. It asks for frames only while moving.
+func Arrive(c *ui.Context, level Level, at time.Time, delay time.Duration, rise float32, e ui.Element) {
+	if level == MotionOff || at.IsZero() {
+		return
+	}
+	t := c.Now().Sub(at) - delay
+	if t >= Pane.Duration {
+		return
+	}
+	c.AnimationFrame()
+	if t < 0 {
+		t = 0
+	}
+	k := Ease(float32(t) / float32(Pane.Duration))
+	if level.Full() && rise != 0 {
+		e.Translate(0, rise*(1-k))
+	}
+	e.Opacity(k)
+}
+
+// Sweep is a 0→1 drawn on the page's curve from at: a chart that sweeps in
+// from its left edge when its page opens or its data is re-planned. It is
+// 1 unless the level is full, and asks for frames only while it travels.
+func Sweep(c *ui.Context, level Level, at time.Time) float32 {
+	if !level.Full() || at.IsZero() {
+		return 1
+	}
+	t := c.Now().Sub(at)
+	if t >= Page.Duration+Pane.Duration {
+		return 1
+	}
+	c.AnimationFrame()
+	return Ease(float32(t) / float32(Page.Duration+Pane.Duration))
+}

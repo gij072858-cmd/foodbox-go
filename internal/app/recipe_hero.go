@@ -3,8 +3,9 @@ package app
 // The detail page's hero is the dish's face, and it carries information
 // instead of pretending to be a photo: the macro split of one serving as a
 // ring, what the pantry is missing, the purine reading, and how long the
-// dish takes. Every number comes from the dish cache; the card draws no
-// animation of its own, so a settled page still asks for no frames.
+// dish takes. Every number comes from the dish cache. Its only motion is
+// the macro meters filling once as the page opens (design.GrowIn), so a
+// settled page still asks for no frames.
 
 import (
 	"fmt"
@@ -28,6 +29,8 @@ func (a *App) recipeHeroCard(c *ui.Context, p design.Palette, rec domain.Recipe)
 		Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border).
 		Padding(design.Sp(c, 4)).Gap(design.Sp(c, 2))
 	design.RestShadow(card, p)
+	design.TintSurface(card, p, design.RadiusCard) // carries the sheen too
+	grow := design.GrowIn(c, a.level, card)
 	// The hero stays flat. Its surface is text and arcs, and tilting a
 	// card of them smears the type; the mark tile inside it is the piece of
 	// artwork the dish page shares with the list.
@@ -42,7 +45,7 @@ func (a *App) recipeHeroCard(c *ui.Context, p design.Palette, rec domain.Recipe)
 		if have {
 			body.Children(func() {
 				a.macroSummary(c, p, nut.Nutrients)
-				a.macroLegend(c, p, nut.Nutrients)
+				a.macroLegend(c, p, nut.Nutrients, grow)
 			})
 		} else {
 			body.Justify(ui.Center).Children(func() {
@@ -59,23 +62,29 @@ func (a *App) recipeHeroCard(c *ui.Context, p design.Palette, rec domain.Recipe)
 // read without a key.
 func (a *App) macroSummary(c *ui.Context, p design.Palette, n nutrition.Nutrients) {
 	ui.Column(c).Width(84).Shrink(0).Gap(0).Justify(ui.Center).Children(func() {
-		ui.Text(c, kcalLabel(n)).FontSize(design.FontTitle).FontWeight(700).
-			TextColor(p.Text).TextAlign(ui.Center)
+		kcal := ui.Text(c, kcalLabel(n)).FontSize(design.FontTitle).FontWeight(700).
+			TextColor(p.Text).TextAlign(ui.Center).FontFeatures("tnum")
+		if a.level.Full() {
+			kcal.ContentTransition(ui.ContentTransition{Numeric: true})
+		}
 		ui.Text(c, "kcal").FontSize(design.FontCaption).TextColor(p.Faint).TextAlign(ui.Center)
 	})
 }
 
-func (a *App) macroLegend(c *ui.Context, p design.Palette, n nutrition.Nutrients) {
+func (a *App) macroLegend(c *ui.Context, p design.Palette, n nutrition.Nutrients, grow float32) {
 	prot, fat, carb, total := macroEnergy(n)
 	col := ui.Column(c).Grow(1).MinWidth(0).Gap(design.Sp(c, 1.5)).Justify(ui.Center)
 	col.Children(func() {
-		a.macroRow(c, p, "蛋白", n.ProteinG, share(prot, total), p.Success)
-		a.macroRow(c, p, "脂肪", n.FatG, share(fat, total), p.Warning)
-		a.macroRow(c, p, "碳水", n.CarbG, share(carb, total), p.Accent)
+		a.macroRow(c, p, "蛋白", n.ProteinG, share(prot, total), p.Success, grow)
+		a.macroRow(c, p, "脂肪", n.FatG, share(fat, total), p.Warning, grow)
+		a.macroRow(c, p, "碳水", n.CarbG, share(carb, total), p.Accent, grow)
 	})
 }
 
-func (a *App) macroRow(c *ui.Context, p design.Palette, label string, grams float64, frac float32, color ui.Color) {
+// macroRow is one macro's label and meter. grow is the hero's one-shot fill
+// (0..1); the words show the final share from the first frame, only the
+// meter travels.
+func (a *App) macroRow(c *ui.Context, p design.Palette, label string, grams float64, frac float32, color ui.Color, grow float32) {
 	ui.Column(c).FillWidth().Gap(design.Sp(c, 0.75)).Children(func() {
 		ui.Row(c).FillWidth().Justify(ui.SpaceBetween).AlignItems(ui.Center).Gap(6).Children(func() {
 			// Meter colours sit at Success whatever the share is, so the
@@ -85,7 +94,7 @@ func (a *App) macroRow(c *ui.Context, p design.Palette, label string, grams floa
 			ui.Text(c, fmt.Sprintf("%.0f g · %.0f%%", grams, frac*100)).
 				FontSize(design.FontMeta).FontWeight(600).TextColor(p.Text)
 		})
-		ui.Meter(c, float64(frac), 0, 1, nil).Label(label + " 占一餐能量")
+		ui.Meter(c, float64(frac*grow), 0, 1, nil).Label(label + " 占一餐能量")
 	})
 }
 

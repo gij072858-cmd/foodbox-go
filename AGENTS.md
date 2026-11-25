@@ -94,10 +94,16 @@ go tool mygo build
 - 图标统一墨色 `p.Ink`；只有画在强调色/墨色填充上的图标用 `p.OnAccent`。Accent 由
   `design.ApplyTheme` 在 `View` 每帧投影到 `ui.Theme`（按 `{Dark, Name}` 签名缓存，签名不变
   不重复 `SetTheme`），不要在页面里给图标挑强调色；`ui.Themed` 只留给设置页的主题预览。
-- 悬浮/按压/阴影统一用 `design.Wash`、`design.Lift`、`RestShadow`、`HoverShadow`；
+- 悬浮/按压/阴影统一用 `design.Wash`、`design.Lift`、`RestShadow`、`HoverShadow`；可点的卡片用
+  `design.Elevate` 在两档阴影之间弹簧过渡（不要再写 `if Hovered() { HoverShadow } else { RestShadow }`）；
+  卡片表面的顶部高光用 `design.Sheen`（`design.Card` 已自带）；悬浮档阴影色是 `p.Float`（Kero floatShadow）；
   按钮用 `design.Button` 的主/次/危险/幽灵四级；它只是 `ui.Button`/`ui.PrimaryButton`
   的薄封装，不要再用 `ButtonBase` 重写一套。
 - 微交互用 `AnimatePose`（只绘制帧）；页面/弹层用 `ElementTransition`。
+- 页面自建的卡片用 `design.Raised(el, p, radius)`（贴面阴影 + 顶部高光）；卡片里的列表行用 `design.Hoverable`。
+  **一个元素只调用一次 `Draw`**：`TintSurface` 已自带高光，不要再对同一元素调 `Sheen`/`Raised`。
+- 局部到达动效：`design.Arrive`（状态变化后某块升起淡入，可带延迟）；进度条/表首次填满用 `design.GrowIn`；
+  图表随数据重排展开用 `design.Sweep`。三者都已按三档动效处理，并在结束后停止请求帧。
 - 卡片→详情优先做共享元素飞行（参考 Cloudy `flights/lerpRect`），不是简单换页。
 - 列表首屏用 `design.Stagger` / `StaggerRow`；骨架用 `Skeleton`；图片用 `ImageIn` / `DrawImage`。
 - 反馈用框架的 `c.Toast`；`App.View` 在 `a.notice` 变化时调用一次，不要再手写内联提示。

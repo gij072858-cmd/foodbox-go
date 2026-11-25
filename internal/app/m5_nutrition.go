@@ -229,7 +229,7 @@ func (a *App) nutritionPage(c *ui.Context, p design.Palette) {
 	a.pageBody(c, func() {
 		if !s.loaded || s.catalog == nil {
 			design.EmptyState(c, p, &icons.Bowl, "成分表还没有加载",
-				"营养估算依赖随包的食物成分表；重新进入此页再试。").FillWidth()
+				"营养估算依赖随包的食物成分表；重新进入此页再试。", a.level).FillWidth()
 			return
 		}
 		a.nutritionTargetCard(c, p)
@@ -244,6 +244,17 @@ func (a *App) nutritionPage(c *ui.Context, p design.Palette) {
 		ui.Text(c, "以上数值都由随包食物成分表与家常用量估算，不构成医学建议。").
 			FontSize(11).TextColor(p.Faint).Margin(4, 8, 0, 0)
 	})
+}
+
+// nutritionCard is one block of the dashboard: a raised card that rises in
+// a beat behind the block above it as the page opens. The target block
+// stays unboxed, because its numbers are already six stat cards.
+func (a *App) nutritionCard(c *ui.Context, p design.Palette, order int) ui.Element {
+	card := design.Raised(ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Padding(design.Sp(c, 4)).
+		Radius(design.RadiusCard).Background(p.Surface).Border(1, p.Border).
+		Margin(0, 0, design.Sp(c, 4), 0), p, design.RadiusCard)
+	design.Arrive(c, a.level, a.pageAt, time.Duration(order)*70*time.Millisecond, 12, card)
+	return card
 }
 
 // nutritionTargetCard shows BMR, TDEE, target calories and the macros.
@@ -298,7 +309,7 @@ func (a *App) nutritionTargetCard(c *ui.Context, p design.Palette) {
 // nutritionEmptyCard is the way out when there is nothing to chart yet.
 func (a *App) nutritionEmptyCard(c *ui.Context, p design.Palette) {
 	card := design.EmptyState(c, p, &icons.Bowl, "还没有开饭记录",
-		"在掌序里结算一道菜，或直接做一道菜，这里会按食物成分表估算摄入，并按天画出趋势。")
+		"在掌序里结算一道菜，或直接做一道菜，这里会按食物成分表估算摄入，并按天画出趋势。", a.level)
 	card.FillWidth().Children(func() {
 		ui.Row(c).Gap(10).Margin(0, 10, 0, 0).Children(func() {
 			if ui.PrimaryButton(c, "去挑一道菜").Clicked() {
@@ -318,7 +329,9 @@ func (a *App) nutritionEmptyCard(c *ui.Context, p design.Palette) {
 func (a *App) nutritionTodayCard(c *ui.Context, p design.Palette) {
 	s := &a.nutrition
 	today := s.report.Today
-	card := ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Margin(0, 0, design.Sp(c, 4), 0)
+	card := a.nutritionCard(c, p, 1)
+	// The bars fill to today's numbers once as the page opens.
+	grow := float64(design.GrowIn(c, a.level, card))
 	card.Children(func() {
 		design.SectionHeader(c, p, "今日摄入", "估算 · 每道菜按一份计")
 		if s.hasTarget {
@@ -326,16 +339,16 @@ func (a *App) nutritionTodayCard(c *ui.Context, p design.Palette) {
 			if s.energy.TargetKcal > 0 {
 				ratio = today.Kcal / float64(s.energy.TargetKcal)
 			}
-			ui.Progress(c, ratio).FillWidth()
+			ui.Progress(c, ratio*grow).FillWidth()
 			ui.Row(c).FillWidth().AlignItems(ui.Center).Justify(ui.SpaceBetween).Children(func() {
 				ui.Text(c, fmt.Sprintf("%s / %d kcal", nutritionNumber(today.Kcal), s.energy.TargetKcal)).
-					FontSize(13).FontWeight(600).TextColor(p.Text)
+					FontSize(13).FontWeight(600).TextColor(p.Text).FontFeatures("tnum")
 				ui.Text(c, nutritionRemainingLabel(today.Kcal, float64(s.energy.TargetKcal))).
 					FontSize(12).TextColor(p.Muted)
 			})
-			a.nutritionMacroRow(c, p, "蛋白", today.ProteinG, float64(s.energy.ProteinG), p.Success)
-			a.nutritionMacroRow(c, p, "脂肪", today.FatG, float64(s.energy.FatG), p.Warning)
-			a.nutritionMacroRow(c, p, "碳水", today.CarbG, float64(s.energy.CarbG), p.Accent)
+			a.nutritionMacroRow(c, p, "蛋白", today.ProteinG, float64(s.energy.ProteinG), p.Success, grow)
+			a.nutritionMacroRow(c, p, "脂肪", today.FatG, float64(s.energy.FatG), p.Warning, grow)
+			a.nutritionMacroRow(c, p, "碳水", today.CarbG, float64(s.energy.CarbG), p.Accent, grow)
 		} else {
 			ui.Text(c, fmt.Sprintf("今日已摄入约 %s kcal", nutritionNumber(today.Kcal))).
 				FontSize(15).FontWeight(600).TextColor(p.Text)
@@ -356,7 +369,7 @@ func (a *App) nutritionTodayCard(c *ui.Context, p design.Palette) {
 }
 
 // nutritionMacroRow is one labelled meter with its numbers.
-func (a *App) nutritionMacroRow(c *ui.Context, p design.Palette, label string, done, target float64, color ui.Color) {
+func (a *App) nutritionMacroRow(c *ui.Context, p design.Palette, label string, done, target float64, color ui.Color, grow float64) {
 	ratio := 0.0
 	if target > 0 {
 		ratio = done / target
@@ -364,16 +377,16 @@ func (a *App) nutritionMacroRow(c *ui.Context, p design.Palette, label string, d
 	ui.Row(c).FillWidth().Gap(10).AlignItems(ui.Center).Children(func() {
 		ui.Box(c).Size(6, 6).Radius(design.RadiusPill).Background(color).Shrink(0)
 		ui.Text(c, label).FontSize(12).TextColor(p.Muted).Width(36).Shrink(0)
-		ui.Progress(c, ratio).Grow(1)
+		ui.Progress(c, ratio*grow).Grow(1)
 		ui.Text(c, fmt.Sprintf("%s / %s g", nutritionNumber(done), nutritionNumber(target))).
-			FontSize(11).TextColor(p.Text).Width(92).Shrink(0).TextAlign(ui.End)
+			FontSize(11).TextColor(p.Text).Width(92).Shrink(0).TextAlign(ui.End).FontFeatures("tnum")
 	})
 }
 
 // nutritionWeekCard charts the last seven days.
 func (a *App) nutritionWeekCard(c *ui.Context, p design.Palette) {
 	s := &a.nutrition
-	card := ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Margin(0, 0, design.Sp(c, 4), 0)
+	card := a.nutritionCard(c, p, 2)
 	card.Children(func() {
 		design.SectionHeader(c, p, "最近 7 天", "估算 · 按本地日期汇总")
 		labels := make([]string, len(s.report.Days))
@@ -412,7 +425,8 @@ func (a *App) nutritionWeekCard(c *ui.Context, p design.Palette) {
 func (a *App) nutritionPurineCard(c *ui.Context, p design.Palette) {
 	s := &a.nutrition
 	today := s.report.Today
-	card := ui.Column(c).FillWidth().Gap(design.Sp(c, 2)).Margin(0, 0, design.Sp(c, 4), 0)
+	card := a.nutritionCard(c, p, 3)
+	grow := float64(design.GrowIn(c, a.level, card))
 	card.Children(func() {
 		header := ui.Row(c).FillWidth().AlignItems(ui.Center).Justify(ui.SpaceBetween)
 		header.Children(func() {
@@ -427,7 +441,7 @@ func (a *App) nutritionPurineCard(c *ui.Context, p design.Palette) {
 			color = p.Danger
 		}
 		ui.Text(c, note).FontSize(13).TextColor(color).LineHeight(1.5)
-		ui.Meter(c, today.PurineMg, 0, 150,
+		ui.Meter(c, today.PurineMg*grow, 0, 150,
 			&ui.MeterLevels{Warning: 50, Critical: 150}).Label("嘌呤负荷")
 		ui.Text(c, "分档口径：低 <50 / 中 50–150 / 高 ≥150 mg 每 100 g；表里没有数据的菜不计入。").
 			FontSize(11).TextColor(p.Faint).LineHeight(1.4)
@@ -437,7 +451,7 @@ func (a *App) nutritionPurineCard(c *ui.Context, p design.Palette) {
 // nutritionTopCard lists the day's biggest ingredient contributions.
 func (a *App) nutritionTopCard(c *ui.Context, p design.Palette) {
 	s := &a.nutrition
-	card := ui.Column(c).FillWidth().Gap(design.Sp(c, 2))
+	card := a.nutritionCard(c, p, 4)
 	card.Children(func() {
 		design.HeaderAction(c, p, "食材贡献", "估算 · 每份计，调料计入", func() {
 			ui.Segmented(c, &s.metric, "按热量", "按蛋白", "按嘌呤").Changed()
